@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import icono from '../assets/icono.png';
+---
+
+<Layout title="Página no encontrada | MordWave" noindex>
+  <main id="contenido" class="nf">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="box">
+      <Image src={icono} alt="" width={160} height={160} class="logo" loading="eager" />
+      <p class="code">404</p>
+      <h1>Esta página se fue de órbita.</h1>
+      <p class="lead">El enlace que seguiste no existe o cambió de lugar. Vuelve al inicio y sigue explorando.</p>
+      <a class="btn btn-primary" href="/">Volver al inicio <span class="arrow">↗</span></a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .nf { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 40px 16px; position: relative; overflow: hidden; text-align: center; }
+  .glow { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; background: radial-gradient(circle, rgba(123, 92, 255, .35), transparent 65%); filter: blur(40px); }
+  .box { position: relative; max-width: 520px; display: grid; justify-items: center; }
+  .logo { width: 120px; height: auto; filter: drop-shadow(0 20px 40px rgba(123, 92, 255, .6)); animation: drift 6s ease-in-out infinite; }
+  @keyframes drift { 0%, 100% { transform: translate(0, 0) rotate(-6deg); } 50% { transform: translate(0, -16px) rotate(6deg); } }
+  .code { font-family: var(--mono); color: var(--violet-2); letter-spacing: .3em; margin: 24px 0 6px; }
+  h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 800; }
+  .lead { color: var(--muted); margin: 14px 0 28px; }
+</style>

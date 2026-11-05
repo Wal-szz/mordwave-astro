@@ -5,12 +5,33 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = 'MordWave | Landing pages y webs con reservas para tu negocio',
   description = 'Diseñamos landing pages y sitios web con agenda en Google Calendar para emprendedores y pymes de todo Chile. Del primer boceto a tu web funcionando.',
+  noindex = false,
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL('/og.png', site.url).href;
+
+// Datos del negocio para Google (aparecen en resultados de búsqueda)
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'MordWave',
+  description,
+  url: site.url,
+  logo: new URL('/favicon.png', site.url).href,
+  image: ogImage,
+  email: site.email,
+  telephone: `+${site.whatsapp}`,
+  areaServed: 'CL',
+  address: { '@type': 'PostalAddress', addressLocality: 'Chillán', addressRegion: 'Ñuble', addressCountry: 'CL' },
+  sameAs: [`https://instagram.com/${site.instagram}`],
+};
 ---
 
 <!doctype html>
@@ -20,14 +41,32 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f0d1c" />
-    <link rel="canonical" href={site.url} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0b0a16" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Vista previa al compartir el link (WhatsApp, Instagram, LinkedIn, etc.) -->
+    <meta property="og:site_name" content="MordWave" />
+    <meta property="og:locale" content="es_CL" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={site.url} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="MordWave: del primer boceto a tu web funcionando" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(business)} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,6 +75,7 @@ const {
     />
   </head>
   <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <slot />
     <script>
       import '../scripts/fx';

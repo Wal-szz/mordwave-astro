@@ -42,6 +42,7 @@ import { site, waLink } from '../data/site';
           <textarea name="mensaje" rows="4" placeholder="¿A qué se dedica tu negocio y qué te gustaría lograr?"></textarea>
         </label>
         <button class="btn btn-primary magnetic" type="submit">Enviar por WhatsApp <span class="arrow">↗</span></button>
+        <p class="form-note" id="form-note" role="status" aria-live="polite">Se abrirá WhatsApp con tu mensaje listo para enviar.</p>
       </form>
     </div>
   </div>
@@ -77,6 +78,10 @@ import { site, waLink } from '../data/site';
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--violet-2); box-shadow: 0 0 0 3px rgba(123, 92, 255, .25); }
   ::placeholder { color: rgba(164, 156, 201, .6); }
   .form .btn { margin-top: 6px; }
+  .form-note { font-size: 13px; color: var(--muted); text-align: center; transition: color .3s; }
+  .form-note.ok { color: var(--green); }
+  /* Campo obligatorio vacío tras intentar enviar */
+  input:user-invalid, select:user-invalid { border-color: #ff6b81; box-shadow: 0 0 0 3px rgba(255, 107, 129, .18); }
 
   @media (max-width: 900px) {
     .wrap { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
@@ -96,5 +101,8 @@ import { site, waLink } from '../data/site';
     ].filter(Boolean);
     const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
     window.open(url, '_blank', 'noopener');
+    const note = document.getElementById('form-note')!;
+    note.textContent = '¡Listo! Revisa la pestaña de WhatsApp y presiona enviar. Te respondemos en menos de 24 horas.';
+    note.classList.add('ok');
   });
 </script>
