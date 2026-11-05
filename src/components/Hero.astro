@@ -51,7 +51,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
         <span class="line"><span class="rise" style="--i:2">a tu</span></span>
         <span class="line rotator rise" style="--i:3" aria-label={words[0]}>
           <span class="rot-track" aria-hidden="true">
-            {[...words, words[0]].map((w) => <span class="grad">{w}</span>)}
+            {words.map((w, n) => <span class="word" style={`--n:${n}`}><span class="grad">{w}</span></span>)}
           </span>
         </span>
       </h1>
@@ -111,8 +111,9 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
       linear-gradient(180deg, rgba(24, 20, 52, .92), rgba(11, 10, 22, .92));
     box-shadow: 0 40px 120px -40px rgba(123, 92, 255, .55), 0 0 0 1px rgba(255,255,255,.03) inset;
     display: grid; place-items: center;
-    transform: perspective(1200px) rotateX(calc(var(--py) * -8deg)) rotateY(calc(var(--px) * 8deg));
-    transition: transform .25s ease-out;
+    /* Solo movimiento 2D: la inclinación 3D hacía que algunos navegadores (Safari) dibujaran el logo borroso */
+    transform: translate(calc(var(--px) * 6px), calc(var(--py) * 6px));
+    transition: transform .4s ease-out;
   }
   /* Borde con luz giratoria */
   .logo-panel::before {
@@ -153,7 +154,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -16px; } }
   @keyframes pulse { 0%, 100% { opacity: .65; scale: 1; } 50% { opacity: 1; scale: 1.14; } }
-  @keyframes enter { from { opacity: 0; transform: scale(.6) rotate(-14deg); filter: blur(10px) drop-shadow(0 30px 60px rgba(123, 92, 255, .55)); } }
+  @keyframes enter { from { opacity: 0; transform: scale(.6) rotate(-14deg); } }
 
   /* Chips flotantes */
   .chip {
@@ -187,14 +188,23 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   .actions.rise { display: flex; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } }
 
-  .rotator { height: 1.04em; display: block; }
-  .rot-track { display: flex; flex-direction: column; animation: rotate 9s var(--ease) infinite; animation-delay: 2s; }
-  .rot-track span { display: block; height: 1.04em; white-space: nowrap; }
-  @keyframes rotate {
-    0%, 25% { transform: translateY(0); }
-    33%, 58% { transform: translateY(-1.04em); }
-    66%, 91% { transform: translateY(-2.08em); }
-    100% { transform: translateY(-3.12em); }
+  /* Palabra rotativa: las 3 palabras están apiladas en el mismo lugar y se turnan
+     con un fundido, así nunca se ven dos palabras cortadas a la vez. Ciclo de 9s. */
+  .rotator { overflow: visible; }
+  .rot-track { display: grid; }
+  .word {
+    grid-area: 1 / 1; white-space: nowrap; opacity: 0;
+    animation: word 9s var(--ease) infinite;
+    animation-delay: calc(var(--n) * 3s + .5s);
+  }
+  @keyframes word {
+    0% { opacity: 0; transform: translateY(.3em); filter: blur(10px); }
+    6%, 30% { opacity: 1; transform: none; filter: blur(0); }
+    36%, 100% { opacity: 0; transform: translateY(-.3em); filter: blur(10px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .word { opacity: 0; }
+    .word:first-child { opacity: 1; }
   }
 
   .lead { color: var(--muted); font-size: 19px; max-width: 520px; }
