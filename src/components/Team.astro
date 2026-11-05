@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+// Fotos: guárdalas en src/assets/equipo/ (ej: walter.jpg) e impórtalas aquí, por ejemplo:
+//   import walterFoto from '../assets/equipo/walter.jpg';
+// y luego pon `photo: walterFoto` en la persona. Sin foto se muestran las iniciales.
+type Member = { name: string; role?: string; bio: string; photo?: ImageMetadata };
+
+const team: Member[] = [
+  {
+    name: 'Walter',
+    role: 'Jefe de proyecto',
+    bio: 'Es tu contacto principal: lidera las reuniones, ordena los plazos y se asegura de que la web cumpla lo que tu negocio necesita.',
+  },
+  {
+    name: 'Carlos',
+    role: 'Jefe técnico',
+    bio: 'Define cómo se construye cada web y cuida que sea rápida, segura y que las reservas e integraciones funcionen bien.',
+  },
+  {
+    name: 'Bastian',
+    // role: 'Cargo por definir',  ← cuando lo tengan, quita las // de esta línea y escribe el cargo
+    bio: 'Diseña y desarrolla las secciones de cada web para que se vean y funcionen bien en celular y computador.',
+  },
+];
+
+const shared = 'Ingeniero informático · Desarrollo web';
+
+const values = [
+  { t: 'Trato directo', d: 'Hablas con quienes construyen tu web, sin intermediarios.' },
+  { t: 'Desde Ñuble', d: 'Estamos en Chillán y trabajamos a distancia con todo Chile.' },
+  { t: 'Acompañamiento', d: 'Te guiamos antes, durante y después de publicar.' },
+];
+
+const initials = (n: string) => n.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
+---
+
+<section id="equipo">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Equipo de trabajo</span>
+      <h2 class="section-title">Tres ingenieros detrás de tu web.</h2>
+      <p class="section-lead">
+        MordWave es un estudio de diseño y desarrollo web nacido en Ñuble. Somos ingenieros informáticos y
+        preferimos pocos proyectos bien hechos a muchos a medias.
+      </p>
+    </div>
+
+    <div class="people">
+      {team.map((m, i) => (
+        <article class="person card reveal" style={`transition-delay:${i * 90}ms`}>
+          {m.photo ? (
+            <Image src={m.photo} alt={`Foto de ${m.name}`} class="avatar photo" width={168} height={168} />
+          ) : (
+            <div class="avatar" aria-hidden="true">{initials(m.name)}</div>
+          )}
+          <h3>{m.name}</h3>
+          {m.role ? <p class="role">{m.role}</p> : <p class="role soon">Próximamente</p>}
+          <p class="studies">{shared}</p>
+          <p class="bio">{m.bio}</p>
+        </article>
+      ))}
+    </div>
+
+    <ul class="values reveal">
+      {values.map((v) => (
+        <li>
+          <h4>{v.t}</h4>
+          <p>{v.d}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .person { padding: 30px; display: flex; flex-direction: column; transition: border-color .3s, transform .3s; }
+  .person:hover { border-color: rgba(154, 130, 255, .4); transform: translateY(-4px); }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 24px; display: grid; place-items: center; margin-bottom: 22px;
+    font-size: 30px; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, var(--violet-2), var(--violet));
+    box-shadow: 0 12px 30px -10px rgba(123, 92, 255, .8);
+  }
+  .photo { object-fit: cover; }
+  h3 { font-size: 24px; letter-spacing: -0.02em; }
+  .role {
+    align-self: flex-start; justify-self: start; margin: 8px 0 10px;
+    font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+    background: rgba(123, 92, 255, .18); color: var(--lavender);
+  }
+  .role.soon { background: transparent; border: 1px dashed rgba(154, 130, 255, .45); color: var(--muted); font-weight: 500; }
+  .studies { font-family: var(--mono); font-size: 12px; color: var(--violet-2); margin-bottom: 12px; }
+  .bio { color: var(--muted); font-size: 15px; }
+
+  .values { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .values li { padding-top: 18px; border-top: 1px solid var(--line); }
+  h4 { font-size: 17px; }
+  .values p { color: var(--muted); font-size: 15px; }
+
+  @media (max-width: 900px) {
+    .people { grid-template-columns: 1fr; }
+    .person {
+      display: grid; grid-template-columns: auto 1fr; column-gap: 18px; padding: 22px;
+    }
+    .person > :not(.avatar) { grid-column: 2; }
+    .avatar { grid-row: 1 / span 4; width: 64px; height: 64px; font-size: 24px; border-radius: 18px; margin: 0; }
+    .values { grid-template-columns: 1fr; gap: 0; margin-top: 28px; }
+    .values li { padding: 16px 0; }
+  }
+</style>

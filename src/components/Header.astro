@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import icono from '../assets/icono.png';
+import { nav, waLink } from '../data/site';
+---
+
+<header class="header" id="header">
+  <div class="container bar">
+    <a href="#inicio" class="brand" aria-label="MordWave, ir al inicio">
+      <Image src={icono} alt="" width={40} height={40} loading="eager" />
+      <span>MordWave</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Principal">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="btn btn-primary nav-cta" href={waLink()} target="_blank" rel="noopener">Cotizar</a>
+    </nav>
+
+    <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    transition: background .3s ease, border-color .3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .header.scrolled {
+    background: rgba(15, 13, 28, .82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-color: var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+  .brand img { width: 40px; height: 40px; }
+  .nav { display: flex; align-items: center; gap: 26px; font-size: 15px; }
+  .nav a:not(.btn) { color: var(--muted); transition: color .2s; }
+  .nav a:not(.btn):hover { color: var(--text); }
+  .nav-cta { padding: 11px 22px; }
+  .menu-btn { display: none; }
+
+  @media (max-width: 1020px) {
+    .menu-btn {
+      display: flex; flex-direction: column; justify-content: center; gap: 7px;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 0 11px;
+    }
+    .menu-btn span { height: 2px; background: var(--text); border-radius: 2px; transition: transform .3s; }
+    .menu-btn[aria-expanded='true'] span:first-child { transform: translateY(4.5px) rotate(45deg); }
+    .menu-btn[aria-expanded='true'] span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
+    .nav {
+      position: fixed; inset: 76px 0 auto 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: rgba(15, 13, 28, .97); border-bottom: 1px solid var(--line);
+      padding: 8px 16px 20px;
+      opacity: 0; pointer-events: none; transform: translateY(-8px);
+      transition: opacity .25s, transform .25s;
+    }
+    .nav.open { opacity: 1; pointer-events: auto; transform: none; }
+    .nav a:not(.btn) { padding: 14px 4px; border-bottom: 1px solid var(--line); font-size: 17px; }
+    .nav-cta { margin-top: 16px; }
+    .header:has(.nav.open) { background: rgba(15, 13, 28, .97); }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('header')!;
+  const nav = document.getElementById('nav')!;
+  const btn = document.getElementById('menu-btn')!;
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  const setOpen = (open: boolean) => {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>

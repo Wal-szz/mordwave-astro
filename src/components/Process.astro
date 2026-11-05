@@ -1,0 +1,111 @@
+---
+const steps = [
+  {
+    title: 'Reunión de inicio',
+    tag: 'Reunión 1',
+    text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.',
+  },
+  {
+    title: 'Abono del 50%',
+    tag: 'Pago 1',
+    text: 'Con el abono del 50% reservamos tu proyecto en nuestra agenda y comenzamos a trabajar.',
+  },
+  {
+    title: 'Diseñamos y desarrollamos',
+    tag: 'Trabajo',
+    text: 'Construimos tu web para celular y computador. Te mantenemos al tanto del avance durante todo el proceso.',
+  },
+  {
+    title: 'Reunión de revisión',
+    tag: 'Reunión 2',
+    text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.',
+  },
+  {
+    title: 'Tu dominio',
+    tag: 'Asesoría',
+    text: 'Compras tu dominio (por ejemplo tunegocio.cl) para que quede a tu nombre. Te asesoramos en qué comprar y dónde.',
+  },
+  {
+    title: 'Publicación y saldo',
+    tag: 'Pago 2',
+    text: 'Pagas el 50% restante, publicamos tu web en tu dominio y te explicamos cómo funciona.',
+  },
+];
+---
+
+<section id="proceso" class="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2 class="section-title">Un proceso simple, de principio a fin.</h2>
+      <p class="section-lead">Sabes en todo momento en qué etapa está tu web, cuánto vas a pagar y cuándo.</p>
+    </div>
+
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li class="step card reveal" style={`transition-delay:${(i % 3) * 80}ms`}>
+          <div class="step-top">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="tag">{s.tag}</span>
+          </div>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="summary reveal">
+      <div class="box card">
+        <span class="big">2</span>
+        <div>
+          <h4>Reuniones contigo</h4>
+          <p>Una al inicio y otra antes de publicar. Si el proyecto lo necesita, sumamos una tercera sin problema.</p>
+        </div>
+      </div>
+      <div class="box card">
+        <span class="big">50%</span>
+        <div>
+          <h4>De abono para comenzar</h4>
+          <p>El otro 50% se paga al final, cuando ya revisaste la web y está lista para publicarse.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process { background: linear-gradient(180deg, transparent, rgba(26, 22, 49, .5) 30%, rgba(26, 22, 49, .5) 70%, transparent); }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+  .step { padding: 28px; position: relative; }
+  .step-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .n {
+    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+    font-family: var(--mono); font-weight: 500; color: #fff;
+    background: linear-gradient(135deg, var(--violet-2), var(--violet));
+    box-shadow: 0 8px 24px -8px rgba(123, 92, 255, .8);
+  }
+  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  h3 { font-size: 21px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .box {
+    padding: 28px; display: flex; gap: 22px; align-items: center;
+    background: radial-gradient(90% 90% at 0% 0%, rgba(123, 92, 255, .2), transparent 70%), var(--card);
+    border-color: rgba(154, 130, 255, .3);
+  }
+  .big {
+    font-size: 54px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; flex: none;
+    background: linear-gradient(180deg, var(--lavender), var(--violet-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h4 { font-size: 18px; margin-bottom: 4px; }
+  .box p { color: var(--muted); font-size: 15px; }
+
+  @media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) {
+    .steps, .summary { grid-template-columns: 1fr; }
+    .step, .box { padding: 22px; }
+    .big { font-size: 44px; }
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import demo from '../assets/demo-tattoo.jpg';
+
+const demoUrl = 'https://landing-tatto-calendar.vercel.app';
+---
+
+<section id="proyectos">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Proyectos</span>
+      <h2 class="section-title">Mira lo que podemos construir para ti.</h2>
+      <p class="section-lead">Un demo funcionando, para que veas cómo se siente una de nuestras webs antes de empezar.</p>
+    </div>
+
+    <article class="project card reveal">
+      <a class="shot" href={demoUrl} target="_blank" rel="noopener" aria-label="Abrir el demo en una pestaña nueva">
+        <div class="browser">
+          <span></span><span></span><span></span>
+          <p>landing-tatto-calendar.vercel.app</p>
+        </div>
+        <Image src={demo} alt="Vista del demo: landing de un estudio de body modification" widths={[480, 800]} sizes="(max-width: 900px) 100vw, 600px" />
+      </a>
+
+      <div class="body">
+        <span class="kind">Demo · Landing + reservas</span>
+        <h3>Estudio de body modification</h3>
+        <p>
+          Landing oscura y elegante para un estudio de piercings y modificación corporal. Muestra materiales, galería y
+          preguntas frecuentes, y permite reservar una cita con abono del 50% para confirmar la hora.
+        </p>
+        <ul>
+          <li>Reserva de citas</li>
+          <li>Abono 50% para confirmar</li>
+          <li>Galería de trabajos</li>
+          <li>Guía interactiva por zona</li>
+          <li>Preguntas frecuentes</li>
+          <li>Responsive</li>
+        </ul>
+        <a class="btn btn-primary" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo ↗</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .project { display: grid; grid-template-columns: 1.15fr 1fr; overflow: hidden; }
+  .shot { display: block; padding: 28px 0 0 28px; background: radial-gradient(80% 80% at 30% 30%, rgba(123, 92, 255, .25), transparent 70%); }
+  .browser {
+    display: flex; align-items: center; gap: 6px; padding: 12px 14px;
+    background: #1d1a33; border: 1px solid var(--line); border-bottom: 0; border-radius: 14px 0 0 0;
+  }
+  .browser span { width: 10px; height: 10px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
+  .browser p { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .shot :global(img) { width: 100%; border-left: 1px solid var(--line); transition: transform .5s ease; transform-origin: top left; }
+  .shot:hover :global(img) { transform: scale(1.02); }
+  .body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .kind { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--violet-2); }
+  h3 { font-size: 30px; letter-spacing: -0.02em; line-height: 1.1; margin: 10px 0 14px; }
+  .body p { color: var(--muted); }
+  ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
+  li { font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--lavender); }
+  .body .btn { align-self: flex-start; }
+
+  @media (max-width: 900px) {
+    .project { grid-template-columns: 1fr; }
+    .body { padding: 28px 22px; }
+    .shot { padding: 22px 0 0 22px; }
+  }
+</style>

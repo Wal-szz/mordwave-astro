@@ -1,0 +1,86 @@
+---
+const faqs = [
+  {
+    q: '¿Cuánto cuesta una página web?',
+    a: 'Depende de lo que necesite tu negocio. Una landing page parte desde $100.000 CLP y una landing con reservas en Google Calendar desde $220.000 CLP. En la reunión de inicio te damos un precio cerrado.',
+  },
+  {
+    q: '¿Cómo se paga?',
+    a: 'En dos partes: un abono del 50% para comenzar el proyecto y el 50% restante al final, cuando ya revisaste la web y está lista para publicarse.',
+  },
+  {
+    q: '¿Cuántas reuniones tendremos?',
+    a: 'Normalmente dos: una al inicio para entender tu negocio y otra antes de publicar para revisar y corregir. Si hace falta, agendamos una tercera.',
+  },
+  {
+    q: '¿Quién compra el dominio?',
+    a: 'Tú. Así el dominio (por ejemplo tunegocio.cl) queda a tu nombre y es tuyo para siempre. Nosotros te asesoramos en cuál elegir y dónde comprarlo.',
+  },
+  {
+    q: '¿Cómo funcionan las reservas con Google Calendar?',
+    a: 'Tus clientes eligen día y hora disponibles desde la web y la cita aparece automáticamente en tu Google Calendar. También se puede pedir un abono para confirmar la hora.',
+  },
+  {
+    q: '¿Cuánto demora un proyecto?',
+    a: 'Depende del alcance, pero trabajamos con plazos acotados que definimos en la reunión de inicio, y te mantenemos al tanto del avance.',
+  },
+  {
+    q: '¿Trabajan con clientes de todo Chile?',
+    a: 'Sí. Estamos en Chillán, Ñuble, pero las reuniones pueden ser por videollamada y trabajamos con negocios de todo el país.',
+  },
+];
+---
+
+<section id="faq">
+  <div class="container grid">
+    <div class="section-head reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 class="section-title">Antes de comenzar.</h2>
+      <p class="section-lead">Si tienes otra duda, escríbenos y te respondemos en menos de 24 horas.</p>
+    </div>
+
+    <div class="list reveal">
+      {faqs.map((f, i) => (
+        <details open={i === 0}>
+          <summary>
+            <span>{f.q}</span>
+            <i aria-hidden="true"></i>
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+  .section-head { position: sticky; top: 110px; }
+  .list { border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 22px 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover span { color: var(--lavender); }
+  i {
+    flex: none; position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
+    transition: transform .3s, background .3s;
+  }
+  i::before, i::after {
+    content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; border-radius: 2px;
+    background: var(--lavender); translate: -50% -50%;
+  }
+  i::after { rotate: 90deg; transition: rotate .3s; }
+  details[open] i { background: var(--violet); border-color: var(--violet); }
+  details[open] i::after { rotate: 0deg; }
+  details p { color: var(--muted); padding: 0 48px 24px 0; }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; gap: 0; }
+    .section-head { position: static; }
+    summary { font-size: 17px; }
+    details p { padding-right: 0; }
+  }
+</style>
