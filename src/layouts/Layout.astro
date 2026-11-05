@@ -38,19 +38,7 @@ const {
   <body>
     <slot />
     <script>
-      // Anima las secciones al aparecer en pantalla
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              e.target.classList.add('is-visible');
-              io.unobserve(e.target);
-            }
-          }
-        },
-        { threshold: 0.12 }
-      );
-      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      import '../scripts/fx';
     </script>
   </body>
 </html>

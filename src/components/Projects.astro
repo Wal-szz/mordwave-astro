@@ -3,24 +3,32 @@ import { Image } from 'astro:assets';
 import demo from '../assets/demo-tattoo.jpg';
 
 const demoUrl = 'https://landing-tatto-calendar.vercel.app';
+const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de trabajos', 'Guía interactiva por zona', 'Preguntas frecuentes', 'Responsive'];
 ---
 
 <section id="proyectos">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Proyectos</span>
-      <h2 class="section-title">Mira lo que podemos construir para ti.</h2>
+      <h2 class="section-title">Mira lo que podemos <span class="grad">construir para ti.</span></h2>
       <p class="section-lead">Un demo funcionando, para que veas cómo se siente una de nuestras webs antes de empezar.</p>
     </div>
 
-    <article class="project card reveal">
-      <a class="shot" href={demoUrl} target="_blank" rel="noopener" aria-label="Abrir el demo en una pestaña nueva">
-        <div class="browser">
-          <span></span><span></span><span></span>
-          <p>landing-tatto-calendar.vercel.app</p>
-        </div>
-        <Image src={demo} alt="Vista del demo: landing de un estudio de body modification" widths={[480, 800]} sizes="(max-width: 900px) 100vw, 600px" />
-      </a>
+    <article class="project card spot reveal">
+      <div class="visual">
+        <a class="shot" href={demoUrl} target="_blank" rel="noopener" aria-label="Abrir el demo en una pestaña nueva" data-tilt="6">
+          <div class="browser">
+            <span></span><span></span><span></span>
+            <p>landing-tatto-calendar.vercel.app</p>
+          </div>
+          <div class="img">
+            <Image src={demo} alt="Vista del demo: landing de un estudio de body modification" widths={[480, 800]} sizes="(max-width: 900px) 100vw, 640px" />
+            <span class="open">Abrir demo ↗</span>
+          </div>
+        </a>
+        <div class="float f1" aria-hidden="true"><span class="dot-live"></span>En vivo</div>
+        <div class="float f2" aria-hidden="true"><strong>50%</strong> abono para confirmar</div>
+      </div>
 
       <div class="body">
         <span class="kind">Demo · Landing + reservas</span>
@@ -29,42 +37,66 @@ const demoUrl = 'https://landing-tatto-calendar.vercel.app';
           Landing oscura y elegante para un estudio de piercings y modificación corporal. Muestra materiales, galería y
           preguntas frecuentes, y permite reservar una cita con abono del 50% para confirmar la hora.
         </p>
-        <ul>
-          <li>Reserva de citas</li>
-          <li>Abono 50% para confirmar</li>
-          <li>Galería de trabajos</li>
-          <li>Guía interactiva por zona</li>
-          <li>Preguntas frecuentes</li>
-          <li>Responsive</li>
-        </ul>
-        <a class="btn btn-primary" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo ↗</a>
+        <ul>{tags.map((t, i) => <li style={`--d:${i * 60}ms`}>{t}</li>)}</ul>
+        <a class="btn btn-primary magnetic" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo <span class="arrow">↗</span></a>
       </div>
     </article>
   </div>
 </section>
 
 <style>
-  .project { display: grid; grid-template-columns: 1.15fr 1fr; overflow: hidden; }
-  .shot { display: block; padding: 28px 0 0 28px; background: radial-gradient(80% 80% at 30% 30%, rgba(123, 92, 255, .25), transparent 70%); }
-  .browser {
-    display: flex; align-items: center; gap: 6px; padding: 12px 14px;
-    background: #1d1a33; border: 1px solid var(--line); border-bottom: 0; border-radius: 14px 0 0 0;
+  .project { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); overflow: hidden; }
+  .visual {
+    position: relative; padding: 44px 0 44px 44px;
+    background: radial-gradient(80% 80% at 30% 40%, rgba(123, 92, 255, .3), transparent 70%);
   }
+  .shot { display: block; border-radius: 16px; overflow: hidden; border: 1px solid var(--line-2); box-shadow: 0 40px 80px -30px rgba(0,0,0,.8), 0 0 60px -20px rgba(123, 92, 255, .5); will-change: transform; }
+  .browser { display: flex; align-items: center; gap: 6px; padding: 12px 14px; background: #1b1834; border-bottom: 1px solid var(--line); }
   .browser span { width: 10px; height: 10px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
+  .browser span:nth-child(1) { background: #ff6b81; }
+  .browser span:nth-child(2) { background: #ffc35c; }
+  .browser span:nth-child(3) { background: #3ee08f; }
   .browser p { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .shot :global(img) { width: 100%; border-left: 1px solid var(--line); transition: transform .5s ease; transform-origin: top left; }
-  .shot:hover :global(img) { transform: scale(1.02); }
-  .body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .img { position: relative; overflow: hidden; }
+  .img :global(img) { width: 100%; transition: transform 1s var(--ease); }
+  .shot:hover .img :global(img) { transform: scale(1.05); }
+  .open {
+    position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 12px 20px; border-radius: 999px;
+    background: rgba(11, 10, 22, .8); border: 1px solid var(--line-2); backdrop-filter: blur(10px); font-weight: 600; font-size: 14px;
+    opacity: 0; scale: .9; transition: opacity .4s, scale .4s var(--ease);
+  }
+  .shot:hover .open { opacity: 1; scale: 1; }
+
+  .float {
+    position: absolute; z-index: 2; padding: 10px 14px; border-radius: 14px; font-size: 13px;
+    background: rgba(22, 19, 49, .85); border: 1px solid var(--line-2); backdrop-filter: blur(12px);
+    box-shadow: 0 16px 30px -12px rgba(0,0,0,.7); display: flex; align-items: center; gap: 8px;
+  }
+  .float strong { color: var(--lavender); }
+  .f1 { top: 22px; left: 22px; animation: bob 5s ease-in-out infinite; }
+  .f2 { bottom: 22px; right: 22px; animation: bob 6s ease-in-out infinite reverse; }
+  .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(62, 224, 143, .7); animation: live 1.8s ease-out infinite; }
+  @keyframes live { to { box-shadow: 0 0 0 9px rgba(62, 224, 143, 0); } }
+  @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+
+  .body { padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; }
   .kind { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--violet-2); }
-  h3 { font-size: 30px; letter-spacing: -0.02em; line-height: 1.1; margin: 10px 0 14px; }
+  h3 { font-size: 34px; letter-spacing: -0.035em; line-height: 1.05; margin: 12px 0 14px; }
   .body p { color: var(--muted); }
-  ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
-  li { font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--lavender); }
+  ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 30px; }
+  li {
+    font-size: 13px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--lavender);
+    background: rgba(123, 92, 255, .06); transition: background .3s, border-color .3s;
+  }
+  li:hover { background: rgba(123, 92, 255, .2); border-color: rgba(157, 134, 255, .5); }
   .body .btn { align-self: flex-start; }
 
   @media (max-width: 900px) {
-    .project { grid-template-columns: 1fr; }
-    .body { padding: 28px 22px; }
-    .shot { padding: 22px 0 0 22px; }
+    .project { grid-template-columns: minmax(0, 1fr); }
+    .visual { padding: 56px 22px 22px; }
+    .f1 { top: 14px; left: 22px; }
+    .f2 { bottom: auto; top: 14px; right: 22px; }
+    .body { padding: 28px 22px 32px; }
+    h3 { font-size: 28px; }
   }
 </style>

@@ -4,10 +4,10 @@ import { site, waLink } from '../data/site';
 
 <section id="contacto">
   <div class="container">
-    <div class="wrap card reveal">
+    <div class="wrap card spot reveal">
       <div class="info">
         <span class="eyebrow">Contacto</span>
-        <h2 class="section-title">Hablemos de tu proyecto.</h2>
+        <h2 class="section-title">Hablemos de <span class="grad">tu proyecto.</span></h2>
         <p class="section-lead">Cuéntanos qué necesita tu negocio y agendamos la reunión de inicio. Respondemos en menos de 24 horas.</p>
 
         <ul class="channels">
@@ -41,7 +41,7 @@ import { site, waLink } from '../data/site';
           Cuéntanos brevemente
           <textarea name="mensaje" rows="4" placeholder="¿A qué se dedica tu negocio y qué te gustaría lograr?"></textarea>
         </label>
-        <button class="btn btn-primary" type="submit">Enviar por WhatsApp ↗</button>
+        <button class="btn btn-primary magnetic" type="submit">Enviar por WhatsApp <span class="arrow">↗</span></button>
       </form>
     </div>
   </div>
@@ -49,16 +49,20 @@ import { site, waLink } from '../data/site';
 
 <style>
   .wrap {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 56px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 60px; overflow: hidden;
     background:
-      radial-gradient(60% 80% at 0% 0%, rgba(123, 92, 255, .24), transparent 70%),
+      radial-gradient(60% 80% at 0% 0%, rgba(123, 92, 255, .3), transparent 70%),
+      radial-gradient(50% 60% at 100% 100%, rgba(200, 107, 255, .12), transparent 70%),
       linear-gradient(180deg, var(--card), var(--bg-2));
   }
   .channels { list-style: none; margin-top: 32px; border-top: 1px solid var(--line); }
   .channels li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
   .channels span { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
   .channels a { color: var(--lavender); word-break: break-all; text-align: right; }
+  .channels a { transition: color .3s; }
   .channels a:hover { color: #fff; }
+  .channels li { transition: padding .4s var(--ease); }
+  .channels li:hover { padding-left: 8px; }
   .channels p { text-align: right; }
 
   .form { display: grid; gap: 16px; align-content: start; }

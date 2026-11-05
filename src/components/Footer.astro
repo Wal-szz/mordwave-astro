@@ -27,6 +27,9 @@ const year = new Date().getFullYear();
       </ul>
     </div>
   </div>
+  <div class="container">
+    <p class="wordmark" aria-hidden="true">MordWave</p>
+  </div>
   <div class="container bottom">
     <p>© {year} MordWave. Todos los derechos reservados.</p>
     <p class="mono">Desarrollo web · Digital — Chillán, Chile</p>
@@ -38,7 +41,18 @@ const year = new Date().getFullYear();
 </a>
 
 <style>
-  footer { border-top: 1px solid var(--line); padding: 64px 0 28px; margin-top: 40px; }
+  footer { border-top: 1px solid var(--line); padding: 72px 0 96px; margin-top: 40px; position: relative; overflow: hidden; }
+  footer::before {
+    content: ''; position: absolute; left: 50%; bottom: -40%; width: 80%; height: 80%; translate: -50% 0; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(123, 92, 255, .25), transparent); filter: blur(30px);
+  }
+  .wordmark {
+    margin-top: 56px; text-align: center; font-weight: 800; letter-spacing: -0.035em; line-height: .8;
+    font-size: clamp(64px, 19vw, 260px);
+    background: linear-gradient(180deg, rgba(216, 208, 255, .28), rgba(216, 208, 255, 0) 85%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    user-select: none;
+  }
   .top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
   .brand img { width: 44px; height: 44px; }
@@ -47,16 +61,20 @@ const year = new Date().getFullYear();
   ul { list-style: none; display: grid; gap: 8px; font-size: 15px; }
   ul a { color: var(--text); opacity: .85; }
   ul a:hover { color: var(--lavender); opacity: 1; }
-  .bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
   .mono { font-family: var(--mono); }
 
   .wa-float {
     position: fixed; right: 20px; bottom: 20px; z-index: 40;
     width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
     background: #25d366; color: #fff; box-shadow: 0 10px 30px -6px rgba(37, 211, 102, .6);
-    transition: transform .2s;
+    transition: transform .3s var(--ease);
+    animation: waIn .8s var(--ease) 1.5s both;
   }
-  .wa-float:hover { transform: scale(1.08); }
+  .wa-float:hover { transform: scale(1.1) rotate(-8deg); }
+  .wa-float::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: waRing 2.6s ease-out 2.5s infinite; }
+  @keyframes waIn { from { opacity: 0; transform: scale(.4); } }
+  @keyframes waRing { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(1.6); } }
 
   @media (max-width: 760px) {
     .top { grid-template-columns: 1fr 1fr; }

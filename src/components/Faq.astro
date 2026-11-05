@@ -35,13 +35,13 @@ const faqs = [
   <div class="container grid">
     <div class="section-head reveal">
       <span class="eyebrow">Preguntas frecuentes</span>
-      <h2 class="section-title">Antes de comenzar.</h2>
+      <h2 class="section-title">Antes de <span class="grad">comenzar.</span></h2>
       <p class="section-lead">Si tienes otra duda, escríbenos y te respondemos en menos de 24 horas.</p>
     </div>
 
-    <div class="list reveal">
+    <div class="list">
       {faqs.map((f, i) => (
-        <details open={i === 0}>
+        <details open={i === 0} class="reveal" style={`--d:${i * 60}ms`}>
           <summary>
             <span>{f.q}</span>
             <i aria-hidden="true"></i>
@@ -57,13 +57,17 @@ const faqs = [
   .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
   .section-head { position: sticky; top: 110px; }
   .list { border-top: 1px solid var(--line); }
-  details { border-bottom: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); interpolate-size: allow-keywords; }
+  /* Apertura suave (navegadores modernos) */
+  details::details-content { height: 0; overflow: hidden; transition: height .45s var(--ease), content-visibility .45s allow-discrete; }
+  details[open]::details-content { height: auto; }
   summary {
     list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
     padding: 22px 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
   }
   summary::-webkit-details-marker { display: none; }
-  summary:hover span { color: var(--lavender); }
+  summary span { transition: color .3s, transform .4s var(--ease); }
+  summary:hover span { color: var(--lavender); transform: translateX(6px); }
   i {
     flex: none; position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
     transition: transform .3s, background .3s;

@@ -1,111 +1,134 @@
 ---
 const steps = [
-  {
-    title: 'Reunión de inicio',
-    tag: 'Reunión 1',
-    text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.',
-  },
-  {
-    title: 'Abono del 50%',
-    tag: 'Pago 1',
-    text: 'Con el abono del 50% reservamos tu proyecto en nuestra agenda y comenzamos a trabajar.',
-  },
-  {
-    title: 'Diseñamos y desarrollamos',
-    tag: 'Trabajo',
-    text: 'Construimos tu web para celular y computador. Te mantenemos al tanto del avance durante todo el proceso.',
-  },
-  {
-    title: 'Reunión de revisión',
-    tag: 'Reunión 2',
-    text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.',
-  },
-  {
-    title: 'Tu dominio',
-    tag: 'Asesoría',
-    text: 'Compras tu dominio (por ejemplo tunegocio.cl) para que quede a tu nombre. Te asesoramos en qué comprar y dónde.',
-  },
-  {
-    title: 'Publicación y saldo',
-    tag: 'Pago 2',
-    text: 'Pagas el 50% restante, publicamos tu web en tu dominio y te explicamos cómo funciona.',
-  },
+  { title: 'Reunión de inicio', tag: 'Reunión 1', text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.' },
+  { title: 'Abono del 50%', tag: 'Pago 1', text: 'Con el abono del 50% reservamos tu proyecto en nuestra agenda y comenzamos a trabajar.' },
+  { title: 'Diseñamos y desarrollamos', tag: 'Trabajo', text: 'Construimos tu web para celular y computador. Te mantenemos al tanto del avance durante todo el proceso.' },
+  { title: 'Reunión de revisión', tag: 'Reunión 2', text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.' },
+  { title: 'Tu dominio', tag: 'Asesoría', text: 'Compras tu dominio (por ejemplo tunegocio.cl) para que quede a tu nombre. Te asesoramos en qué comprar y dónde.' },
+  { title: 'Publicación y saldo', tag: 'Pago 2', text: 'Pagas el 50% restante, publicamos tu web en tu dominio y te explicamos cómo funciona.' },
 ];
 ---
 
 <section id="proceso" class="process">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Cómo trabajamos</span>
-      <h2 class="section-title">Un proceso simple, de principio a fin.</h2>
-      <p class="section-lead">Sabes en todo momento en qué etapa está tu web, cuánto vas a pagar y cuándo.</p>
+  <div class="container layout">
+    <div class="side">
+      <div class="reveal">
+        <span class="eyebrow">Cómo trabajamos</span>
+        <h2 class="section-title">Un proceso simple, <span class="grad">de principio a fin.</span></h2>
+        <p class="section-lead">Sabes en todo momento en qué etapa está tu web, cuánto vas a pagar y cuándo.</p>
+      </div>
+
+      <div class="summary">
+        <div class="box card spot reveal" style="--d:100ms">
+          <span class="big" data-count="2">2</span>
+          <div>
+            <h4>Reuniones contigo</h4>
+            <p>Una al inicio y otra antes de publicar. Si el proyecto lo necesita, sumamos una tercera.</p>
+          </div>
+        </div>
+        <div class="box card spot reveal" style="--d:200ms">
+          <span class="big" data-count="50" data-suffix="%">50%</span>
+          <div>
+            <h4>De abono para comenzar</h4>
+            <p>El otro 50% se paga al final, cuando ya revisaste la web y está lista.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <ol class="steps">
+    <div class="timeline" id="timeline">
+      <div class="track" aria-hidden="true"><div class="fill"></div></div>
+      <ol class="steps">
       {steps.map((s, i) => (
-        <li class="step card reveal" style={`transition-delay:${(i % 3) * 80}ms`}>
-          <div class="step-top">
-            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+        <li class="step reveal">
+          <span class="node" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="content card spot">
             <span class="tag">{s.tag}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
           </div>
-          <h3>{s.title}</h3>
-          <p>{s.text}</p>
         </li>
       ))}
-    </ol>
-
-    <div class="summary reveal">
-      <div class="box card">
-        <span class="big">2</span>
-        <div>
-          <h4>Reuniones contigo</h4>
-          <p>Una al inicio y otra antes de publicar. Si el proyecto lo necesita, sumamos una tercera sin problema.</p>
-        </div>
-      </div>
-      <div class="box card">
-        <span class="big">50%</span>
-        <div>
-          <h4>De abono para comenzar</h4>
-          <p>El otro 50% se paga al final, cuando ya revisaste la web y está lista para publicarse.</p>
-        </div>
-      </div>
+      </ol>
     </div>
   </div>
 </section>
 
 <style>
-  .process { background: linear-gradient(180deg, transparent, rgba(26, 22, 49, .5) 30%, rgba(26, 22, 49, .5) 70%, transparent); }
-  .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
-  .step { padding: 28px; position: relative; }
-  .step-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-  .n {
-    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
-    font-family: var(--mono); font-weight: 500; color: #fff;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet));
-    box-shadow: 0 8px 24px -8px rgba(123, 92, 255, .8);
-  }
-  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  h3 { font-size: 21px; letter-spacing: -0.01em; margin-bottom: 8px; }
-  .step p { color: var(--muted); font-size: 15px; }
-
-  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-  .box {
-    padding: 28px; display: flex; gap: 22px; align-items: center;
-    background: radial-gradient(90% 90% at 0% 0%, rgba(123, 92, 255, .2), transparent 70%), var(--card);
-    border-color: rgba(154, 130, 255, .3);
-  }
+  .process { background: linear-gradient(180deg, transparent, rgba(22, 19, 49, .55) 20%, rgba(22, 19, 49, .55) 80%, transparent); }
+  .layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 72px; align-items: start; }
+  .side { position: sticky; top: 120px; }
+  .summary { display: grid; gap: 14px; margin-top: 40px; }
+  .box { padding: 24px; display: flex; gap: 22px; align-items: center; }
   .big {
-    font-size: 54px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; flex: none;
-    background: linear-gradient(180deg, var(--lavender), var(--violet-2));
+    font-size: 58px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; flex: none; min-width: 2.3ch;
+    background: linear-gradient(180deg, #fff, var(--violet-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  h4 { font-size: 18px; margin-bottom: 4px; }
+  h4 { font-size: 18px; margin-bottom: 2px; }
   .box p { color: var(--muted); font-size: 15px; }
 
-  @media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 640px) {
-    .steps, .summary { grid-template-columns: 1fr; }
-    .step, .box { padding: 22px; }
-    .big { font-size: 44px; }
+  /* Línea de tiempo */
+  .timeline { position: relative; padding-left: 76px; }
+  .steps { list-style: none; display: grid; gap: 22px; }
+  .track { position: absolute; left: 25px; top: 10px; bottom: 10px; width: 2px; background: var(--line); border-radius: 2px; }
+  .fill {
+    position: absolute; inset: 0; border-radius: inherit; transform-origin: top; transform: scaleY(var(--fill, 0));
+    background: linear-gradient(180deg, var(--violet-2), var(--pink));
+    box-shadow: 0 0 16px rgba(157, 134, 255, .8);
+  }
+  .step { position: relative; }
+  .node {
+    position: absolute; left: -76px; top: 22px; width: 52px; height: 52px; border-radius: 16px;
+    display: grid; place-items: center; font-family: var(--mono); font-size: 15px; color: var(--muted);
+    background: var(--bg-2); border: 1px solid var(--line-2);
+    transition: all .6s var(--ease);
+  }
+  .step.active .node {
+    color: #fff; border-color: transparent;
+    background: linear-gradient(135deg, var(--violet-2), var(--violet));
+    box-shadow: 0 0 0 6px rgba(123, 92, 255, .15), 0 10px 30px -6px rgba(123, 92, 255, .9);
+    transform: scale(1.06);
+  }
+  .content { padding: 26px 28px; transition: border-color .6s, transform .6s var(--ease); }
+  .step.active .content { border-color: rgba(157, 134, 255, .35); }
+  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--violet-2); }
+  h3 { font-size: 22px; letter-spacing: -0.02em; margin: 6px 0 6px; }
+  .content p { color: var(--muted); font-size: 15px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 56px; }
+    .side { position: static; }
+  }
+  @media (max-width: 560px) {
+    .timeline { padding-left: 58px; }
+    .steps { gap: 16px; }
+    .track { left: 19px; }
+    .node { left: -58px; width: 40px; height: 40px; border-radius: 12px; font-size: 13px; top: 20px; }
+    .content { padding: 20px; }
+    .big { font-size: 46px; }
+    .box { padding: 20px; gap: 16px; }
   }
 </style>
+
+<script>
+  // Llena la línea y activa los pasos según el scroll
+  const tl = document.getElementById('timeline')!;
+  const fill = tl.querySelector<HTMLElement>('.fill')!;
+  const steps = [...tl.querySelectorAll<HTMLElement>('.step')];
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = tl.getBoundingClientRect();
+    const mid = innerHeight * 0.6;
+    const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+    fill.style.setProperty('--fill', p.toFixed(3));
+    for (const s of steps) {
+      const node = s.querySelector('.node')!.getBoundingClientRect();
+      s.classList.toggle('active', node.top + node.height / 2 < mid);
+    }
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
+</script>
