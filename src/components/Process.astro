@@ -1,9 +1,9 @@
 ---
 const steps = [
-  { title: 'Reunión de inicio', tag: 'Reunión 1', text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.' },
+  { title: 'Reunión de inicio', tag: 'Reunión', text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.' },
   { title: 'Abono del 50%', tag: 'Pago 1', text: 'Con el abono del 50% reservamos tu proyecto en nuestra agenda y comenzamos a trabajar.' },
   { title: 'Diseñamos y desarrollamos', tag: 'Trabajo', text: 'Construimos tu web para celular y computador. Te mantenemos al tanto del avance durante todo el proceso.' },
-  { title: 'Reunión de revisión', tag: 'Reunión 2', text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.' },
+  { title: 'Reunión de revisión', tag: 'Revisión', text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.' },
   { title: 'Tu dominio', tag: 'Asesoría', text: 'Compras tu dominio (por ejemplo tunegocio.cl) para que quede a tu nombre. Te asesoramos en qué comprar y dónde.' },
   { title: 'Publicación y saldo', tag: 'Pago 2', text: 'Pagas el 50% restante, publicamos tu web en tu dominio y te explicamos cómo funciona.' },
 ];
@@ -20,10 +20,12 @@ const steps = [
 
       <div class="summary">
         <div class="box card spot reveal" style="--d:100ms">
-          <span class="big" data-count="2">2</span>
+          <span class="big-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
+          </span>
           <div>
-            <h4>Reuniones contigo</h4>
-            <p>Una al inicio y otra antes de publicar. Si el proyecto lo necesita, sumamos una tercera.</p>
+            <h4>Todas las reuniones necesarias</h4>
+            <p>Partimos con una reunión de inicio, revisamos juntos antes de publicar y nos juntamos las veces que haga falta entre medio.</p>
           </div>
         </div>
         <div class="box card spot reveal" style="--d:200ms">
@@ -64,6 +66,14 @@ const steps = [
     font-size: 58px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; flex: none; min-width: 2.3ch;
     background: linear-gradient(180deg, #fff, var(--violet-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .big-icon {
+    flex: none; width: 2.3ch; font-size: 58px; height: 1em; display: grid; place-items: center;
+  }
+  .big-icon svg {
+    width: 58px; height: 58px; padding: 13px; border-radius: 18px; color: #fff;
+    background: linear-gradient(135deg, var(--violet-2), var(--violet));
+    box-shadow: 0 10px 26px -8px rgba(123, 92, 255, .9);
   }
   h4 { font-size: 18px; margin-bottom: 2px; }
   .box p { color: var(--muted); font-size: 15px; }
@@ -107,6 +117,8 @@ const steps = [
     .node { left: -58px; width: 40px; height: 40px; border-radius: 12px; font-size: 13px; top: 20px; }
     .content { padding: 20px; }
     .big { font-size: 46px; }
+    .big-icon { font-size: 46px; }
+    .big-icon svg { width: 48px; height: 48px; padding: 11px; border-radius: 15px; }
     .box { padding: 20px; gap: 16px; }
   }
 </style>
