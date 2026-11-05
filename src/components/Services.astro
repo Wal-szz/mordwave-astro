@@ -42,7 +42,7 @@ const extras = [
             <span class="badge">Más pedido</span>
           </div>
           <h3>Landing + reservas con Google Calendar</h3>
-          <p class="price">Desde $220.000 CLP</p>
+          <p class="price">Precio a tu medida</p>
           <p class="text">
             Tus clientes eligen día y hora desde la web y la cita llega directo a tu Google Calendar. Ideal para
             estudios de tatuajes, barberías, estética y consultas.
@@ -87,7 +87,7 @@ const extras = [
           <span class="num">01</span>
         </div>
         <h3>Landing page a medida</h3>
-        <p class="price">Desde $100.000 CLP</p>
+        <p class="price">Precio a tu medida</p>
         <p class="text">Una página rápida y pensada para convertir visitas en clientes.</p>
         <div class="browser" aria-hidden="true">
           <div class="b-bar"><i></i><i></i><i></i></div>
@@ -115,11 +115,17 @@ const extras = [
       ))}
 
       <div class="card cta reveal">
-        <div>
-          <h3>¿No sabes cuál necesitas?</h3>
-          <p>Cuéntanos de tu negocio y te recomendamos la opción que calza con lo que buscas y tu presupuesto.</p>
+        <div class="cta-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
-        <a class="btn btn-primary magnetic" href={waLink('Hola MordWave, quiero consultar por sus servicios.')} target="_blank" rel="noopener">Contactar <span class="arrow">↗</span></a>
+        <div class="cta-text">
+          <h3>Nos adaptamos <span class="grad">a ti.</span></h3>
+          <p>
+            No trabajamos con paquetes cerrados. Conversamos sobre lo que necesita tu negocio y con qué presupuesto
+            cuentas, y armamos una propuesta a tu medida.
+          </p>
+        </div>
+        <a class="btn btn-primary magnetic" href={waLink('Hola MordWave, quiero cotizar una web a mi medida.')} target="_blank" rel="noopener">Cotizar sin compromiso <span class="arrow">↗</span></a>
       </div>
     </div>
   </div>
@@ -223,14 +229,35 @@ const extras = [
   h4 { font-size: 18px; letter-spacing: -0.01em; }
   .extra p { color: var(--muted); font-size: 15px; }
 
-  /* ---- CTA ---- */
+  /* ---- Nos adaptamos a ti ---- */
   .cta {
-    grid-column: span 6; padding: 30px 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    background: linear-gradient(100deg, rgba(123, 92, 255, .18), rgba(200, 107, 255, .08) 60%, transparent), rgba(16, 14, 36, .85);
+    grid-column: span 6; padding: 36px 40px; display: flex; align-items: center; gap: 32px; overflow: hidden;
+    background:
+      radial-gradient(60% 140% at 0% 50%, rgba(123, 92, 255, .32), transparent 70%),
+      radial-gradient(40% 120% at 100% 50%, rgba(200, 107, 255, .14), transparent 70%),
+      rgba(16, 14, 36, .9);
+    border-color: rgba(157, 134, 255, .3);
   }
-  .cta h3 { font-size: 24px; }
-  .cta p { color: var(--muted); font-size: 15px; max-width: 580px; }
+  .cta-text { flex: 1; }
+  .cta h3 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.04em; }
+  .cta p { color: var(--muted); font-size: 16px; max-width: 600px; margin-top: 8px; }
   .cta .btn { flex: none; }
+  /* Ícono de "ajustes" con perillas que se mueven solas */
+  .cta-icon {
+    flex: none; width: 84px; height: 84px; border-radius: 24px; padding: 18px 16px;
+    display: grid; gap: 11px; align-content: center;
+    background: rgba(123, 92, 255, .16); border: 1px solid rgba(157, 134, 255, .3);
+  }
+  .cta-icon span { position: relative; height: 3px; border-radius: 3px; background: rgba(216, 208, 255, .3); }
+  .cta-icon span::after {
+    content: ''; position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; translate: -50% -50%;
+    background: var(--lavender); box-shadow: 0 0 12px rgba(157, 134, 255, .9);
+    animation: knob 4s var(--ease) infinite;
+  }
+  .cta-icon span:nth-child(1)::after { left: 30%; animation-delay: 0s; }
+  .cta-icon span:nth-child(2)::after { left: 70%; animation-delay: -1.3s; }
+  .cta-icon span:nth-child(3)::after { left: 45%; animation-delay: -2.6s; }
+  @keyframes knob { 0%, 100% { left: 25%; } 33% { left: 80%; } 66% { left: 50%; } }
 
   @media (max-width: 1020px) {
     .feat { grid-column: span 6; grid-row: auto; }
@@ -242,7 +269,8 @@ const extras = [
     .feat, .land, .extra, .cta { grid-column: auto; }
     .feat { grid-template-columns: 1fr; padding: 28px 22px 36px; }
     .land { padding: 26px 22px; }
-    .cta { flex-direction: column; align-items: flex-start; padding: 26px 22px; }
+    .cta { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 20px; }
+    .cta-icon { width: 68px; height: 68px; padding: 14px 12px; gap: 9px; }
     h3 { font-size: 24px; }
   }
 </style>
