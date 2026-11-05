@@ -10,137 +10,94 @@ const steps = [
 ---
 
 <section id="proceso" class="process">
-  <div class="container layout">
-    <div class="side">
-      <div class="reveal">
-        <span class="eyebrow">Cómo trabajamos</span>
-        <h2 class="section-title">Un proceso simple, <span class="grad">de principio a fin.</span></h2>
-        <p class="section-lead">Sabes en todo momento en qué etapa está tu web, cuánto vas a pagar y cuándo.</p>
-      </div>
-
-      <div class="summary">
-        <div class="box card spot reveal" style="--d:100ms">
-          <span class="big-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
-          </span>
-          <div>
-            <h4>Todas las reuniones necesarias</h4>
-            <p>Partimos con una reunión de inicio, revisamos juntos antes de publicar y nos juntamos las veces que haga falta entre medio.</p>
-          </div>
-        </div>
-        <div class="box card spot reveal" style="--d:200ms">
-          <span class="big" data-count="50" data-suffix="%">50%</span>
-          <div>
-            <h4>De abono para comenzar</h4>
-            <p>El otro 50% se paga al final, cuando ya revisaste la web y está lista.</p>
-          </div>
-        </div>
-      </div>
+  <div class="container">
+    <div class="sec-head mono">
+      <span class="idx">(03)</span>
+      <span class="name">Cómo trabajamos</span>
+      <span class="count">Seis pasos</span>
     </div>
 
-    <div class="timeline" id="timeline">
-      <div class="track" aria-hidden="true"><div class="fill"></div></div>
-      <ol class="steps">
-      {steps.map((s, i) => (
-        <li class="step reveal">
-          <span class="node" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <div class="content card spot">
-            <span class="tag">{s.tag}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
+    <div class="layout">
+      <div class="side">
+        <h2 class="display sec-title lines">
+          <span><span style="--l:0">De la idea</span></span>
+          <span><span style="--l:1">al lanzamiento,</span></span>
+          <span><span style="--l:2" class="ital">sin sorpresas.</span></span>
+        </h2>
+        <dl class="facts reveal">
+          <div>
+            <dt class="mono">Reuniones</dt>
+            <dd><strong>Todas las necesarias.</strong> Partimos con una reunión de inicio, revisamos juntos antes de publicar y nos juntamos las veces que haga falta entre medio.</dd>
           </div>
-        </li>
-      ))}
+          <div>
+            <dt class="mono">Pago</dt>
+            <dd><strong><span class="ital">50%</span> al comenzar, <span class="ital">50%</span> al publicar.</strong> Pagas el saldo cuando ya revisaste la web y está lista.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <ol class="steps" id="steps">
+        {steps.map((s, i) => (
+          <li class="step reveal">
+            <span class="num">{i + 1}.</span>
+            <div>
+              <span class="tag mono">{s.tag}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
       </ol>
     </div>
   </div>
 </section>
 
 <style>
-  .process { background: linear-gradient(180deg, transparent, rgba(22, 19, 49, .55) 20%, rgba(22, 19, 49, .55) 80%, transparent); }
-  .layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 72px; align-items: start; }
-  .side { position: sticky; top: 120px; }
-  .summary { display: grid; gap: 14px; margin-top: 40px; }
-  .box { padding: 24px; display: flex; gap: 22px; align-items: center; }
-  .big {
-    font-size: 58px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; flex: none; min-width: 2.3ch;
-    background: linear-gradient(180deg, #fff, var(--violet-2));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .big-icon {
-    flex: none; width: 2.3ch; font-size: 58px; height: 1em; display: grid; place-items: center;
-  }
-  .big-icon svg {
-    width: 58px; height: 58px; padding: 13px; border-radius: 18px; color: #fff;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet));
-    box-shadow: 0 10px 26px -8px rgba(123, 92, 255, .9);
-  }
-  h4 { font-size: 18px; margin-bottom: 2px; }
-  .box p { color: var(--muted); font-size: 15px; }
+  .process { padding: 0 0 120px; }
+  .layout { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+  .side { position: sticky; top: 90px; }
+  .sec-title { font-size: clamp(40px, 5.4vw, 80px); }
 
-  /* Línea de tiempo */
-  .timeline { position: relative; padding-left: 76px; }
-  .steps { list-style: none; display: grid; gap: 22px; }
-  .track { position: absolute; left: 25px; top: 10px; bottom: 10px; width: 2px; background: var(--line); border-radius: 2px; }
-  .fill {
-    position: absolute; inset: 0; border-radius: inherit; transform-origin: top; transform: scaleY(var(--fill, 0));
-    background: linear-gradient(180deg, var(--violet-2), var(--pink));
-    box-shadow: 0 0 16px rgba(157, 134, 255, .8);
-  }
-  .step { position: relative; }
-  .node {
-    position: absolute; left: -76px; top: 22px; width: 52px; height: 52px; border-radius: 16px;
-    display: grid; place-items: center; font-family: var(--mono); font-size: 15px; color: var(--muted);
-    background: var(--bg-2); border: 1px solid var(--line-2);
-    transition: all .6s var(--ease);
-  }
-  .step.active .node {
-    color: #fff; border-color: transparent;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet));
-    box-shadow: 0 0 0 6px rgba(123, 92, 255, .15), 0 10px 30px -6px rgba(123, 92, 255, .9);
-    transform: scale(1.06);
-  }
-  .content { padding: 26px 28px; transition: border-color .6s, transform .6s var(--ease); }
-  .step.active .content { border-color: rgba(157, 134, 255, .35); }
-  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--violet-2); }
-  h3 { font-size: 22px; letter-spacing: -0.02em; margin: 6px 0 6px; }
-  .content p { color: var(--muted); font-size: 15px; }
+  .facts { display: grid; border-top: 1px solid var(--line-strong); }
+  .facts > div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  dt { color: var(--muted); padding-top: 4px; }
+  dd { color: var(--ink-2); font-size: 15px; }
+  dd strong { display: block; color: var(--ink); font-size: 20px; letter-spacing: -0.03em; margin-bottom: 4px; }
+  dd .ital { font-size: 1.15em; }
 
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; gap: 56px; }
+  .steps { list-style: none; border-top: 1px solid var(--line-strong); margin-top: 56px; }
+  .step { display: grid; grid-template-columns: 110px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--line); }
+  .num {
+    font-family: var(--serif); font-style: italic; font-size: 72px; line-height: .8; color: var(--paper-3);
+    -webkit-text-stroke: 1px var(--ink); transition: color .6s var(--ease);
+  }
+  .step.active .num { color: var(--violet); -webkit-text-stroke-color: var(--violet); }
+  .tag { color: var(--violet); }
+  h3 { font-size: 30px; letter-spacing: -0.04em; line-height: 1.05; margin: 6px 0 8px; }
+  .step p { color: var(--ink-2); max-width: 52ch; }
+
+  @media (max-width: 1000px) {
+    .layout { grid-template-columns: 1fr; gap: 0; }
     .side { position: static; }
   }
-  @media (max-width: 560px) {
-    .timeline { padding-left: 58px; }
-    .steps { gap: 16px; }
-    .track { left: 19px; }
-    .node { left: -58px; width: 40px; height: 40px; border-radius: 12px; font-size: 13px; top: 20px; }
-    .content { padding: 20px; }
-    .big { font-size: 46px; }
-    .big-icon { font-size: 46px; }
-    .big-icon svg { width: 48px; height: 48px; padding: 11px; border-radius: 15px; }
-    .box { padding: 20px; gap: 16px; }
+  @media (max-width: 640px) {
+    .process { padding-bottom: 80px; }
+    .facts > div { grid-template-columns: 1fr; gap: 4px; }
+    .step { grid-template-columns: 56px 1fr; gap: 12px; padding: 24px 0; }
+    .num { font-size: 48px; }
+    h3 { font-size: 24px; }
   }
 </style>
 
 <script>
-  // Llena la línea y activa los pasos según el scroll
-  const tl = document.getElementById('timeline')!;
-  const fill = tl.querySelector<HTMLElement>('.fill')!;
-  const steps = [...tl.querySelectorAll<HTMLElement>('.step')];
+  // Los números se pintan de morado a medida que pasas por cada paso
+  const steps = [...document.querySelectorAll<HTMLElement>('#steps .step')];
   let ticking = false;
   const update = () => {
     ticking = false;
-    const r = tl.getBoundingClientRect();
     const mid = innerHeight * 0.6;
-    const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
-    fill.style.setProperty('--fill', p.toFixed(3));
-    for (const s of steps) {
-      const node = s.querySelector('.node')!.getBoundingClientRect();
-      s.classList.toggle('active', node.top + node.height / 2 < mid);
-    }
+    for (const s of steps) s.classList.toggle('active', s.getBoundingClientRect().top < mid);
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  addEventListener('resize', update);
   update();
 </script>

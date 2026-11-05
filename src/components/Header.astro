@@ -7,86 +7,83 @@ import { nav, waLink } from '../data/site';
 <header class="header" id="header">
   <div class="container bar">
     <a href="#inicio" class="brand" aria-label="MordWave, ir al inicio">
-      <Image src={icono} alt="" width={40} height={40} loading="eager" />
+      <Image src={icono} alt="" width={36} height={36} loading="eager" />
       <span>MordWave</span>
     </a>
 
     <nav class="nav" id="nav" aria-label="Principal">
-      <div class="links">
-        <span class="pill" aria-hidden="true"></span>
-        {nav.map((item) => <a href={item.href} data-link>{item.label}</a>)}
-      </div>
-      <a class="btn btn-primary nav-cta magnetic" href={waLink()} target="_blank" rel="noopener">Cotizar <span class="arrow">↗</span></a>
+      <ol class="links">
+        {nav.map((item, i) => (
+          <li>
+            <a href={item.href} data-link>
+              <span class="n">{String(i + 1).padStart(2, '0')}</span>
+              <span class="t">{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <a class="btn nav-cta" href={waLink()} target="_blank" rel="noopener">Cotizar <span class="arrow">→</span></a>
     </nav>
 
     <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
-      <span></span><span></span>
+      <span class="lbl">Menú</span>
+      <span class="bars"><i></i><i></i></span>
     </button>
   </div>
-  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
 
 <style>
   .header {
     position: fixed; inset: 0 0 auto 0; z-index: 50;
-    transition: background .4s, border-color .4s, transform .4s var(--ease);
     border-bottom: 1px solid transparent;
+    transition: border-color .3s;
   }
-  .header.scrolled {
-    background: rgba(11, 10, 22, .72);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border-color: var(--line);
+  /* El desenfoque va en una capa aparte: si estuviera en .header, el menú del celular
+     (position: fixed) se mediría contra el header y no contra la pantalla */
+  .header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: rgba(244, 241, 251, .86);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   }
-  .progress {
-    position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
-    background: linear-gradient(90deg, var(--violet), var(--pink));
-    transform-origin: left; transform: scaleX(var(--p, 0));
+  .header.scrolled { border-color: var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; letter-spacing: -0.03em; }
+  .brand img { width: 34px; height: 34px; transition: transform .6s var(--ease); }
+  .brand:hover img { transform: rotate(-14deg); }
+
+  .nav { display: flex; align-items: center; gap: 28px; }
+  .links { list-style: none; display: flex; gap: 22px; }
+  .links a { display: inline-flex; gap: 6px; align-items: baseline; font-size: 14.5px; font-weight: 500; color: var(--ink-2); }
+  .links .n { font-family: var(--mono); font-size: 10px; color: var(--muted); transition: color .3s; }
+  .links .t {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size .4s var(--ease);
   }
-  .bar { display: flex; align-items: center; justify-content: space-between; height: 78px; gap: 20px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -0.03em; }
-  .brand img { width: 38px; height: 38px; transition: transform .6s var(--ease); }
-  .brand:hover img { transform: rotate(-12deg) scale(1.08); }
-  .nav { display: flex; align-items: center; gap: 14px; }
-  .links {
-    position: relative; display: flex; gap: 2px; padding: 5px;
-    border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.025);
-  }
-  .links a {
-    position: relative; z-index: 1; padding: 8px 14px; border-radius: 999px;
-    font-size: 14px; color: var(--muted); transition: color .3s;
-  }
-  .links a:hover, .links a.active { color: var(--text); }
-  .pill {
-    position: absolute; top: 5px; bottom: 5px; left: 0; border-radius: 999px;
-    background: rgba(123, 92, 255, .22); border: 1px solid rgba(157, 134, 255, .3);
-    width: var(--w, 0); transform: translateX(var(--x, 0)); opacity: var(--o, 0);
-    transition: transform .5s var(--ease), width .5s var(--ease), opacity .3s;
-  }
-  .nav-cta { padding: 12px 22px; }
+  .links a:hover .t, .links a.active .t { background-size: 100% 1px; }
+  .links a.active { color: var(--ink); }
+  .links a.active .n { color: var(--violet); }
+  .nav-cta { padding: 11px 18px; font-size: 14px; }
   .menu-btn { display: none; }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1080px) {
     .menu-btn {
-      display: flex; flex-direction: column; justify-content: center; gap: 7px;
-      width: 46px; height: 46px; border-radius: 14px;
-      background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 0 12px;
+      display: inline-flex; align-items: center; gap: 12px; background: none; border: 1px solid var(--ink);
+      padding: 9px 14px; font-weight: 600; font-size: 14px;
     }
-    .menu-btn span { height: 2px; background: var(--text); border-radius: 2px; transition: transform .4s var(--ease); }
-    .menu-btn[aria-expanded='true'] span:first-child { transform: translateY(4.5px) rotate(45deg); }
-    .menu-btn[aria-expanded='true'] span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
+    .bars { display: grid; gap: 5px; width: 18px; }
+    .bars i { height: 1.5px; background: currentColor; transition: transform .4s var(--ease); }
+    .menu-btn[aria-expanded='true'] .bars i:first-child { transform: translateY(3.25px) rotate(45deg); }
+    .menu-btn[aria-expanded='true'] .bars i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
     .nav {
-      position: fixed; inset: 78px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
-      background: rgba(11, 10, 22, .98); border-bottom: 1px solid var(--line); padding: 8px 16px 22px;
-      clip-path: inset(0 0 100% 0); transition: clip-path .5s var(--ease); pointer-events: none;
+      position: fixed; inset: 68px 0 0 0; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 0;
+      background: var(--paper); padding: 8px var(--gutter) 28px;
+      clip-path: inset(0 0 100% 0); transition: clip-path .55s var(--ease); pointer-events: none;
     }
-    .nav.open { clip-path: inset(0 0 0 0); pointer-events: auto; }
-    .links { flex-direction: column; border: 0; background: none; padding: 0; }
-    .pill { display: none; }
-    .links a { padding: 15px 4px; border-radius: 0; border-bottom: 1px solid var(--line); font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
-    .links a.active { color: var(--lavender); }
-    .nav-cta { margin-top: 18px; }
-    .header:has(.nav.open) { background: rgba(11, 10, 22, .98); }
+    .nav.open { clip-path: inset(0); pointer-events: auto; }
+    .links { flex-direction: column; gap: 0; }
+    .links a { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: clamp(28px, 8vw, 44px); font-weight: 700; letter-spacing: -0.04em; }
+    .links .n { font-size: 12px; width: 26px; }
+    .nav-cta { justify-content: space-between; padding: 18px 22px; font-size: 16px; }
   }
 </style>
 
@@ -94,52 +91,35 @@ import { nav, waLink } from '../data/site';
   const header = document.getElementById('header')!;
   const nav = document.getElementById('nav')!;
   const btn = document.getElementById('menu-btn')!;
-  const progress = document.getElementById('progress')!;
-  const pill = nav.querySelector<HTMLElement>('.pill')!;
   const links = [...nav.querySelectorAll<HTMLAnchorElement>('[data-link]')];
 
+  const setActive = (a?: HTMLAnchorElement) => links.forEach((l) => l.classList.toggle('active', l === a));
   const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > 10);
+    header.classList.toggle('scrolled', scrollY > 10);
     const max = document.documentElement.scrollHeight - innerHeight;
-    progress.style.setProperty('--p', String(max > 0 ? scrollY / max : 0));
-    // Al llegar al final, marca la última sección (Contacto)
-    if (max > 0 && scrollY >= max - 4) {
-      const last = links[links.length - 1];
-      links.forEach((l) => l.classList.toggle('active', l === last));
-      movePill(last);
-    }
+    if (max > 0 && scrollY >= max - 4) setActive(links[links.length - 1]);
   };
   onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('scroll', onScroll, { passive: true });
 
-  // Marca la sección visible en el menú y mueve la píldora
-  function movePill(a?: HTMLAnchorElement) {
-    if (!a) return pill.style.setProperty('--o', '0');
-    pill.style.setProperty('--w', `${a.offsetWidth}px`);
-    pill.style.setProperty('--x', `${a.offsetLeft}px`);
-    pill.style.setProperty('--o', '1');
-  }
   const spy = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        const a = links.find((l) => l.hash === `#${e.target.id}`);
-        links.forEach((l) => l.classList.toggle('active', l === a));
-        movePill(a);
+        if (e.isIntersecting) setActive(links.find((l) => l.hash === `#${e.target.id}`));
       }
     },
     { rootMargin: '-45% 0px -50% 0px' }
   );
-  links.forEach((l) => {
-    const s = document.querySelector(l.hash);
-    if (s) spy.observe(s);
-  });
-  window.addEventListener('resize', () => movePill(links.find((l) => l.classList.contains('active'))));
+  links.forEach((l) => { const s = document.querySelector(l.hash); if (s) spy.observe(s); });
+  const hero = document.getElementById('inicio');
+  if (hero) new IntersectionObserver(([e]) => e.isIntersecting && setActive(), { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
 
   const setOpen = (open: boolean) => {
     nav.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', String(open));
     btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    btn.querySelector('.lbl')!.textContent = open ? 'Cerrar' : 'Menú';
+    document.body.style.overflow = open ? 'hidden' : '';
   };
   btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
   nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));

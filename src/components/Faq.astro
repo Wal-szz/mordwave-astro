@@ -31,60 +31,70 @@ const faqs = [
 ];
 ---
 
-<section id="faq">
-  <div class="container grid">
-    <div class="section-head reveal">
-      <span class="eyebrow">Preguntas frecuentes</span>
-      <h2 class="section-title">Antes de <span class="grad">comenzar.</span></h2>
-      <p class="section-lead">Si tienes otra duda, escríbenos y te respondemos en menos de 24 horas.</p>
+<section id="faq" class="faq">
+  <div class="container">
+    <div class="sec-head mono">
+      <span class="idx">(06)</span>
+      <span class="name">Preguntas frecuentes</span>
+      <span class="count">{faqs.length} respuestas</span>
     </div>
 
-    <div class="list">
-      {faqs.map((f, i) => (
-        <details open={i === 0} class="reveal" style={`--d:${i * 60}ms`}>
-          <summary>
-            <span>{f.q}</span>
-            <i aria-hidden="true"></i>
-          </summary>
-          <p>{f.a}</p>
-        </details>
-      ))}
+    <div class="grid">
+      <div class="side">
+        <h2 class="display sec-title lines">
+          <span><span style="--l:0">Antes de</span></span>
+          <span><span style="--l:1" class="ital">comenzar.</span></span>
+        </h2>
+        <p class="sec-lead reveal">Si tienes otra duda, escríbenos y te respondemos en menos de 24 horas.</p>
+      </div>
+
+      <div class="list">
+        {faqs.map((f, i) => (
+          <details open={i === 0} class="reveal" style={`--d:${i * 50}ms`}>
+            <summary>
+              <span class="q mono">P.{String(i + 1).padStart(2, '0')}</span>
+              <span class="t">{f.q}</span>
+              <i aria-hidden="true"></i>
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
-  .section-head { position: sticky; top: 110px; }
-  .list { border-top: 1px solid var(--line); }
+  .faq { padding: 0 0 120px; }
+  .grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+  .side { position: sticky; top: 90px; }
+  .list { border-top: 1px solid var(--line-strong); margin-top: 56px; }
   details { border-bottom: 1px solid var(--line); interpolate-size: allow-keywords; }
-  /* Apertura suave (navegadores modernos) */
   details::details-content { height: 0; overflow: hidden; transition: height .45s var(--ease), content-visibility .45s allow-discrete; }
   details[open]::details-content { height: auto; }
   summary {
-    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
-    padding: 22px 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+    list-style: none; cursor: pointer; display: grid; grid-template-columns: 56px 1fr 28px; gap: 12px; align-items: center;
+    padding: 22px 0; font-size: 20px; font-weight: 600; letter-spacing: -0.025em;
   }
   summary::-webkit-details-marker { display: none; }
-  summary span { transition: color .3s, transform .4s var(--ease); }
-  summary:hover span { color: var(--lavender); transform: translateX(6px); }
-  i {
-    flex: none; position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
-    transition: transform .3s, background .3s;
-  }
-  i::before, i::after {
-    content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; border-radius: 2px;
-    background: var(--lavender); translate: -50% -50%;
-  }
-  i::after { rotate: 90deg; transition: rotate .3s; }
-  details[open] i { background: var(--violet); border-color: var(--violet); }
+  .q { color: var(--muted); }
+  details[open] .q { color: var(--violet); }
+  .t { transition: transform .4s var(--ease); }
+  summary:hover .t { transform: translateX(6px); }
+  i { position: relative; width: 28px; height: 28px; }
+  i::before, i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; background: var(--ink); translate: -50% -50%; transition: rotate .4s var(--ease); }
+  i::after { rotate: 90deg; }
   details[open] i::after { rotate: 0deg; }
-  details p { color: var(--muted); padding: 0 48px 24px 0; }
+  details p { color: var(--ink-2); padding: 0 40px 26px 68px; max-width: 64ch; }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1000px) {
     .grid { grid-template-columns: 1fr; gap: 0; }
-    .section-head { position: static; }
-    summary { font-size: 17px; }
-    details p { padding-right: 0; }
+    .side { position: static; }
+    .list { margin-top: 0; }
+  }
+  @media (max-width: 640px) {
+    .faq { padding-bottom: 80px; }
+    summary { grid-template-columns: 44px 1fr 24px; font-size: 17px; }
+    details p { padding: 0 0 22px 56px; }
   }
 </style>

@@ -2,46 +2,56 @@
 import { site, waLink } from '../data/site';
 ---
 
-<section id="contacto">
+<section id="contacto" class="contact">
   <div class="container">
-    <div class="wrap card spot reveal">
-      <div class="info">
-        <span class="eyebrow">Contacto</span>
-        <h2 class="section-title">Hablemos de <span class="grad">tu proyecto.</span></h2>
-        <p class="section-lead">Cuéntanos qué necesita tu negocio y agendamos la reunión de inicio. Respondemos en menos de 24 horas.</p>
+    <div class="sec-head mono">
+      <span class="idx">(07)</span>
+      <span class="name">Contacto</span>
+      <span class="count">Respuesta en menos de 24 h</span>
+    </div>
 
-        <ul class="channels">
-          <li><span>WhatsApp</span><a href={waLink()} target="_blank" rel="noopener">+56 9 8396 0591</a></li>
-          <li><span>Email</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><span>Instagram</span><a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener">@{site.instagram}</a></li>
-          <li><span>Ubicación</span><p>{site.location}</p></li>
-        </ul>
+    <h2 class="big lines">
+      <span><span style="--l:0">Hablemos de</span></span>
+      <span><span style="--l:1" class="ital">tu proyecto.</span></span>
+    </h2>
+
+    <div class="grid">
+      <div class="info reveal">
+        <p class="lead">Cuéntanos qué necesita tu negocio y agendamos la reunión de inicio.</p>
+        <dl class="channels">
+          <div><dt class="mono">WhatsApp</dt><dd><a class="ulink" href={waLink()} target="_blank" rel="noopener">+56 9 8396 0591</a></dd></div>
+          <div><dt class="mono">Email</dt><dd><a class="ulink" href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+          <div><dt class="mono">Instagram</dt><dd><a class="ulink" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener">@{site.instagram}</a></dd></div>
+          <div><dt class="mono">Ubicación</dt><dd>{site.location}</dd></div>
+        </dl>
       </div>
 
       <!-- El formulario arma un mensaje y lo abre en WhatsApp (no necesita servidor) -->
-      <form class="form" id="contact-form" data-wa={site.whatsapp}>
+      <form class="form reveal" style="--d:120ms" id="contact-form" data-wa={site.whatsapp}>
         <label>
-          Nombre
+          <span class="mono">01 — Nombre</span>
           <input name="nombre" required autocomplete="name" placeholder="Tu nombre" />
         </label>
         <label>
-          Nombre del negocio
+          <span class="mono">02 — Negocio</span>
           <input name="negocio" placeholder="Ej: Estudio Luna" />
         </label>
+        <fieldset>
+          <legend class="mono">03 — ¿Qué necesitas?</legend>
+          <div class="choices">
+            {['Landing page', 'Landing + reservas', 'No estoy seguro'].map((o, i) => (
+              <label class="choice">
+                <input type="radio" name="servicio" value={o} required={i === 0} />
+                <span>{o}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
         <label>
-          ¿Qué necesitas?
-          <select name="servicio" required>
-            <option value="" disabled selected>Selecciona una opción</option>
-            <option>Landing page</option>
-            <option>Landing + reservas con Google Calendar</option>
-            <option>No estoy seguro</option>
-          </select>
+          <span class="mono">04 — Cuéntanos brevemente</span>
+          <textarea name="mensaje" rows="3" placeholder="¿A qué se dedica tu negocio y qué te gustaría lograr?"></textarea>
         </label>
-        <label>
-          Cuéntanos brevemente
-          <textarea name="mensaje" rows="4" placeholder="¿A qué se dedica tu negocio y qué te gustaría lograr?"></textarea>
-        </label>
-        <button class="btn btn-primary magnetic" type="submit">Enviar por WhatsApp <span class="arrow">↗</span></button>
+        <button class="btn send" type="submit">Enviar por WhatsApp <span class="arrow">→</span></button>
         <p class="form-note" id="form-note" role="status" aria-live="polite">Se abrirá WhatsApp con tu mensaje listo para enviar.</p>
       </form>
     </div>
@@ -49,42 +59,54 @@ import { site, waLink } from '../data/site';
 </section>
 
 <style>
-  .wrap {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 60px; overflow: hidden;
-    background:
-      radial-gradient(60% 80% at 0% 0%, rgba(123, 92, 255, .3), transparent 70%),
-      radial-gradient(50% 60% at 100% 100%, rgba(200, 107, 255, .12), transparent 70%),
-      linear-gradient(180deg, var(--card), var(--bg-2));
-  }
-  .channels { list-style: none; margin-top: 32px; border-top: 1px solid var(--line); }
-  .channels li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-  .channels span { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
-  .channels a { color: var(--lavender); word-break: break-all; text-align: right; }
-  .channels a { transition: color .3s; }
-  .channels a:hover { color: #fff; }
-  .channels li { transition: padding .4s var(--ease); }
-  .channels li:hover { padding-left: 8px; }
-  .channels p { text-align: right; }
+  /* Bloque en tinta oscura: da contraste al cierre de la página */
+  .contact { background: var(--ink); color: var(--paper); padding: 0 0 110px; }
+  .contact .sec-head { border-top: 0; border-bottom: 1px solid rgba(244, 241, 251, .2); color: rgba(244, 241, 251, .8); }
+  .contact .count { color: rgba(244, 241, 251, .5); }
+  .big { font-size: clamp(54px, 10vw, 160px); line-height: .88; letter-spacing: -0.06em; font-weight: 800; margin: 56px 0 72px; }
+  .big .ital { color: var(--violet-soft); font-size: 1.1em; }
 
-  .form { display: grid; gap: 16px; align-content: start; }
-  label { display: grid; gap: 8px; font-size: 14px; font-weight: 500; color: var(--lavender); }
-  input, select, textarea {
-    font: inherit; font-size: 16px; color: var(--text);
-    background: rgba(15, 13, 28, .6); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px;
-    transition: border-color .2s, box-shadow .2s; width: 100%;
-  }
-  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a49cc9' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
-  textarea { resize: vertical; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--violet-2); box-shadow: 0 0 0 3px rgba(123, 92, 255, .25); }
-  ::placeholder { color: rgba(164, 156, 201, .6); }
-  .form .btn { margin-top: 6px; }
-  .form-note { font-size: 13px; color: var(--muted); text-align: center; transition: color .3s; }
-  .form-note.ok { color: var(--green); }
-  /* Campo obligatorio vacío tras intentar enviar */
-  input:user-invalid, select:user-invalid { border-color: #ff6b81; box-shadow: 0 0 0 3px rgba(255, 107, 129, .18); }
+  .grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+  .lead { font-size: 20px; color: rgba(244, 241, 251, .8); max-width: 34ch; }
+  .channels { margin-top: 32px; border-top: 1px solid rgba(244, 241, 251, .2); }
+  .channels > div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(244, 241, 251, .12); }
+  .channels dt { color: rgba(244, 241, 251, .5); padding-top: 3px; }
+  .channels dd { word-break: break-word; }
 
-  @media (max-width: 900px) {
-    .wrap { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
+  .form { display: grid; gap: 26px; }
+  label, fieldset { display: grid; gap: 6px; border: 0; }
+  .form .mono, legend { color: rgba(244, 241, 251, .55); }
+  legend { margin-bottom: 10px; }
+  input:not([type='radio']), textarea {
+    font: inherit; font-size: 22px; letter-spacing: -0.02em; color: var(--paper); width: 100%;
+    background: transparent; border: 0; border-bottom: 1px solid rgba(244, 241, 251, .3); padding: 8px 0 12px;
+    transition: border-color .3s; resize: vertical;
+  }
+  input:not([type='radio']):focus, textarea:focus { outline: none; border-color: var(--violet-soft); }
+  input:user-invalid { border-color: #ff8a9b; }
+  ::placeholder { color: rgba(244, 241, 251, .3); }
+
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choice { display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice span { display: block; padding: 10px 16px; border: 1px solid rgba(244, 241, 251, .3); font-size: 15px; transition: background .3s, color .3s, border-color .3s; }
+  .choice:hover span { border-color: var(--paper); }
+  .choice input:checked + span { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .choice input:focus-visible + span { outline: 2px solid var(--violet-soft); outline-offset: 3px; }
+
+  .send { background: var(--paper); color: var(--ink); border-color: var(--paper); justify-content: space-between; margin-top: 6px; }
+  .send:hover { background: var(--violet); border-color: var(--violet); color: #fff; }
+  .form-note { font-size: 13px; color: rgba(244, 241, 251, .5); }
+  .form-note.ok { color: #6ee7a8; }
+
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  @media (max-width: 640px) {
+    .contact { padding-bottom: 80px; }
+    .big { margin: 36px 0 44px; }
+    .channels > div { grid-template-columns: 1fr; gap: 2px; }
+    input:not([type='radio']), textarea { font-size: 19px; }
   }
 </style>
 
@@ -99,8 +121,7 @@ import { site, waLink } from '../data/site';
       `Me interesa: ${d.get('servicio')}`,
       d.get('mensaje') ? `\n${d.get('mensaje')}` : '',
     ].filter(Boolean);
-    const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
-    window.open(url, '_blank', 'noopener');
+    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
     const note = document.getElementById('form-note')!;
     note.textContent = '¡Listo! Revisa la pestaña de WhatsApp y presiona enviar. Te respondemos en menos de 24 horas.';
     note.classList.add('ok');
