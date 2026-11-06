@@ -12,6 +12,7 @@ const paths = [
     for: 'Para lanzar tu negocio, un servicio o una campaña.',
     items: ['Una página con todo lo importante', 'WhatsApp y formulario de contacto', 'Lista para Google'],
     kind: 'one',
+    time: '5 a 7 días hábiles',
     wa: 'Hola MordWave, quiero cotizar una landing page.',
   },
   {
@@ -20,6 +21,7 @@ const paths = [
     for: 'Para empresas que necesitan mostrar más: servicios, equipo, proyectos.',
     items: ['Varias páginas: inicio, servicios, nosotros, contacto…', 'Estructura pensada para posicionar en Google', 'Crece contigo: se suman páginas cuando quieras'],
     kind: 'multi',
+    time: '10 a 15 días hábiles',
     wa: 'Hola MordWave, quiero cotizar un sitio web de varias páginas.',
   },
   {
@@ -28,16 +30,12 @@ const paths = [
     for: 'Para vender tus productos por internet.',
     items: ['Catálogo, carrito y pago en línea', 'Despacho a todo Chile', 'Tú subes productos y precios'],
     kind: 'shop',
+    time: 'Próximamente',
     soon: true,
     wa: 'Hola MordWave, me interesa una tienda online. ¿Me avisan cuando esté disponible?',
   },
 ];
 
-const extras = [
-  { t: '100% responsive', d: 'Se ve perfecta en celular, tablet y computador.', icon: '<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>' },
-  { t: 'WhatsApp directo', d: 'Tus clientes te escriben con un toque.', icon: '<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5Z"/>' },
-  { t: 'Lista para Google', d: 'SEO básico para que te encuentren.', icon: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>' },
-];
 ---
 
 <section id="servicios">
@@ -46,7 +44,7 @@ const extras = [
       <span class="eyebrow">Servicios</span>
       <h2 class="section-title">Elige el camino para <span class="grad">tu negocio.</span></h2>
       <p class="section-lead">
-        Tres tipos de web según lo que necesitas, y reservas online que se suman a cualquiera de ellas.
+        Tres tipos de web según lo que necesitas. Las reservas online se suman a cualquiera de ellas.
       </p>
     </div>
 
@@ -78,6 +76,7 @@ const extras = [
           <h3>{p.t}</h3>
           <p class="for">{p.for}</p>
           <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
+          <p class="time"><span>Plazo estimado</span><strong>{p.time}</strong></p>
           <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">
             {p.soon ? 'Avísame cuando esté' : 'Cotizar'} <span class="arrow">→</span>
           </a>
@@ -101,6 +100,7 @@ const extras = [
           <li>Sincronizado con tu Google Calendar</li>
           <li>Abono para asegurar la hora</li>
         </ul>
+        <p class="time"><span>Plazo estimado con landing</span><strong>7 a 10 días hábiles</strong></p>
       </div>
 
       <div class="phone-wrap" aria-hidden="true">
@@ -128,20 +128,6 @@ const extras = [
         </div>
       </div>
     </article>
-
-    <div class="extras">
-      {extras.map((x, i) => (
-        <article class="card spot extra reveal" style={`--d:${i * 90}ms`}>
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={x.icon} />
-          </span>
-          <div>
-            <h4>{x.t}</h4>
-            <p>{x.d}</p>
-          </div>
-        </article>
-      ))}
-    </div>
 
     <div class="card cta reveal">
       <div class="cta-icon" aria-hidden="true">
@@ -177,8 +163,13 @@ const extras = [
   .paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .path { padding: 28px; display: flex; flex-direction: column; }
   .path .for { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
-  .path .checks { margin-bottom: 24px; }
-  .more { margin-top: auto; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 16px; border-top: 1px solid var(--line); width: 100%; }
+  .path .checks { margin-bottom: 20px; }
+  .time { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .time span { color: var(--muted); }
+  .time strong { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); }
+  .feat .time { margin-top: 20px; max-width: 420px; }
+  .path .time { margin-top: auto; }
+  .more { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
   .more .arrow { transition: transform .35s var(--ease); }
   .more:hover .arrow { transform: translateX(4px); }
   .soon h3, .soon .for, .soon .checks { opacity: .75; }
@@ -243,13 +234,6 @@ const extras = [
   @keyframes confirm { 0%, 40% { background: #b9addf; transform: none; } 44%, 50% { background: #7b5cff; transform: none; } 53% { transform: scale(.94); } 57%, 92% { background: #5b3df0; transform: none; } 100% { background: #b9addf; } }
   @keyframes toast { 0%, 56% { opacity: 0; transform: translateY(30px) scale(.95); } 62%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: translateY(30px) scale(.95); } }
 
-  /* ---- Extras ---- */
-  .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-  .extra { padding: 22px; display: flex; gap: 16px; align-items: flex-start; }
-  .ico { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--lavender); background: rgba(123, 92, 255, .16); }
-  h4 { font-size: 17px; letter-spacing: -0.01em; }
-  .extra p { color: var(--muted); font-size: 14.5px; }
-
   /* ---- Nos adaptamos a ti ---- */
   .cta { margin-top: 16px; padding: 36px 40px; display: flex; align-items: center; gap: 32px; border-color: rgba(157, 134, 255, .3); }
   .cta-text { flex: 1; }
@@ -272,10 +256,10 @@ const extras = [
     .path { display: grid; grid-template-columns: 180px 1fr; column-gap: 28px; }
     .path > :not(.mini) { grid-column: 2; }
     .path .mini { grid-row: 1 / span 6; margin: 0; height: 100%; min-height: 140px; }
-    .extras { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) {
     .path { display: flex; padding: 24px 20px; }
+    .path .mini { display: none; }
     .feat { grid-template-columns: 1fr; padding: 28px 22px 36px; gap: 28px; }
     .cta { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 20px; }
     .cta-icon { width: 68px; height: 68px; padding: 14px 12px; gap: 9px; }
