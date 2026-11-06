@@ -12,7 +12,6 @@ const paths = [
     for: 'Para lanzar tu negocio, un servicio o una campaña.',
     items: ['Una página con todo lo importante', 'WhatsApp y formulario de contacto', 'Lista para Google'],
     kind: 'one',
-    time: '5 a 7 días hábiles',
     wa: 'Hola MordWave, quiero cotizar una landing page.',
   },
   {
@@ -21,7 +20,6 @@ const paths = [
     for: 'Para empresas que necesitan mostrar más: servicios, equipo, proyectos.',
     items: ['Varias páginas: inicio, servicios, nosotros, contacto…', 'Estructura pensada para posicionar en Google', 'Crece contigo: se suman páginas cuando quieras'],
     kind: 'multi',
-    time: '10 a 15 días hábiles',
     wa: 'Hola MordWave, quiero cotizar un sitio web de varias páginas.',
   },
   {
@@ -30,7 +28,6 @@ const paths = [
     for: 'Para vender tus productos por internet.',
     items: ['Catálogo, carrito y pago en línea', 'Despacho a todo Chile', 'Tú subes productos y precios'],
     kind: 'shop',
-    time: 'Próximamente',
     soon: true,
     wa: 'Hola MordWave, me interesa una tienda online. ¿Me avisan cuando esté disponible?',
   },
@@ -76,7 +73,6 @@ const paths = [
           <h3>{p.t}</h3>
           <p class="for">{p.for}</p>
           <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
-          <p class="time"><span>Plazo estimado</span><strong>{p.time}</strong></p>
           <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">
             {p.soon ? 'Avísame cuando esté' : 'Cotizar'} <span class="arrow">→</span>
           </a>
@@ -100,7 +96,7 @@ const paths = [
           <li>Sincronizado con tu Google Calendar</li>
           <li>Abono para asegurar la hora</li>
         </ul>
-        <p class="time"><span>Plazo estimado con landing</span><strong>7 a 10 días hábiles</strong></p>
+
       </div>
 
       <div class="phone-wrap" aria-hidden="true">
@@ -164,12 +160,7 @@ const paths = [
   .path { padding: 28px; display: flex; flex-direction: column; }
   .path .for { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
   .path .checks { margin-bottom: 20px; }
-  .time { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; }
-  .time span { color: var(--muted); }
-  .time strong { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); }
-  .feat .time { margin-top: 20px; max-width: 420px; }
-  .path .time { margin-top: auto; }
-  .more { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
+  .more { margin-top: auto; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
   .more .arrow { transition: transform .35s var(--ease); }
   .more:hover .arrow { transform: translateX(4px); }
   .soon h3, .soon .for, .soon .checks { opacity: .75; }
