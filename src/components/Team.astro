@@ -36,49 +36,38 @@ const values = [
 ];
 ---
 
-<section id="equipo" class="team">
+<section id="equipo">
   <div class="container">
-    <div class="sec-head mono">
-      <span class="idx">(05)</span>
-      <span class="name">Equipo de trabajo</span>
-      <span class="count">Chillán, Ñuble</span>
-    </div>
-
-    <div class="intro">
-      <h2 class="display sec-title lines">
-        <span><span style="--l:0">Tres ingenieros</span></span>
-        <span><span style="--l:1" class="ital">detrás de tu web.</span></span>
-      </h2>
-      <p class="sec-lead reveal">
-        MordWave es un estudio de diseño y desarrollo web nacido en Ñuble. Somos ingenieros informáticos y preferimos
-        pocos proyectos bien hechos a muchos a medias.
+    <div class="section-head reveal">
+      <span class="eyebrow">Equipo de trabajo</span>
+      <h2 class="section-title">Tres ingenieros <span class="grad">detrás de tu web.</span></h2>
+      <p class="section-lead">
+        MordWave es un estudio de diseño y desarrollo web nacido en Ñuble. Somos ingenieros informáticos y
+        preferimos pocos proyectos bien hechos a muchos a medias.
       </p>
     </div>
 
     <div class="people">
       {team.map((m, i) => (
-        <article class="person reveal" style={`--d:${i * 100}ms`}>
-          <div class="portrait">
-            {m.photo ? (
-              <Image src={m.photo} alt={`Foto de ${m.name}`} width={600} height={720} />
-            ) : (
-              <Image src={icono} alt="" width={240} height={240} class="ph" />
-            )}
-            <span class="mono pno">0{i + 1}</span>
-          </div>
+        <article class="person card spot reveal" style={`--d:${i * 110}ms`}>
+          {m.photo ? (
+            <Image src={m.photo} alt={`Foto de ${m.name}`} class="avatar photo" width={168} height={168} />
+          ) : (
+            <div class="avatar logo" aria-hidden="true"><Image src={icono} alt="" width={120} height={120} /></div>
+          )}
           <h3>{m.name}</h3>
-          <p class="role mono">{m.role ?? 'Cargo próximamente'}</p>
+          {m.role ? <p class="role">{m.role}</p> : <p class="role soon">Próximamente</p>}
           <p class="studies">{m.studies}</p>
           <p class="bio">{m.bio}</p>
         </article>
       ))}
     </div>
 
-    <ul class="values">
-      {values.map((v, i) => (
-        <li class="reveal" style={`--d:${i * 90}ms`}>
-          <span class="ital vn">{['i', 'ii', 'iii'][i]}.</span>
-          <div><h4>{v.t}</h4><p>{v.d}</p></div>
+    <ul class="values reveal">
+      {values.map((v) => (
+        <li>
+          <h4>{v.t}</h4>
+          <p>{v.d}</p>
         </li>
       ))}
     </ul>
@@ -86,51 +75,58 @@ const values = [
 </section>
 
 <style>
-  .team { padding: 0 0 120px; }
-  .intro { display: grid; grid-template-columns: 7fr 5fr; gap: 48px; align-items: end; }
-  .intro .sec-lead { margin-bottom: 72px; }
-
-  .people { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; border-top: 1px solid var(--line-strong); }
-  .person { position: relative; padding: 28px 0 36px; }
-  .person + .person::before { content: ''; position: absolute; left: -28px; top: 0; bottom: 0; border-left: 1px solid var(--line); }
-  .portrait {
-    position: relative; aspect-ratio: 5 / 6; display: grid; place-items: center; overflow: hidden; margin-bottom: 22px;
-    background:
-      repeating-linear-gradient(135deg, transparent 0 10px, rgba(20, 17, 42, .045) 10px 11px),
-      var(--paper-2);
-    border: 1px solid var(--line);
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .person { padding: 30px; display: flex; flex-direction: column; transition: transform .6s var(--ease); }
+  .person:hover { transform: translateY(-6px); }
+  .avatar {
+    position: relative; width: 88px; height: 88px; border-radius: 26px; display: grid; place-items: center; margin-bottom: 24px;
+    font-size: 30px; font-weight: 800; color: #fff; isolation: isolate;
+    background: linear-gradient(135deg, var(--violet-2), var(--violet) 55%, #5a33e6);
+    box-shadow: 0 14px 34px -10px rgba(123, 92, 255, .85);
+    transition: transform .6s var(--ease);
   }
-  .portrait :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .portrait :global(.ph) { width: 44%; height: auto; object-fit: contain; transition: transform .8s var(--ease); }
-  .person:hover .portrait :global(.ph) { transform: rotate(-10deg) scale(1.06); }
-  .pno { position: absolute; top: 12px; left: 14px; color: var(--muted); }
-  h3 { font-size: 30px; letter-spacing: -0.045em; line-height: 1; }
-  .role { color: var(--violet); margin: 10px 0 6px; }
-  .studies { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
-  .bio { color: var(--ink-2); font-size: 15.5px; }
+  /* Anillo de luz girando alrededor del avatar */
+  .avatar::before {
+    content: ''; position: absolute; inset: -5px; border-radius: 30px; z-index: -1; padding: 2px;
+    background: conic-gradient(from var(--r, 0deg), transparent 0 60%, var(--lavender) 80%, transparent 95%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: ring 4s linear infinite;
+  }
+  @property --r { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  @keyframes ring { to { --r: 360deg; } }
+  .person:hover .avatar { transform: rotate(-6deg) scale(1.05); }
+  .photo { object-fit: cover; }
+  /* Mientras no hay foto: ícono de MordWave sobre fondo oscuro */
+  .avatar.logo {
+    background: radial-gradient(circle at 50% 40%, rgba(123, 92, 255, .35), transparent 70%), #141130;
+    border: 1px solid rgba(157, 134, 255, .3);
+  }
+  .avatar.logo :global(img) { width: 76%; height: auto; filter: drop-shadow(0 6px 14px rgba(123, 92, 255, .6)); }
+  h3 { font-size: 24px; letter-spacing: -0.02em; }
+  .role {
+    align-self: flex-start; justify-self: start; margin: 8px 0 10px;
+    font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+    background: rgba(123, 92, 255, .18); color: var(--lavender);
+  }
+  .role.soon { background: transparent; border: 1px dashed rgba(154, 130, 255, .45); color: var(--muted); font-weight: 500; }
+  .studies { font-family: var(--mono); font-size: 12px; color: var(--violet-2); margin-bottom: 12px; }
+  .bio { color: var(--muted); font-size: 15px; }
 
-  .values { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; margin-top: 56px; border-top: 1px solid var(--line-strong); }
-  .values li { display: grid; grid-template-columns: 44px 1fr; padding-top: 20px; }
-  .vn { font-size: 26px; line-height: 1; }
-  h4 { font-size: 18px; letter-spacing: -0.02em; }
+  .values { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .values li { padding-top: 18px; border-top: 1px solid var(--line); }
+  h4 { font-size: 17px; }
   .values p { color: var(--muted); font-size: 15px; }
 
-  @media (max-width: 1000px) {
-    .intro { grid-template-columns: 1fr; gap: 0; }
-    .intro .sec-lead { margin: -40px 0 48px; }
+  @media (max-width: 900px) {
     .people { grid-template-columns: 1fr; }
-    .person, .person + .person {
-      display: grid; grid-template-columns: 120px 1fr; column-gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line);
+    .person {
+      display: grid; grid-template-columns: auto 1fr; column-gap: 18px; padding: 22px;
     }
-    .person + .person::before { display: none; }
-    .portrait { grid-row: 1 / span 4; margin: 0; align-self: start; }
-    .values { grid-template-columns: 1fr; }
-    .values li { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  }
-  @media (max-width: 640px) {
-    .team { padding-bottom: 80px; }
-    .intro .sec-lead { margin: -20px 0 36px; }
-    .person, .person + .person { grid-template-columns: 88px 1fr; column-gap: 16px; }
-    h3 { font-size: 24px; }
+    .person > :not(.avatar) { grid-column: 2; }
+    .avatar { grid-row: 1 / span 4; width: 64px; height: 64px; font-size: 24px; border-radius: 18px; margin: 0; }
+    .avatar::before { border-radius: 22px; }
+    .values { grid-template-columns: 1fr; gap: 0; margin-top: 28px; }
+    .values li { padding: 16px 0; }
   }
 </style>

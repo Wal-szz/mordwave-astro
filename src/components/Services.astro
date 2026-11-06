@@ -1,213 +1,276 @@
 ---
 import { waLink } from '../data/site';
 
-const services = [
-  {
-    n: '01',
-    t: 'Landing page a medida',
-    d: 'Una página rápida y pensada para convertir visitas en clientes. Ideal para lanzar tu negocio, un servicio o una campaña.',
-    tags: ['Diseño a medida', 'Responsive', 'WhatsApp', 'Formulario', 'SEO básico'],
-  },
-  {
-    n: '02',
-    t: 'Landing + reservas con Google Calendar',
-    d: 'Tus clientes eligen día y hora desde la web y la cita llega directo a tu Google Calendar. Para estudios de tatuajes, barberías, estética y consultas.',
-    tags: ['Agenda online', 'Google Calendar', 'Abono para confirmar', 'Confirmación'],
-  },
-];
-
 const days = Array.from({ length: 14 }, (_, i) => i + 10);
 const slots = ['10:00', '11:30', '15:00', '17:30'];
-const flow = [
-  { t: 'Elige el día', d: 'Ve solo los días con horas disponibles.' },
-  { t: 'Elige la hora', d: 'Las horas tomadas no aparecen.' },
-  { t: 'Confirma', d: 'Con abono, si lo necesitas.' },
-  { t: 'Llega a tu calendario', d: 'La cita aparece sola en Google Calendar.' },
+const extras = [
+  {
+    t: '100% responsive',
+    d: 'Se ve perfecta en celular, tablet y computador.',
+    icon: '<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  },
+  {
+    t: 'WhatsApp directo',
+    d: 'Tus clientes te escriben con un toque.',
+    icon: '<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5Z"/>',
+  },
+  {
+    t: 'Lista para Google',
+    d: 'SEO básico para que te encuentren.',
+    icon: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  },
 ];
 ---
 
-<section id="servicios" class="services">
+<section id="servicios">
   <div class="container">
-    <div class="sec-head mono">
-      <span class="idx">(02)</span>
-      <span class="name">Servicios</span>
-      <span class="count">Lo que hacemos</span>
+    <div class="section-head reveal">
+      <span class="eyebrow">Servicios</span>
+      <h2 class="section-title">Lo que hacemos, <span class="grad">sin vueltas.</span></h2>
+      <p class="section-lead">
+        Nos especializamos en dos cosas y las hacemos bien: landing pages que se ven profesionales y webs que además
+        reciben reservas solas.
+      </p>
     </div>
 
-    <h2 class="display sec-title lines">
-      <span><span style="--l:0">Dos cosas,</span></span>
-      <span><span style="--l:1" class="ital">muy bien hechas.</span></span>
-    </h2>
-
-    <!-- Índice de servicios -->
-    <ol class="index">
-      {services.map((s) => (
-        <li class="row reveal">
-          <span class="n mono">{s.n}</span>
-          <h3>{s.t}</h3>
-          <div class="body">
-            <p>{s.d}</p>
-            <ul class="tags">{s.tags.map((t) => <li>{t}</li>)}</ul>
+    <div class="bento">
+      <!-- Destacado: reservas con Google Calendar -->
+      <article class="card spot feat reveal">
+        <div class="feat-text">
+          <div class="top">
+            <span class="num">02</span>
+            <span class="badge">Más pedido</span>
           </div>
-          <span class="price mono">Precio a tu medida</span>
-        </li>
-      ))}
-    </ol>
+          <h3>Landing + reservas con Google Calendar</h3>
+          <p class="price">Precio a tu medida</p>
+          <p class="text">
+            Tus clientes eligen día y hora desde la web y la cita llega directo a tu Google Calendar. Ideal para
+            estudios de tatuajes, barberías, estética y consultas.
+          </p>
+          <ul class="checks">
+            <li>Horarios disponibles en tiempo real</li>
+            <li>Sincronizado con tu Google Calendar</li>
+            <li>Abono para asegurar la hora</li>
+          </ul>
+        </div>
 
-    <!-- Cómo funciona una reserva: el celular y los pasos van sincronizados (ciclo de 10s) -->
-    <div class="demo">
-      <div class="demo-text reveal">
-        <p class="mono kicker">Fig. 01 — Así reserva tu cliente</p>
-        <ol class="flow">
-          {flow.map((f, i) => (
-            <li style={`--s:${i}`}>
-              <span class="fn">{i + 1}</span>
-              <div><strong>{f.t}</strong><span>{f.d}</span></div>
-            </li>
-          ))}
-        </ol>
-      </div>
+        <div class="phone-wrap" aria-hidden="true">
+          <div class="phone" data-tilt="10">
+            <div class="notch"></div>
+            <div class="screen">
+              <p class="p-title">Reserva tu hora</p>
+              <p class="p-month">Noviembre</p>
+              <div class="week">{['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d) => <span>{d}</span>)}</div>
+              <div class="days">
+                {days.map((d) => (
+                  <span class:list={['day', { off: d % 7 === 2 || d === 10 || d === 11, sel: d === 14 }]}>{d}</span>
+                ))}
+              </div>
+              <p class="p-label">Horarios</p>
+              <div class="slots">
+                {slots.map((s) => <span class:list={['slot', { sel: s === '15:00', off: s === '11:30' }]}>{s}</span>)}
+              </div>
+              <span class="confirm">Confirmar reserva</span>
+              <div class="toast">
+                <span class="t-ok">✓</span>
+                <div><strong>¡Reserva confirmada!</strong><small>Añadida a Google Calendar</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-glow"></div>
+        </div>
+      </article>
 
-      <div class="phone-wrap reveal" style="--d:120ms" aria-hidden="true">
-        <div class="phone">
-          <div class="notch"></div>
-          <div class="screen">
-            <p class="p-title">Reserva tu hora</p>
-            <p class="p-month">Noviembre</p>
-            <div class="week">{['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d) => <span>{d}</span>)}</div>
-            <div class="days">
-              {days.map((d) => (
-                <span class:list={['day', { off: d % 7 === 2 || d === 10 || d === 11, sel: d === 14 }]}>{d}</span>
-              ))}
-            </div>
-            <p class="p-label">Horarios</p>
-            <div class="slots">
-              {slots.map((s) => <span class:list={['slot', { sel: s === '15:00', off: s === '11:30' }]}>{s}</span>)}
-            </div>
-            <span class="confirm">Confirmar reserva</span>
-            <div class="toast">
-              <span class="t-ok">✓</span>
-              <div><strong>¡Reserva confirmada!</strong><small>Añadida a Google Calendar</small></div>
+      <!-- Landing page -->
+      <article class="card spot land reveal" style="--d:100ms">
+        <div class="top">
+          <span class="num">01</span>
+        </div>
+        <h3>Landing page a medida</h3>
+        <p class="price">Precio a tu medida</p>
+        <p class="text">Una página rápida y pensada para convertir visitas en clientes.</p>
+        <div class="browser" aria-hidden="true">
+          <div class="b-bar"><i></i><i></i><i></i></div>
+          <div class="b-view">
+            <div class="b-page">
+              <div class="sk hero-sk"><span></span><span></span><span class="cta-sk"></span></div>
+              <div class="sk row-sk"><span></span><span></span><span></span></div>
+              <div class="sk img-sk"></div>
+              <div class="sk lines-sk"><span></span><span></span><span></span></div>
+              <div class="sk row-sk"><span></span><span></span><span></span></div>
+              <div class="sk hero-sk"><span></span><span></span><span class="cta-sk"></span></div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </article>
 
-    <!-- Nos adaptamos a ti -->
-    <div class="adapt reveal">
-      <p class="statement">
-        No vendemos paquetes. <span class="ital">Nos adaptamos a ti</span> — a lo que necesita tu negocio y a tu presupuesto.
-      </p>
-      <a class="btn" href={waLink('Hola MordWave, quiero cotizar una web a mi medida.')} target="_blank" rel="noopener">Cotizar sin compromiso <span class="arrow">→</span></a>
+      {extras.map((x, i) => (
+        <article class="card spot extra reveal" style={`--d:${i * 90}ms`}>
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={x.icon} />
+          </span>
+          <h4>{x.t}</h4>
+          <p>{x.d}</p>
+        </article>
+      ))}
+
+      <div class="card cta reveal">
+        <div class="cta-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="cta-text">
+          <h3>Nos adaptamos <span class="grad">a ti.</span></h3>
+          <p>
+            No trabajamos con paquetes cerrados. Conversamos sobre lo que necesita tu negocio y con qué presupuesto
+            cuentas, y armamos una propuesta a tu medida.
+          </p>
+        </div>
+        <a class="btn btn-primary magnetic" href={waLink('Hola MordWave, quiero cotizar una web a mi medida.')} target="_blank" rel="noopener">Cotizar sin compromiso <span class="arrow">↗</span></a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .services { padding: 120px 0 0; }
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+  .num { font-family: var(--mono); color: var(--violet-2); font-size: 14px; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(123, 92, 255, .2); color: var(--lavender); border: 1px solid rgba(157, 134, 255, .3); }
+  h3 { font-size: 28px; line-height: 1.08; letter-spacing: -0.03em; }
+  .price { font-family: var(--mono); color: var(--lavender); font-size: 14px; margin: 10px 0 14px; }
+  .text { color: var(--muted); }
 
-  /* ---- Índice ---- */
-  .index { list-style: none; border-top: 1px solid var(--line-strong); }
-  .row {
-    position: relative; display: grid; grid-template-columns: 80px 5fr 5fr 2fr; gap: 24px; align-items: start;
-    padding: 36px 0; border-bottom: 1px solid var(--line-strong); isolation: isolate;
+  /* ---- Destacado ---- */
+  .feat {
+    grid-column: span 4; grid-row: span 2; padding: 40px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 250px; gap: 28px; align-items: center;
+    background:
+      radial-gradient(70% 80% at 100% 0%, rgba(123, 92, 255, .28), transparent 70%),
+      linear-gradient(180deg, rgba(26, 22, 56, .9), rgba(16, 14, 36, .9));
+    border-color: rgba(157, 134, 255, .3);
   }
-  .row::before {
-    content: ''; position: absolute; inset: 0; z-index: -1; background: var(--paper-2);
-    transform: scaleY(0); transform-origin: bottom; transition: transform .5s var(--ease);
+  .checks { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+  .checks li::before {
+    content: ''; flex: none; width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
+    background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
   }
-  .row:hover::before { transform: scaleY(1); }
-  .row .n { padding-top: 10px; color: var(--violet); }
-  h3 { font-size: clamp(28px, 3.2vw, 44px); line-height: 1; letter-spacing: -0.045em; font-weight: 700; transition: transform .5s var(--ease); }
-  .row:hover h3 { transform: translateX(8px); }
-  .body p { color: var(--ink-2); max-width: 44ch; }
-  .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-  .tags li { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; padding: 5px 9px; border: 1px solid var(--line); }
-  .price { justify-self: end; padding-top: 10px; color: var(--muted); }
 
-  /* ---- Demo de reserva ---- */
-  .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 100px 0; }
-  .kicker { color: var(--muted); margin-bottom: 28px; }
-  .flow { list-style: none; border-top: 1px solid var(--line); }
-  .flow li {
-    display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line);
-    animation-duration: 10s; animation-iteration-count: infinite;
+  /* Celular con la reserva animada (ciclo de 10s) */
+  .phone-wrap { position: relative; display: grid; place-items: center; }
+  .phone-glow { position: absolute; inset: 15% 5%; background: rgba(123, 92, 255, .5); filter: blur(50px); z-index: -1; border-radius: 50%; }
+  .phone {
+    width: 240px; border-radius: 38px; padding: 10px; position: relative;
+    background: linear-gradient(160deg, #2b2650, #120f26);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset, 0 40px 80px -30px rgba(0,0,0,.8);
   }
-  .flow li:nth-child(1) { animation-name: s1; }
-  .flow li:nth-child(2) { animation-name: s2; }
-  .flow li:nth-child(3) { animation-name: s3; }
-  .flow li:nth-child(4) { animation-name: s4; }
-  .fn {
-    width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--ink);
-    font-family: var(--serif); font-style: italic; font-size: 24px; transition: background .3s, color .3s;
-  }
-  .flow strong { display: block; font-size: 22px; letter-spacing: -0.03em; }
-  .flow span:not(.fn) { color: var(--muted); font-size: 15px; }
-  /* Cada paso se marca justo cuando el celular lo muestra */
-  @keyframes s1 { 0%, 10% { opacity: .4; } 12%, 30% { opacity: 1; } 33%, 100% { opacity: .4; } }
-  @keyframes s2 { 0%, 30% { opacity: .4; } 33%, 46% { opacity: 1; } 49%, 100% { opacity: .4; } }
-  @keyframes s3 { 0%, 46% { opacity: .4; } 49%, 58% { opacity: 1; } 61%, 100% { opacity: .4; } }
-  @keyframes s4 { 0%, 58% { opacity: .4; } 61%, 92% { opacity: 1; } 96%, 100% { opacity: .4; } }
-
-  .phone-wrap { display: grid; place-items: center; position: relative; padding: 40px 0; }
-  .phone-wrap::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 32px 32px; mask-image: radial-gradient(circle, #000 30%, transparent 70%);
-  }
-  .phone { position: relative; width: 270px; border-radius: 40px; padding: 10px; background: var(--ink); }
-  .notch { position: absolute; top: 18px; left: 50%; translate: -50% 0; width: 76px; height: 20px; border-radius: 999px; background: var(--ink); z-index: 2; }
-  .screen { position: relative; border-radius: 31px; background: #fff; color: var(--ink); padding: 50px 18px 20px; overflow: hidden; font-size: 12px; }
-  .p-title { font-weight: 800; font-size: 19px; letter-spacing: -0.03em; }
-  .p-month { color: var(--muted); font-size: 12px; margin-bottom: 10px; font-family: var(--serif); font-style: italic; font-size: 16px; }
+  .notch { position: absolute; top: 18px; left: 50%; translate: -50% 0; width: 70px; height: 20px; border-radius: 999px; background: #0b0a16; z-index: 2; }
+  .screen { position: relative; border-radius: 30px; background: #f6f3ff; color: #1a1535; padding: 48px 16px 18px; overflow: hidden; font-size: 12px; }
+  .p-title { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; }
+  .p-month { color: #7a72a6; font-size: 12px; margin-bottom: 10px; }
   .week, .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-  .week span { font-size: 10px; color: var(--muted); font-weight: 600; }
+  .week span { font-size: 10px; color: #9b94c4; font-weight: 600; }
   .days { margin-top: 4px; }
-  .day { aspect-ratio: 1; display: grid; place-items: center; font-weight: 600; font-size: 11px; border: 1px solid var(--line); }
-  .day.off { border-color: transparent; color: #c5c0d8; text-decoration: line-through; }
+  .day { aspect-ratio: 1; display: grid; place-items: center; border-radius: 8px; font-weight: 600; font-size: 11px; background: #ebe6ff; }
+  .day.off { background: transparent; color: #c7c1e6; text-decoration: line-through; }
   .day.sel { animation: pickDay 10s var(--ease) infinite; }
-  .p-label { margin: 14px 0 6px; font-weight: 700; font-size: 12px; }
+  .p-label { margin: 12px 0 6px; font-weight: 700; font-size: 12px; }
   .slots { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .slot { text-align: center; padding: 7px 0; border: 1px solid var(--line); font-weight: 600; font-size: 11px; }
-  .slot.off { color: #c5c0d8; text-decoration: line-through; }
+  .slot { text-align: center; padding: 7px 0; border-radius: 9px; border: 1px solid #ddd6ff; font-weight: 600; font-size: 11px; }
+  .slot.off { color: #c7c1e6; text-decoration: line-through; }
   .slot.sel { animation: pickSlot 10s var(--ease) infinite; }
-  .confirm { display: block; margin-top: 14px; text-align: center; padding: 11px 0; font-weight: 700; color: #fff; background: #b9b3cf; animation: confirm 10s var(--ease) infinite; }
+  .confirm { display: block; margin-top: 12px; text-align: center; padding: 10px 0; border-radius: 12px; font-weight: 700; color: #fff; background: #b9addf; animation: confirm 10s var(--ease) infinite; }
   .toast {
     position: absolute; left: 10px; right: 10px; bottom: 12px; display: flex; gap: 10px; align-items: center;
-    padding: 12px; background: var(--ink); color: #fff; animation: toast 10s var(--ease) infinite;
+    padding: 12px; border-radius: 14px; background: #1a1535; color: #fff; box-shadow: 0 16px 30px -10px rgba(26, 21, 53, .6);
+    animation: toast 10s var(--ease) infinite;
   }
   .toast strong { display: block; font-size: 12px; }
-  .toast small { font-size: 10.5px; color: var(--violet-soft); }
-  .t-ok { width: 26px; height: 26px; flex: none; display: grid; place-items: center; background: var(--green); color: #fff; font-weight: 800; }
-  @keyframes pickDay { 0%, 10% { background: transparent; color: inherit; } 14%, 92% { background: var(--violet); color: #fff; border-color: var(--violet); } 100% { background: transparent; color: inherit; } }
-  @keyframes pickSlot { 0%, 30% { background: transparent; color: inherit; } 34%, 92% { background: var(--violet); color: #fff; border-color: var(--violet); } 100% { background: transparent; color: inherit; } }
-  @keyframes confirm { 0%, 46% { background: #b9b3cf; transform: none; } 49% { background: var(--ink); } 52% { transform: scale(.95); } 55%, 92% { background: var(--ink); transform: none; } 100% { background: #b9b3cf; } }
-  @keyframes toast { 0%, 58% { opacity: 0; transform: translateY(24px); } 63%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: translateY(24px); } }
+  .toast small { font-size: 10.5px; color: #b9b1e6; }
+  .t-ok { width: 26px; height: 26px; flex: none; border-radius: 8px; display: grid; place-items: center; background: rgba(62, 224, 143, .2); color: var(--green); font-weight: 800; }
+
+  @keyframes pickDay { 0%, 12% { background: #ebe6ff; color: inherit; transform: none; } 16% { transform: scale(.85); } 20%, 92% { background: #7b5cff; color: #fff; transform: none; box-shadow: 0 6px 14px -4px rgba(123, 92, 255, .8); } 100% { background: #ebe6ff; color: inherit; } }
+  @keyframes pickSlot { 0%, 30% { background: transparent; color: inherit; border-color: #ddd6ff; transform: none; } 34% { transform: scale(.9); } 38%, 92% { background: #7b5cff; color: #fff; border-color: #7b5cff; transform: none; } 100% { background: transparent; color: inherit; } }
+  @keyframes confirm { 0%, 40% { background: #b9addf; transform: none; } 44%, 50% { background: #7b5cff; transform: none; } 53% { transform: scale(.94); } 57%, 92% { background: #5b3df0; transform: none; } 100% { background: #b9addf; } }
+  @keyframes toast { 0%, 56% { opacity: 0; transform: translateY(30px) scale(.95); } 62%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: translateY(30px) scale(.95); } }
+
+  /* ---- Landing ---- */
+  .land { grid-column: span 2; grid-row: span 2; padding: 32px; display: flex; flex-direction: column; overflow: hidden; }
+  .land h3 { font-size: 24px; }
+  .browser { margin-top: 24px; flex: 1; min-height: 220px; border-radius: 14px; border: 1px solid var(--line-2); background: #100e24; overflow: hidden; display: flex; flex-direction: column; }
+  .b-bar { display: flex; gap: 5px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .b-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
+  .b-view { position: relative; flex: 1; overflow: hidden; }
+  .b-page { position: absolute; inset: 0 0 auto 0; padding: 14px; display: grid; gap: 12px; animation: pageScroll 12s ease-in-out infinite alternate; }
+  @keyframes pageScroll { 0%, 10% { transform: translateY(0); } 90%, 100% { transform: translateY(-55%); } }
+  .sk span, .img-sk { display: block; border-radius: 6px; background: linear-gradient(90deg, rgba(157, 134, 255, .18), rgba(157, 134, 255, .32), rgba(157, 134, 255, .18)); background-size: 200% 100%; animation: shimmer 2.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .hero-sk { display: grid; gap: 7px; justify-items: start; }
+  .hero-sk span:nth-child(1) { width: 80%; height: 16px; }
+  .hero-sk span:nth-child(2) { width: 55%; height: 16px; }
+  .hero-sk .cta-sk { width: 70px; height: 20px; border-radius: 999px; background: var(--violet); animation: none; margin-top: 4px; }
+  .row-sk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .row-sk span { height: 46px; }
+  .img-sk { height: 70px; }
+  .lines-sk { display: grid; gap: 6px; }
+  .lines-sk span { height: 7px; }
+  .lines-sk span:nth-child(2) { width: 85%; }
+  .lines-sk span:nth-child(3) { width: 60%; }
+
+  /* ---- Extras ---- */
+  .extra { grid-column: span 2; padding: 26px; transition: transform .5s var(--ease); }
+  .extra:hover { transform: translateY(-4px); }
+  .ico {
+    width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px;
+    color: var(--lavender); background: rgba(123, 92, 255, .16); border: 1px solid rgba(157, 134, 255, .25);
+    transition: transform .6s var(--ease), background .3s;
+  }
+  .extra:hover .ico { transform: rotate(-8deg) scale(1.08); background: rgba(123, 92, 255, .3); }
+  h4 { font-size: 18px; letter-spacing: -0.01em; }
+  .extra p { color: var(--muted); font-size: 15px; }
 
   /* ---- Nos adaptamos a ti ---- */
-  .adapt {
-    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end;
-    padding: 56px 0 120px; border-top: 1px solid var(--line-strong);
+  .cta {
+    grid-column: span 6; padding: 36px 40px; display: flex; align-items: center; gap: 32px; overflow: hidden;
+    background:
+      radial-gradient(60% 140% at 0% 50%, rgba(123, 92, 255, .32), transparent 70%),
+      radial-gradient(40% 120% at 100% 50%, rgba(200, 107, 255, .14), transparent 70%),
+      rgba(16, 14, 36, .9);
+    border-color: rgba(157, 134, 255, .3);
   }
-  .statement { font-size: clamp(30px, 4vw, 54px); line-height: 1.05; letter-spacing: -0.045em; font-weight: 700; max-width: 22ch; }
-  .statement .ital { font-size: 1.1em; }
+  .cta-text { flex: 1; }
+  .cta h3 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.04em; }
+  .cta p { color: var(--muted); font-size: 16px; max-width: 600px; margin-top: 8px; }
+  .cta .btn { flex: none; }
+  /* Ícono de "ajustes" con perillas que se mueven solas */
+  .cta-icon {
+    flex: none; width: 84px; height: 84px; border-radius: 24px; padding: 18px 16px;
+    display: grid; gap: 11px; align-content: center;
+    background: rgba(123, 92, 255, .16); border: 1px solid rgba(157, 134, 255, .3);
+  }
+  .cta-icon span { position: relative; height: 3px; border-radius: 3px; background: rgba(216, 208, 255, .3); }
+  .cta-icon span::after {
+    content: ''; position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; translate: -50% -50%;
+    background: var(--lavender); box-shadow: 0 0 12px rgba(157, 134, 255, .9);
+    animation: knob 4s var(--ease) infinite;
+  }
+  .cta-icon span:nth-child(1)::after { left: 30%; animation-delay: 0s; }
+  .cta-icon span:nth-child(2)::after { left: 70%; animation-delay: -1.3s; }
+  .cta-icon span:nth-child(3)::after { left: 45%; animation-delay: -2.6s; }
+  @keyframes knob { 0%, 100% { left: 25%; } 33% { left: 80%; } 66% { left: 50%; } }
 
-  @media (max-width: 1000px) {
-    .row { grid-template-columns: 56px 1fr; }
-    .row .body { grid-column: 2; }
-    .price { grid-column: 2; justify-self: start; padding-top: 0; }
-    .demo { grid-template-columns: 1fr; gap: 24px; padding: 72px 0; }
-    .adapt { grid-template-columns: 1fr; }
+  @media (max-width: 1020px) {
+    .feat { grid-column: span 6; grid-row: auto; }
+    .land { grid-column: span 6; grid-row: auto; }
+    .browser { min-height: 240px; }
   }
-  @media (max-width: 640px) {
-    .services { padding-top: 80px; }
-    .row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
-    .row .body, .price { grid-column: 1; }
-    .row .n { padding: 0; }
-    .flow strong { font-size: 19px; }
-    .phone { width: 250px; }
-    .adapt { padding-bottom: 80px; }
-    .adapt .btn { justify-content: space-between; }
+  @media (max-width: 760px) {
+    .bento { grid-template-columns: 1fr; }
+    .feat, .land, .extra, .cta { grid-column: auto; }
+    .feat { grid-template-columns: 1fr; padding: 28px 22px 36px; }
+    .land { padding: 26px 22px; }
+    .cta { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 20px; }
+    .cta-icon { width: 68px; height: 68px; padding: 14px 12px; gap: 9px; }
+    h3 { font-size: 24px; }
   }
 </style>

@@ -12,6 +12,7 @@ export const waLink = (text = 'Hola, vi MordWave y me gustaría cotizar un proye
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
 
 export const nav = [
+  { href: '#inicio', label: 'Inicio' },
   { href: '#servicios', label: 'Servicios' },
   { href: '#proceso', label: 'Cómo trabajamos' },
   { href: '#proyectos', label: 'Proyectos' },
