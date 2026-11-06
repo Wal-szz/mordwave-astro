@@ -4,7 +4,6 @@ import icono from '../assets/icono.png';
 import { waLink } from '../data/site';
 
 const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
-const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño a medida', 'WhatsApp integrado', 'SEO básico', 'Responsive', 'Abono online'];
 ---
 
 <section class="hero" id="inicio">
@@ -56,7 +55,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
         </span>
       </h1>
       <p class="lead rise" style="--i:4">
-        Creamos landing pages a medida y webs con reservas conectadas a Google Calendar, para emprendimientos y pymes
+        Creamos landing pages, sitios web y reservas online conectadas a Google Calendar, para emprendimientos y pymes
         que quieren verse profesionales y recibir clientes desde el primer día.
       </p>
       <div class="actions rise" style="--i:5">
@@ -64,25 +63,20 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
         <a class="btn btn-ghost magnetic" href="#proyectos">Ver proyecto demo</a>
       </div>
       <ul class="facts rise" style="--i:6">
-        <li><strong>A tu medida</strong><span>Nos adaptamos a ti</span></li>
-        <li><strong>Reuniones</strong><span>Todas las necesarias</span></li>
-        <li><strong><span data-count="50" data-suffix="%">50%</span> / 50%</strong><span>Abono y saldo</span></li>
+        <li><strong>3 ingenieros</strong><span>Informáticos, trato directo</span></li>
+        <li><strong>Chillán</strong><span>Trabajamos con todo Chile</span></li>
+        <li><strong>&lt; 24 horas</strong><span>Para responderte</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="ticker marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {[0, 1].map(() => ticker.map((t) => <span class="tick">{t}<i>✦</i></span>))}
-    </div>
-  </div>
 </section>
 
 <style>
-  .hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 130px 0 0; overflow: hidden; }
+  .hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 130px 0 90px; overflow: hidden; }
 
   /* Fondo: auroras y grilla */
-  .aurora { position: absolute; inset: 0; pointer-events: none; filter: blur(70px); opacity: .75; }
+  .aurora { position: absolute; inset: 0; pointer-events: none; filter: blur(80px); opacity: .45; }
   .aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
   .aurora span:nth-child(1) { width: 46vw; height: 46vw; left: -8vw; top: 4vh; background: #5b3df0; opacity: .5; animation: drift1 18s ease-in-out infinite; }
   .aurora span:nth-child(2) { width: 34vw; height: 34vw; right: -6vw; top: -10vh; background: #b04dff; opacity: .25; animation: drift2 22s ease-in-out infinite; }
@@ -160,8 +154,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   .chip {
     position: absolute; z-index: 4; display: flex; align-items: center; gap: 12px;
     padding: 12px 16px 12px 12px; border-radius: 16px;
-    background: rgba(22, 19, 49, .78); border: 1px solid var(--line-2);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: var(--surface); border: 1px solid var(--line-2);
     box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .6);
     font-size: 13px; line-height: 1.25;
   }
@@ -216,17 +209,16 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   .facts li > span { font-size: 13px; color: var(--muted); }
 
   /* Cinta inferior */
-  .ticker { margin-top: 90px; border-block: 1px solid var(--line); padding: 20px 0; background: rgba(123, 92, 255, .035); position: relative; }
-  .tick { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; color: rgba(243, 240, 255, .82); }
-  .tick i { font-style: normal; color: var(--violet-2); font-size: 16px; }
 
+  @media (max-width: 720px) {
+    .hero { min-height: 0; padding-bottom: 56px; }
+  }
   @media (max-width: 960px) {
     .grid { grid-template-columns: 1fr; gap: 48px; }
     .logo-wrap { max-width: 460px; width: 100%; margin: 0 auto; }
     .chip-a { right: -8px; }
     .chip-b { left: -8px; }
     .hero { padding-top: 104px; }
-    .ticker { margin-top: 64px; }
   }
   @media (max-width: 520px) {
     .chip { padding: 9px 12px 9px 9px; font-size: 12px; }
@@ -237,7 +229,6 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
     .facts { grid-template-columns: 1fr; }
     .facts li, .facts li + li { padding: 14px 0; border-left: 0; border-bottom: 1px solid var(--line); flex-direction: row; justify-content: space-between; align-items: baseline; }
     .actions .btn { flex: 1 1 100%; }
-    .tick { font-size: 18px; }
   }
 </style>
 

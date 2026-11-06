@@ -2,6 +2,30 @@
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 
+// 0. Enlaces internos (#seccion) que siempre llegan a su sección.
+// Si algo cambia de alto mientras se desplaza (una pregunta que se abre, la tipografía que termina
+// de cargar), al terminar el recorrido se revisa la posición y se corrige.
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+  if (!a || a.target === '_blank' || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+  const id = decodeURIComponent(a.hash.slice(1));
+  const target = id ? document.getElementById(id) : null;
+  if (!target) return;
+  e.preventDefault();
+  history.pushState(null, '', `#${id}`);
+  const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const go = (behavior: ScrollBehavior) => scrollTo({ top: target.getBoundingClientRect().top + scrollY - offset, behavior });
+  go(reduce ? 'auto' : 'smooth');
+  let done = false;
+  const check = () => {
+    if (done) return;
+    done = true;
+    if (Math.abs(target.getBoundingClientRect().top - offset) > 4) go('auto');
+  };
+  addEventListener('scrollend', check, { once: true });
+  setTimeout(check, 1600); // por si el navegador no tiene el evento scrollend
+});
+
 // 1. Aparición al entrar en pantalla
 const io = new IntersectionObserver(
   (entries) => {
@@ -14,15 +38,6 @@ const io = new IntersectionObserver(
   { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
 );
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-// 2. Brillo que sigue al mouse dentro de las tarjetas (.spot)
-document.querySelectorAll<HTMLElement>('.spot').forEach((el) => {
-  el.addEventListener('pointermove', (e) => {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    el.style.setProperty('--my', `${e.clientY - r.top}px`);
-  });
-});
 
 if (!reduce && finePointer) {
   // 3. Inclinación 3D ([data-tilt="grados"])

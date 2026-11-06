@@ -1,11 +1,32 @@
 ---
+// Proceso en 4 pasos + lo que incluye cada proyecto. Aquí vive la información de pago y reuniones
+// (no se repite en otras secciones).
 const steps = [
-  { title: 'Reunión de inicio', tag: 'Reunión', text: 'Conversamos sobre tu negocio, lo que necesitas y cómo quieres que se vea. Salimos con una propuesta clara de alcance y precio.' },
-  { title: 'Abono del 50%', tag: 'Pago 1', text: 'Con el abono del 50% reservamos tu proyecto en nuestra agenda y comenzamos a trabajar.' },
-  { title: 'Diseñamos y desarrollamos', tag: 'Trabajo', text: 'Construimos tu web para celular y computador. Te mantenemos al tanto del avance durante todo el proceso.' },
-  { title: 'Reunión de revisión', tag: 'Revisión', text: 'Antes de publicar, revisamos juntos la web completa y aplicamos las correcciones que pidas.' },
-  { title: 'Tu dominio', tag: 'Asesoría', text: 'Compras tu dominio (por ejemplo tunegocio.cl) para que quede a tu nombre. Te asesoramos en qué comprar y dónde.' },
-  { title: 'Publicación y saldo', tag: 'Pago 2', text: 'Pagas el 50% restante, publicamos tu web en tu dominio y te explicamos cómo funciona.' },
+  {
+    title: 'Reunión de inicio',
+    text: 'Conversamos sobre tu negocio y lo que necesitas. Te enviamos una propuesta con alcance, precio y plazo.',
+  },
+  {
+    title: 'Abono y desarrollo',
+    text: 'Con el abono del 50% partimos. Para empezar necesitamos tu logo, textos y fotos; si te falta algo, te ayudamos. Te vamos mostrando los avances.',
+  },
+  {
+    title: 'Revisión',
+    text: 'Revisamos juntos la web completa y hacemos las correcciones que pidas. Nos reunimos todas las veces que sea necesario.',
+  },
+  {
+    title: 'Publicación',
+    text: 'Compras tu dominio para que quede a tu nombre, con nuestra asesoría. Pagas el 50% restante, publicamos y te enseñamos a usar tu web.',
+  },
+];
+
+const includes = [
+  'Diseño a medida, adaptado al celular',
+  'Botón de WhatsApp y formulario de contacto',
+  'SEO básico para aparecer en Google',
+  'Sitio seguro con certificado SSL',
+  'Asesoría para elegir y comprar tu dominio',
+  'Capacitación al entregar y acompañamiento',
 ];
 ---
 
@@ -14,43 +35,28 @@ const steps = [
     <div class="side">
       <div class="reveal">
         <span class="eyebrow">Cómo trabajamos</span>
-        <h2 class="section-title">Un proceso simple, <span class="grad">de principio a fin.</span></h2>
-        <p class="section-lead">Sabes en todo momento en qué etapa está tu web, cuánto vas a pagar y cuándo.</p>
+        <h2 class="section-title">De la idea a tu <span class="grad">web publicada.</span></h2>
+        <p class="section-lead">Sabes en todo momento en qué etapa está tu web y cuándo pagas cada parte.</p>
       </div>
 
-      <div class="summary">
-        <div class="box card spot reveal" style="--d:100ms">
-          <span class="big-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
-          </span>
-          <div>
-            <h4>Todas las reuniones necesarias</h4>
-            <p>Partimos con una reunión de inicio, revisamos juntos antes de publicar y nos juntamos las veces que haga falta entre medio.</p>
-          </div>
-        </div>
-        <div class="box card spot reveal" style="--d:200ms">
-          <span class="big" data-count="50" data-suffix="%">50%</span>
-          <div>
-            <h4>De abono para comenzar</h4>
-            <p>El otro 50% se paga al final, cuando ya revisaste la web y está lista.</p>
-          </div>
-        </div>
+      <div class="card inc reveal" style="--d:100ms">
+        <h3>Incluido en cada proyecto</h3>
+        <ul>{includes.map((x) => <li>{x}</li>)}</ul>
       </div>
     </div>
 
     <div class="timeline" id="timeline">
       <div class="track" aria-hidden="true"><div class="fill"></div></div>
       <ol class="steps">
-      {steps.map((s, i) => (
-        <li class="step reveal">
-          <span class="node" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <div class="content card spot">
-            <span class="tag">{s.tag}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </div>
-        </li>
-      ))}
+        {steps.map((s, i) => (
+          <li class="step reveal">
+            <span class="node" aria-hidden="true">{i + 1}</span>
+            <div class="content card">
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
       </ol>
     </div>
   </div>
@@ -58,68 +64,44 @@ const steps = [
 
 <style>
   .process { background: linear-gradient(180deg, transparent, rgba(22, 19, 49, .55) 20%, rgba(22, 19, 49, .55) 80%, transparent); }
-  .layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 72px; align-items: start; }
-  .side { position: sticky; top: 120px; }
-  .summary { display: grid; gap: 14px; margin-top: 40px; }
-  .box { padding: 24px; display: flex; gap: 22px; align-items: center; }
-  .big {
-    font-size: 58px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; flex: none; min-width: 2.3ch;
-    background: linear-gradient(180deg, #fff, var(--violet-2));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .big-icon {
-    flex: none; width: 2.3ch; font-size: 58px; height: 1em; display: grid; place-items: center;
-  }
-  .big-icon svg {
-    width: 58px; height: 58px; padding: 13px; border-radius: 18px; color: #fff;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet));
-    box-shadow: 0 10px 26px -8px rgba(123, 92, 255, .9);
-  }
-  h4 { font-size: 18px; margin-bottom: 2px; }
-  .box p { color: var(--muted); font-size: 15px; }
+  .layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
+  .side { position: sticky; top: 110px; }
 
-  /* Línea de tiempo */
-  .timeline { position: relative; padding-left: 76px; }
-  .steps { list-style: none; display: grid; gap: 22px; }
-  .track { position: absolute; left: 25px; top: 10px; bottom: 10px; width: 2px; background: var(--line); border-radius: 2px; }
-  .fill {
-    position: absolute; inset: 0; border-radius: inherit; transform-origin: top; transform: scaleY(var(--fill, 0));
-    background: linear-gradient(180deg, var(--violet-2), var(--pink));
-    box-shadow: 0 0 16px rgba(157, 134, 255, .8);
+  .inc { padding: 26px 28px; margin-top: 32px; }
+  .inc h3 { font-size: 18px; margin-bottom: 14px; }
+  .inc ul { list-style: none; display: grid; gap: 10px; }
+  .inc li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+  .inc li::before {
+    content: ''; flex: none; width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
+    background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
   }
+
+  /* Línea de tiempo que se llena al hacer scroll */
+  .timeline { position: relative; padding-left: 72px; }
+  .steps { list-style: none; display: grid; gap: 18px; }
+  .track { position: absolute; left: 23px; top: 10px; bottom: 10px; width: 2px; background: var(--line); border-radius: 2px; }
+  .fill { position: absolute; inset: 0; border-radius: inherit; transform-origin: top; transform: scaleY(var(--fill, 0)); background: var(--violet-2); }
   .step { position: relative; }
   .node {
-    position: absolute; left: -76px; top: 22px; width: 52px; height: 52px; border-radius: 16px;
-    display: grid; place-items: center; font-family: var(--mono); font-size: 15px; color: var(--muted);
-    background: var(--bg-2); border: 1px solid var(--line-2);
-    transition: all .6s var(--ease);
+    position: absolute; left: -72px; top: 20px; width: 48px; height: 48px; border-radius: 14px;
+    display: grid; place-items: center; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--muted);
+    background: var(--surface); border: 1px solid var(--line-2); transition: all .5s var(--ease);
   }
-  .step.active .node {
-    color: #fff; border-color: transparent;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet));
-    box-shadow: 0 0 0 6px rgba(123, 92, 255, .15), 0 10px 30px -6px rgba(123, 92, 255, .9);
-    transform: scale(1.06);
-  }
-  .content { padding: 26px 28px; transition: border-color .6s, transform .6s var(--ease); }
-  .step.active .content { border-color: rgba(157, 134, 255, .35); }
-  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--violet-2); }
-  h3 { font-size: 22px; letter-spacing: -0.02em; margin: 6px 0 6px; }
-  .content p { color: var(--muted); font-size: 15px; }
+  .step.active .node { color: #fff; background: var(--violet); border-color: var(--violet); }
+  .content { padding: 24px 26px; }
+  .content h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .content p { color: var(--muted); font-size: 15.5px; }
 
   @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; gap: 56px; }
+    .layout { grid-template-columns: 1fr; gap: 40px; }
     .side { position: static; }
   }
   @media (max-width: 560px) {
-    .timeline { padding-left: 58px; }
-    .steps { gap: 16px; }
-    .track { left: 19px; }
-    .node { left: -58px; width: 40px; height: 40px; border-radius: 12px; font-size: 13px; top: 20px; }
-    .content { padding: 20px; }
-    .big { font-size: 46px; }
-    .big-icon { font-size: 46px; }
-    .big-icon svg { width: 48px; height: 48px; padding: 11px; border-radius: 15px; }
-    .box { padding: 20px; gap: 16px; }
+    .timeline { padding-left: 54px; }
+    .track { left: 17px; }
+    .node { left: -54px; width: 36px; height: 36px; border-radius: 10px; font-size: 16px; top: 18px; }
+    .content { padding: 18px 18px; }
+    .inc { padding: 22px 20px; }
   }
 </style>
 
@@ -133,11 +115,10 @@ const steps = [
     ticking = false;
     const r = tl.getBoundingClientRect();
     const mid = innerHeight * 0.6;
-    const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
-    fill.style.setProperty('--fill', p.toFixed(3));
+    fill.style.setProperty('--fill', Math.max(0, Math.min(1, (mid - r.top) / r.height)).toFixed(3));
     for (const s of steps) {
-      const node = s.querySelector('.node')!.getBoundingClientRect();
-      s.classList.toggle('active', node.top + node.height / 2 < mid);
+      const n = s.querySelector('.node')!.getBoundingClientRect();
+      s.classList.toggle('active', n.top + n.height / 2 < mid);
     }
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });

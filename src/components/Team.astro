@@ -29,11 +29,6 @@ const team: Member[] = [
   },
 ];
 
-const values = [
-  { t: 'Trato directo', d: 'Hablas con quienes construyen tu web, sin intermediarios.' },
-  { t: 'Desde Ñuble', d: 'Estamos en Chillán y trabajamos a distancia con todo Chile.' },
-  { t: 'Acompañamiento', d: 'Te guiamos antes, durante y después de publicar.' },
-];
 ---
 
 <section id="equipo">
@@ -63,14 +58,6 @@ const values = [
       ))}
     </div>
 
-    <ul class="values reveal">
-      {values.map((v) => (
-        <li>
-          <h4>{v.t}</h4>
-          <p>{v.d}</p>
-        </li>
-      ))}
-    </ul>
   </div>
 </section>
 
@@ -113,10 +100,6 @@ const values = [
   .studies { font-family: var(--mono); font-size: 12px; color: var(--violet-2); margin-bottom: 12px; }
   .bio { color: var(--muted); font-size: 15px; }
 
-  .values { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
-  .values li { padding-top: 18px; border-top: 1px solid var(--line); }
-  h4 { font-size: 17px; }
-  .values p { color: var(--muted); font-size: 15px; }
 
   @media (max-width: 900px) {
     .people { grid-template-columns: 1fr; }
@@ -126,7 +109,5 @@ const values = [
     .person > :not(.avatar) { grid-column: 2; }
     .avatar { grid-row: 1 / span 4; width: 64px; height: 64px; font-size: 24px; border-radius: 18px; margin: 0; }
     .avatar::before { border-radius: 22px; }
-    .values { grid-template-columns: 1fr; gap: 0; margin-top: 28px; }
-    .values li { padding: 16px 0; }
   }
 </style>
