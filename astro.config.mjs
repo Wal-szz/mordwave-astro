@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mordwave.com',
+  site: 'https://www.mordwave.com',
   integrations: [sitemap()],
 });
