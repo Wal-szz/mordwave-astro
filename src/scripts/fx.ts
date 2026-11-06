@@ -15,15 +15,6 @@ const io = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-// 2. Brillo que sigue al mouse dentro de las tarjetas (.spot)
-document.querySelectorAll<HTMLElement>('.spot').forEach((el) => {
-  el.addEventListener('pointermove', (e) => {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    el.style.setProperty('--my', `${e.clientY - r.top}px`);
-  });
-});
-
 if (!reduce && finePointer) {
   // 3. Inclinación 3D ([data-tilt="grados"])
   document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {

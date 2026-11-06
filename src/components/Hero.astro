@@ -4,7 +4,7 @@ import icono from '../assets/icono.png';
 import { waLink } from '../data/site';
 
 const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
-const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño a medida', 'WhatsApp integrado', 'SEO básico', 'Responsive', 'Abono online'];
+const ticker = ['Landing pages', 'Sitios web', 'Reservas online', 'Google Calendar', 'Diseño a medida', 'WhatsApp integrado', 'SEO básico', 'Responsive', 'Abono online'];
 ---
 
 <section class="hero" id="inicio">
@@ -56,7 +56,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
         </span>
       </h1>
       <p class="lead rise" style="--i:4">
-        Creamos landing pages a medida y webs con reservas conectadas a Google Calendar, para emprendimientos y pymes
+        Creamos landing pages, sitios web y reservas online conectadas a Google Calendar, para emprendimientos y pymes
         que quieren verse profesionales y recibir clientes desde el primer día.
       </p>
       <div class="actions rise" style="--i:5">
@@ -82,7 +82,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   .hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 130px 0 0; overflow: hidden; }
 
   /* Fondo: auroras y grilla */
-  .aurora { position: absolute; inset: 0; pointer-events: none; filter: blur(70px); opacity: .75; }
+  .aurora { position: absolute; inset: 0; pointer-events: none; filter: blur(80px); opacity: .45; }
   .aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
   .aurora span:nth-child(1) { width: 46vw; height: 46vw; left: -8vw; top: 4vh; background: #5b3df0; opacity: .5; animation: drift1 18s ease-in-out infinite; }
   .aurora span:nth-child(2) { width: 34vw; height: 34vw; right: -6vw; top: -10vh; background: #b04dff; opacity: .25; animation: drift2 22s ease-in-out infinite; }
@@ -160,8 +160,7 @@ const ticker = ['Landing pages', 'Reservas online', 'Google Calendar', 'Diseño 
   .chip {
     position: absolute; z-index: 4; display: flex; align-items: center; gap: 12px;
     padding: 12px 16px 12px 12px; border-radius: 16px;
-    background: rgba(22, 19, 49, .78); border: 1px solid var(--line-2);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: var(--surface); border: 1px solid var(--line-2);
     box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .6);
     font-size: 13px; line-height: 1.25;
   }

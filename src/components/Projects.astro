@@ -1,8 +1,33 @@
 ---
 import { Image } from 'astro:assets';
 import demo from '../assets/demo-tattoo.jpg';
+import nulanios from '../assets/nulanios.jpg';
+import inkSoul from '../assets/ink-soul.jpg';
 
 const demoUrl = 'https://landing-tatto-calendar.vercel.app';
+const more = [
+  {
+    img: nulanios,
+    url: 'https://nulanios-burgers.vercel.app',
+    badge: 'Proyecto real',
+    real: true,
+    kind: 'Sitio web · Hamburguesería',
+    t: "Nulanio's Burgers",
+    need: 'Emprendimiento familiar de Coihueco recién lanzado que necesitaba estar en internet rápido.',
+    did: 'Sitio con menú visible, historia del negocio y pedidos directos por WhatsApp.',
+  },
+  {
+    img: inkSoul,
+    url: 'https://tatto-landingpage.vercel.app',
+    badge: 'Concepto MordWave',
+    real: false,
+    kind: 'Landing · Estudio de tatuajes',
+    t: 'Ink & Soul',
+    need: 'Una presencia oscura y elegante para un estudio de tatuajes.',
+    did: 'Landing con galería de trabajos, sección de artistas y forma de reservar sesión.',
+  },
+];
+
 const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de trabajos', 'Guía interactiva por zona', 'Preguntas frecuentes', 'Responsive'];
 ---
 
@@ -41,6 +66,28 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
         <a class="btn btn-primary magnetic" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo <span class="arrow">↗</span></a>
       </div>
     </article>
+
+    <div class="more">
+      {more.map((p, i) => (
+        <article class="card spot mini reveal" style={`--d:${i * 100}ms`}>
+          <a class="mshot" href={p.url} target="_blank" rel="noopener" aria-label={`Abrir ${p.t} en una pestaña nueva`}>
+            <Image src={p.img} alt={`Vista de ${p.t}`} widths={[400, 800]} sizes="(max-width: 900px) 100vw, 560px" />
+          </a>
+          <div class="mbody">
+            <div class="mtop">
+              <span class:list={['mbadge', { real: p.real }]}>{p.badge}</span>
+              <span class="kind">{p.kind}</span>
+            </div>
+            <h3>{p.t}</h3>
+            <dl>
+              <div><dt>Necesitaba</dt><dd>{p.need}</dd></div>
+              <div><dt>Hicimos</dt><dd>{p.did}</dd></div>
+            </dl>
+            <a class="visit" href={p.url} target="_blank" rel="noopener">Ver sitio <span class="arrow">↗</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -62,14 +109,14 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
   .shot:hover .img :global(img) { transform: scale(1.05); }
   .open {
     position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 12px 20px; border-radius: 999px;
-    background: rgba(11, 10, 22, .8); border: 1px solid var(--line-2); backdrop-filter: blur(10px); font-weight: 600; font-size: 14px;
+    background: var(--bg); border: 1px solid var(--line-2); font-weight: 600; font-size: 14px;
     opacity: 0; scale: .9; transition: opacity .4s, scale .4s var(--ease);
   }
   .shot:hover .open { opacity: 1; scale: 1; }
 
   .float {
     position: absolute; z-index: 2; padding: 10px 14px; border-radius: 14px; font-size: 13px;
-    background: rgba(22, 19, 49, .85); border: 1px solid var(--line-2); backdrop-filter: blur(12px);
+    background: var(--surface); border: 1px solid var(--line-2);
     box-shadow: 0 16px 30px -12px rgba(0,0,0,.7); display: flex; align-items: center; gap: 8px;
   }
   .float strong { color: var(--lavender); }
@@ -91,7 +138,29 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
   li:hover { background: rgba(123, 92, 255, .2); border-color: rgba(157, 134, 255, .5); }
   .body .btn { align-self: flex-start; }
 
+  /* ---- Más proyectos ---- */
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .mini { overflow: hidden; display: flex; flex-direction: column; }
+  .mshot { display: block; overflow: hidden; border-bottom: 1px solid var(--line); aspect-ratio: 16 / 9; }
+  .mshot :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 1s var(--ease); }
+  .mshot:hover :global(img) { transform: scale(1.04); }
+  .mbody { padding: 26px 28px 28px; display: flex; flex-direction: column; flex: 1; }
+  .mtop { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+  .mbadge { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; border: 1px dashed var(--line-2); color: var(--muted); }
+  .mbadge.real { border: 0; background: rgba(62, 224, 143, .14); color: var(--green); }
+  .mini h3 { font-size: 26px; margin: 12px 0 14px; }
+  .mini dl { display: grid; gap: 10px; margin-bottom: 20px; }
+  .mini dl > div { display: grid; grid-template-columns: 96px 1fr; gap: 12px; font-size: 15px; }
+  .mini dt { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--violet-2); padding-top: 3px; }
+  .mini dd { color: var(--muted); }
+  .visit { margin-top: auto; align-self: flex-start; display: inline-flex; gap: 8px; font-weight: 600; color: var(--lavender); }
+  .visit .arrow { transition: transform .35s var(--ease); }
+  .visit:hover .arrow { transform: translate(3px, -3px); }
+
   @media (max-width: 900px) {
+    .more { grid-template-columns: 1fr; }
+    .mbody { padding: 22px 20px 24px; }
+    .mini dl > div { grid-template-columns: 1fr; gap: 2px; }
     .project { grid-template-columns: minmax(0, 1fr); }
     .visual { padding: 56px 22px 22px; }
     .f1 { top: 14px; left: 22px; }
