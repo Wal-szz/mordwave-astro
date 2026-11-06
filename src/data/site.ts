@@ -1,7 +1,7 @@
 // Datos de contacto y textos compartidos. Cambia aquí y se actualiza en toda la web.
 export const site = {
   name: 'MordWave',
-  url: 'https://mordwave.com',
+  url: 'https://www.mordwave.com',
   email: 'mordewave@gmail.com',
   whatsapp: '56983960591',
   instagram: 'mordwaves',
