@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import icono from '../assets/icono.png';
 import { waLink } from '../data/site';
 
-const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
 ---
 
 <section class="hero" id="inicio">
@@ -48,9 +47,7 @@ const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
       <h1>
         <span class="line"><span class="rise" style="--i:1">Del primer boceto</span></span>
         <span class="line"><span class="rise" style="--i:2">a tu</span></span>
-        <span class="line rotator rise" style="--i:3" aria-label={words[0]}>
-          <span class="word grad" id="rot-word" aria-hidden="true" data-words={JSON.stringify(words)}>{words[0]}</span>
-        </span>
+        <span class="line"><span class="rise grad" style="--i:3">web funcionando.</span></span>
       </h1>
       <p class="lead rise" style="--i:4">
         Creamos landing pages, sitios web y reservas online conectadas a Google Calendar, para emprendimientos y pymes
@@ -89,7 +86,7 @@ const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
     opacity: .5;
   }
 
-  .grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; position: relative; flex: 1; }
+  .grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 64px; align-items: center; position: relative; flex: 1; }
 
   /* ---- Panel del logo ---- */
   .logo-wrap { position: relative; animation: panelIn 1.4s var(--ease) both; }
@@ -169,7 +166,7 @@ const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
   @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 
   /* ---- Información ---- */
-  h1 { font-size: clamp(44px, 6.4vw, 86px); line-height: .98; letter-spacing: -0.05em; font-weight: 800; margin: 22px 0 26px; }
+  h1 { font-size: clamp(44px, 5.6vw, 86px); line-height: .98; letter-spacing: -0.05em; font-weight: 800; margin: 22px 0 26px; }
   .line { display: block; overflow: hidden; padding-bottom: .06em; }
   .rise { display: inline-block; animation: rise 1.1s var(--ease) both; animation-delay: calc(var(--i) * 90ms + 250ms); }
   .line > .rise { display: block; }
@@ -181,12 +178,6 @@ const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
   .actions.rise { display: flex; }
   @keyframes fadeUp { from { opacity: .01; transform: translateY(24px); filter: blur(6px); } }
 
-  /* Palabra rotativa: un solo elemento que cambia de texto con un fundido (ver script).
-     Así Google no cuenta cada palabra como contenido nuevo y la página no parece más lenta. */
-  .rotator { overflow: visible; }
-  .word { display: inline-block; white-space: nowrap; transition: opacity .45s var(--ease), transform .45s var(--ease), filter .45s var(--ease); }
-  .word.out { opacity: 0; transform: translateY(-.3em); filter: blur(8px); }
-  .word.pre { opacity: 0; transform: translateY(.3em); filter: blur(8px); transition: none; }
 
   .lead { color: var(--muted); font-size: 19px; max-width: 520px; }
   .actions { flex-wrap: wrap; gap: 12px; margin: 36px 0 44px; }
@@ -221,24 +212,6 @@ const words = ['web funcionando.', 'agenda llena.', 'negocio online.'];
 </style>
 
 <script>
-  // Cambia la palabra del título cada 3 segundos
-  const word = document.getElementById('rot-word');
-  if (word && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const list: string[] = JSON.parse(word.dataset.words || '[]');
-    let n = 0;
-    setInterval(() => {
-      word.classList.add('out');
-      setTimeout(() => {
-        n = (n + 1) % list.length;
-        word.textContent = list[n];
-        word.classList.remove('out');
-        word.classList.add('pre');
-        void word.offsetWidth;
-        word.classList.remove('pre');
-      }, 450);
-    }, 3000);
-  }
-
   const panel = document.getElementById('logo-panel') as HTMLElement;
   const canvas = document.getElementById('particles') as HTMLCanvasElement;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
