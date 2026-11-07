@@ -1,47 +1,94 @@
 ---
+import { Image } from 'astro:assets';
+import icono from '../assets/icono.png';
 import { site, waLink } from '../data/site';
+
+const options = ['Landing page', 'Sitio web', 'Reservas online', 'No estoy seguro'];
+
+const waIcon =
+  '<path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-4.1-3.6c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4ZM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8Zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.8L.1 24l6.4-1.7A11.8 11.8 0 0 0 12 23.7 11.8 11.8 0 0 0 20.4 3.6Z"/>';
+
+const channels = [
+  { label: 'WhatsApp', value: '+56 9 8396 0591', href: waLink(), fill: true, icon: waIcon },
+  { label: 'Email', value: site.email, href: `mailto:${site.email}`, icon: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>' },
+  { label: 'Instagram', value: `@${site.instagram}`, href: `https://instagram.com/${site.instagram}`, icon: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>' },
+];
 ---
 
 <section id="contacto">
   <div class="container">
-    <div class="wrap card spot reveal">
+    <div class="wrap card reveal">
       <div class="info">
         <span class="eyebrow">Contacto</span>
         <h2 class="section-title">Hablemos de <span class="grad">tu proyecto.</span></h2>
-        <p class="section-lead">Cuéntanos qué necesita tu negocio y agendamos la reunión de inicio. Respondemos en menos de 24 horas.</p>
+        <p class="section-lead">Cuéntanos qué necesita tu negocio y agendamos la reunión de inicio.</p>
+        <p class="status"><i aria-hidden="true"></i>Respondemos en menos de 24 horas</p>
+
+        <!-- Vista previa: muestra en vivo el mensaje que se enviará por WhatsApp -->
+        <div class="chat" aria-live="polite">
+          <div class="chat-head">
+            <Image src={icono} alt="" width={64} height={64} class="avatar" />
+            <div><strong>MordWave</strong><small>Así llegará tu mensaje</small></div>
+          </div>
+          <div class="chat-body">
+            <p class="bubble" id="preview">Hola MordWave, soy …</p>
+          </div>
+        </div>
 
         <ul class="channels">
-          <li><span>WhatsApp</span><a href={waLink()} target="_blank" rel="noopener">+56 9 8396 0591</a></li>
-          <li><span>Email</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><span>Instagram</span><a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener">@{site.instagram}</a></li>
-          <li><span>Ubicación</span><p>{site.location}</p></li>
+          {channels.map((c) => (
+            <li>
+              <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                <span class="ico" aria-hidden="true">
+                  {c.fill ? (
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" set:html={c.icon} />
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={c.icon} />
+                  )}
+                </span>
+                <span class="txt"><small>{c.label}</small>{c.value}</span>
+                <span class="go" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
         </ul>
+        <p class="loc">{site.location}</p>
       </div>
 
       <!-- El formulario arma un mensaje y lo abre en WhatsApp (no necesita servidor) -->
       <form class="form" id="contact-form" data-wa={site.whatsapp}>
+        <div class="row">
+          <label>
+            <span class="lbl">Nombre</span>
+            <input name="nombre" required autocomplete="name" placeholder="Tu nombre" />
+          </label>
+          <label>
+            <span class="lbl">Negocio <span class="opt">(opcional)</span></span>
+            <input name="negocio" placeholder="Ej: Estudio Luna" />
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>¿Qué necesitas?</legend>
+          <div class="choices">
+            {options.map((o, i) => (
+              <label class="choice">
+                <input type="radio" name="servicio" value={o} required={i === 0} />
+                <span>{o}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
         <label>
-          Nombre
-          <input name="nombre" required autocomplete="name" placeholder="Tu nombre" />
-        </label>
-        <label>
-          Nombre del negocio
-          <input name="negocio" placeholder="Ej: Estudio Luna" />
-        </label>
-        <label>
-          ¿Qué necesitas?
-          <select name="servicio" required>
-            <option value="" disabled selected>Selecciona una opción</option>
-            <option>Landing page</option>
-            <option>Landing + reservas con Google Calendar</option>
-            <option>No estoy seguro</option>
-          </select>
-        </label>
-        <label>
-          Cuéntanos brevemente
+          <span class="lbl">Cuéntanos brevemente <span class="opt">(opcional)</span></span>
           <textarea name="mensaje" rows="4" placeholder="¿A qué se dedica tu negocio y qué te gustaría lograr?"></textarea>
         </label>
-        <button class="btn btn-primary magnetic" type="submit">Enviar por WhatsApp <span class="arrow">↗</span></button>
+
+        <button class="btn send" type="submit">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" set:html={waIcon} />
+          Enviar por WhatsApp
+        </button>
         <p class="form-note" id="form-note" role="status" aria-live="polite">Se abrirá WhatsApp con tu mensaje listo para enviar.</p>
       </form>
     </div>
@@ -50,57 +97,115 @@ import { site, waLink } from '../data/site';
 
 <style>
   .wrap {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 60px; overflow: hidden;
-    background:
-      radial-gradient(60% 80% at 0% 0%, rgba(123, 92, 255, .3), transparent 70%),
-      radial-gradient(50% 60% at 100% 100%, rgba(200, 107, 255, .12), transparent 70%),
-      linear-gradient(180deg, var(--card), var(--bg-2));
+    display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; padding: 56px; overflow: hidden;
+    background: radial-gradient(70% 60% at 0% 0%, rgba(123, 92, 255, .2), transparent 70%), var(--surface);
   }
-  .channels { list-style: none; margin-top: 32px; border-top: 1px solid var(--line); }
-  .channels li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-  .channels span { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
-  .channels a { color: var(--lavender); word-break: break-all; text-align: right; }
-  .channels a { transition: color .3s; }
-  .channels a:hover { color: #fff; }
-  .channels li { transition: padding .4s var(--ease); }
-  .channels li:hover { padding-left: 8px; }
-  .channels p { text-align: right; }
+  .info .section-title { margin-top: 18px; }
+  .status { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 14px; color: var(--lavender); }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(62, 224, 143, .6); animation: live 2s ease-out infinite; }
+  @keyframes live { to { box-shadow: 0 0 0 8px rgba(62, 224, 143, 0); } }
 
-  .form { display: grid; gap: 16px; align-content: start; }
-  label { display: grid; gap: 8px; font-size: 14px; font-weight: 500; color: var(--lavender); }
-  input, select, textarea {
-    font: inherit; font-size: 16px; color: var(--text);
-    background: rgba(15, 13, 28, .6); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px;
-    transition: border-color .2s, box-shadow .2s; width: 100%;
+  /* Vista previa estilo chat */
+  .chat { margin-top: 28px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line-2); background: #0e1a17; }
+  .chat-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #13221e; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  .chat-head :global(.avatar) { width: 34px; height: 34px; border-radius: 50%; background: var(--bg); padding: 4px; }
+  .chat-head strong { display: block; font-size: 14px; }
+  .chat-head small { color: #8fb5a8; font-size: 12px; }
+  .chat-body {
+    padding: 18px 16px 20px; min-height: 120px; display: flex; justify-content: flex-end; align-items: flex-end;
+    background-image: radial-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px); background-size: 14px 14px;
   }
-  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a49cc9' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
+  .bubble {
+    position: relative; max-width: 88%; padding: 10px 12px 18px; border-radius: 12px 12px 4px 12px;
+    background: #1f5e4a; color: #eafff6; font-size: 14px; line-height: 1.45; white-space: pre-line; word-break: break-word;
+  }
+  .bubble::after { content: '✓✓'; position: absolute; right: 8px; bottom: 3px; font-size: 10px; letter-spacing: -2px; color: #7fd4ff; }
+
+  /* Canales: lista vertical, cada fila con ícono, dato y flecha */
+  .channels { list-style: none; display: grid; gap: 8px; margin-top: 20px; }
+  .channels a {
+    display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-radius: 14px;
+    border: 1px solid var(--line); background: rgba(255, 255, 255, .02); transition: border-color .3s;
+  }
+  .channels a:hover { border-color: var(--line-2); }
+  .channels .ico { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: var(--lavender); background: rgba(123, 92, 255, .16); }
+  .channels li:first-child .ico { color: #25d366; background: rgba(37, 211, 102, .14); }
+  .channels .txt { flex: 1; min-width: 0; display: grid; font-size: 14.5px; overflow-wrap: anywhere; }
+  .channels small { color: var(--muted); font-size: 11px; font-family: var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  .channels .go { color: var(--muted); transition: transform .35s var(--ease), color .3s; }
+  .channels a:hover .go { color: var(--lavender); transform: translate(2px, -2px); }
+  .loc { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+  /* Formulario */
+  .form { display: grid; gap: 20px; align-content: start; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  label, fieldset { display: grid; gap: 8px; font-size: 14px; font-weight: 500; color: var(--lavender); border: 0; min-width: 0; }
+  legend { margin-bottom: 8px; }
+  .opt { color: var(--muted); font-weight: 400; }
+  input:not([type='radio']), textarea {
+    font: inherit; font-size: 16px; color: var(--text); width: 100%;
+    background: var(--bg); border: 1px solid var(--line-2); border-radius: 12px; padding: 13px 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
   textarea { resize: vertical; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--violet-2); box-shadow: 0 0 0 3px rgba(123, 92, 255, .25); }
-  ::placeholder { color: rgba(164, 156, 201, .6); }
-  .form .btn { margin-top: 6px; }
+  input:not([type='radio']):focus, textarea:focus { outline: none; border-color: var(--violet-2); box-shadow: 0 0 0 3px rgba(123, 92, 255, .25); }
+  ::placeholder { color: rgba(164, 156, 201, .55); }
+  input:user-invalid { border-color: #ff6b81; }
+
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .choice { display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice span {
+    display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; font-size: 15px; color: var(--text);
+    border: 1px solid var(--line-2); background: var(--bg); transition: border-color .2s, background .2s;
+  }
+  .choice span::before { content: ''; flex: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); transition: all .2s; }
+  .choice:hover span { border-color: var(--violet-2); }
+  .choice input:checked + span { border-color: var(--violet); background: rgba(123, 92, 255, .16); }
+  .choice input:checked + span::before { border-color: var(--violet-2); background: var(--violet-2); box-shadow: inset 0 0 0 3px var(--bg); }
+  .choice input:focus-visible + span { outline: 2px solid var(--lavender); outline-offset: 2px; }
+
+  .send { width: 100%; margin-top: 4px; background: #25d366; color: #06301a; font-weight: 700; }
+  .send:hover { background: #2fe072; }
   .form-note { font-size: 13px; color: var(--muted); text-align: center; transition: color .3s; }
   .form-note.ok { color: var(--green); }
-  /* Campo obligatorio vacío tras intentar enviar */
-  input:user-invalid, select:user-invalid { border-color: #ff6b81; box-shadow: 0 0 0 3px rgba(255, 107, 129, .18); }
 
-  @media (max-width: 900px) {
-    .wrap { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
+  @media (max-width: 960px) {
+    .wrap { grid-template-columns: 1fr; padding: 32px 20px; gap: 36px; }
+  }
+  @media (max-width: 520px) {
+    .chat { display: none; } /* en celular el teclado la taparía mientras se escribe */
+    .row, .choices { grid-template-columns: 1fr; }
   }
 </style>
 
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement;
+  const preview = document.getElementById('preview')!;
+
+  // Arma el mensaje con lo que la persona va escribiendo
+  const buildMessage = () => {
+    const d = new FormData(form);
+    const nombre = String(d.get('nombre') || '').trim();
+    const negocio = String(d.get('negocio') || '').trim();
+    const servicio = String(d.get('servicio') || '').trim();
+    const mensaje = String(d.get('mensaje') || '').trim();
+    return [
+      `Hola MordWave, soy ${nombre || '…'}.`,
+      negocio ? `Negocio: ${negocio}` : '',
+      servicio ? `Me interesa: ${servicio}` : '',
+      mensaje ? `\n${mensaje}` : '',
+    ].filter(Boolean).join('\n');
+  };
+
+  const update = () => (preview.textContent = buildMessage());
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  update();
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const d = new FormData(form);
-    const lines = [
-      `Hola MordWave, soy ${d.get('nombre')}.`,
-      d.get('negocio') ? `Negocio: ${d.get('negocio')}` : '',
-      `Me interesa: ${d.get('servicio')}`,
-      d.get('mensaje') ? `\n${d.get('mensaje')}` : '',
-    ].filter(Boolean);
-    const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
-    window.open(url, '_blank', 'noopener');
+    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(buildMessage())}`, '_blank', 'noopener');
     const note = document.getElementById('form-note')!;
     note.textContent = '¡Listo! Revisa la pestaña de WhatsApp y presiona enviar. Te respondemos en menos de 24 horas.';
     note.classList.add('ok');
