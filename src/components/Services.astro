@@ -94,8 +94,9 @@ const paths = [
         <ul class="checks">
           <li>Horarios disponibles en tiempo real</li>
           <li>Sincronizado con tu Google Calendar</li>
-          <li>Abono para asegurar la hora</li>
+          <li>Tus clientes reservan a cualquier hora, sin escribirte</li>
         </ul>
+        <a class="see-demo" href="#proyectos">Ver un ejemplo funcionando <span class="arrow">→</span></a>
 
       </div>
 
@@ -194,6 +195,9 @@ const paths = [
   }
   .feat h3 { font-size: clamp(28px, 3vw, 36px); max-width: 16ch; }
   .feat .text { max-width: 52ch; }
+  .see-demo { display: inline-flex; gap: 8px; align-items: center; margin-top: 24px; font-weight: 600; color: var(--lavender); }
+  .see-demo .arrow { transition: transform .35s var(--ease); }
+  .see-demo:hover .arrow { transform: translateX(4px); }
 
   .phone-wrap { position: relative; display: grid; place-items: center; }
   .phone { width: 250px; border-radius: 38px; padding: 10px; position: relative; background: #24203f; }
