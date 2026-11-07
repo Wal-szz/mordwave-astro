@@ -56,30 +56,6 @@ const socials = [
       </div>
     </div>
 
-    <!-- Marca grande: un SVG que siempre calza con el ancho disponible -->
-    <svg class="wordmark" viewBox="0 0 1000 190" role="img" aria-label="MordWave">
-      <defs>
-        <linearGradient id="wm-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#d8d0ff" stop-opacity=".34" />
-          <stop offset=".75" stop-color="#9d86ff" stop-opacity=".08" />
-          <stop offset="1" stop-color="#9d86ff" stop-opacity="0" />
-        </linearGradient>
-        <linearGradient id="wm-shine" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset=".5" stop-color="#fff" stop-opacity=".55" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0" />
-          <animate attributeName="x1" values="-1;1" dur="6s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="0;2" dur="6s" repeatCount="indefinite" />
-        </linearGradient>
-        <linearGradient id="wm-fade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset=".1" stop-color="#fff" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0" />
-        </linearGradient>
-        <mask id="wm-mask"><rect width="1000" height="190" fill="url(#wm-fade)" /></mask>
-      </defs>
-      <text x="500" y="160" text-anchor="middle" textLength="990" lengthAdjust="spacingAndGlyphs" fill="url(#wm-fill)">MordWave</text>
-      <text x="500" y="160" text-anchor="middle" textLength="990" lengthAdjust="spacingAndGlyphs" fill="none" stroke="url(#wm-shine)" stroke-width="1.2" mask="url(#wm-mask)">MordWave</text>
-    </svg>
 
     <div class="bottom">
       <p>© {year} MordWave. Todos los derechos reservados.</p>
@@ -132,12 +108,10 @@ const socials = [
   ul a:hover { color: var(--lavender); opacity: 1; }
   .loc { color: var(--muted); font-size: 14px; }
 
-  .wordmark { display: block; width: 100%; height: auto; margin-top: 64px; user-select: none; }
-  .wordmark text { font-family: var(--display); font-weight: 800; font-size: 200px; letter-spacing: -0.04em; }
 
   .bottom {
     display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
-    margin-top: 12px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted);
+    margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted);
   }
   .mono { font-family: var(--mono); }
   .to-top { display: inline-flex; gap: 8px; align-items: center; color: var(--lavender); transition: gap .3s var(--ease); }
@@ -163,7 +137,6 @@ const socials = [
   @media (max-width: 560px) {
     footer { padding-top: 64px; padding-bottom: 96px; }
     .top { grid-template-columns: 1fr; gap: 32px; }
-    .wordmark { margin-top: 44px; }
     .bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>
