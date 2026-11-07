@@ -28,7 +28,6 @@ const more = [
   },
 ];
 
-const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de trabajos', 'Guía interactiva por zona', 'Preguntas frecuentes', 'Responsive'];
 ---
 
 <section id="proyectos">
@@ -52,7 +51,6 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
           </div>
         </a>
         <div class="float f1" aria-hidden="true"><span class="dot-live"></span>En vivo</div>
-        <div class="float f2" aria-hidden="true"><strong>50%</strong> abono para confirmar</div>
       </div>
 
       <div class="body">
@@ -60,9 +58,8 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
         <h3>Estudio de body modification</h3>
         <p>
           Landing oscura y elegante para un estudio de piercings y modificación corporal. Muestra materiales, galería y
-          preguntas frecuentes, y permite reservar una cita con abono del 50% para confirmar la hora.
+          preguntas frecuentes, y permite reservar una cita desde la misma página.
         </p>
-        <ul>{tags.map((t, i) => <li style={`--d:${i * 60}ms`}>{t}</li>)}</ul>
         <a class="btn btn-primary magnetic" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo <span class="arrow">↗</span></a>
       </div>
     </article>
@@ -121,7 +118,6 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
   }
   .float strong { color: var(--lavender); }
   .f1 { top: 22px; left: 22px; animation: bob 5s ease-in-out infinite; }
-  .f2 { bottom: 22px; right: 22px; animation: bob 6s ease-in-out infinite reverse; }
   .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(62, 224, 143, .7); animation: live 1.8s ease-out infinite; }
   @keyframes live { to { box-shadow: 0 0 0 9px rgba(62, 224, 143, 0); } }
   @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
@@ -130,13 +126,7 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
   .kind { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--violet-2); }
   h3 { font-size: 34px; letter-spacing: -0.035em; line-height: 1.05; margin: 12px 0 14px; }
   .body p { color: var(--muted); }
-  ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 30px; }
-  li {
-    font-size: 13px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--lavender);
-    background: rgba(123, 92, 255, .06); transition: background .3s, border-color .3s;
-  }
-  li:hover { background: rgba(123, 92, 255, .2); border-color: rgba(157, 134, 255, .5); }
-  .body .btn { align-self: flex-start; }
+  .body .btn { align-self: flex-start; margin-top: 28px; }
 
   /* ---- Más proyectos ---- */
   .more { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
@@ -164,7 +154,6 @@ const tags = ['Reserva de citas', 'Abono 50% para confirmar', 'Galería de traba
     .project { grid-template-columns: minmax(0, 1fr); }
     .visual { padding: 56px 22px 22px; }
     .f1 { top: 14px; left: 22px; }
-    .f2 { bottom: auto; top: 14px; right: 22px; }
     .body { padding: 28px 22px 32px; }
     h3 { font-size: 28px; }
   }
