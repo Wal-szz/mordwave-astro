@@ -4,7 +4,7 @@ import { waLink } from '../data/site';
 const days = Array.from({ length: 14 }, (_, i) => i + 10);
 const slots = ['10:00', '11:30', '15:00', '17:30'];
 
-// Los tres caminos principales. "soon" marca un servicio que todavía no se ofrece.
+// Los dos tipos de web que ofrecemos hoy.
 const paths = [
   {
     n: '01',
@@ -12,6 +12,7 @@ const paths = [
     for: 'Para lanzar tu negocio, un servicio o una campaña.',
     items: ['Una página con todo lo importante', 'WhatsApp y formulario de contacto', 'Lista para Google'],
     kind: 'one',
+    tag: '1 página',
     wa: 'Hola MordWave, quiero cotizar una landing page.',
   },
   {
@@ -20,18 +21,12 @@ const paths = [
     for: 'Para empresas que necesitan mostrar más: servicios, equipo, proyectos.',
     items: ['Varias páginas: inicio, servicios, nosotros, contacto…', 'Estructura pensada para posicionar en Google', 'Crece contigo: se suman páginas cuando quieras'],
     kind: 'multi',
+    tag: 'Varias páginas',
     wa: 'Hola MordWave, quiero cotizar un sitio web de varias páginas.',
   },
-  {
-    n: '03',
-    t: 'Tienda online',
-    for: 'Para vender tus productos por internet.',
-    items: ['Catálogo, carrito y pago en línea', 'Despacho a todo Chile', 'Tú subes productos y precios'],
-    kind: 'shop',
-    soon: true,
-    wa: 'Hola MordWave, me interesa una tienda online. ¿Me avisan cuando esté disponible?',
-  },
 ];
+const pages = ['Inicio', 'Servicios', 'Nosotros', 'Contacto'];
+const slugs = ['', 'servicios', 'nosotros', 'contacto'];
 
 ---
 
@@ -41,41 +36,57 @@ const paths = [
       <span class="eyebrow">Servicios</span>
       <h2 class="section-title">Elige el camino para <span class="grad">tu negocio.</span></h2>
       <p class="section-lead">
-        Tres tipos de web según lo que necesitas. Las reservas online se suman a cualquiera de ellas.
+        Dos tipos de web según lo que necesitas. Las reservas online se suman a cualquiera de ellas.
       </p>
     </div>
 
     <div class="paths">
       {paths.map((p, i) => (
-        <article class:list={['card', 'spot', 'path', 'reveal', { soon: p.soon }]} style={`--d:${i * 90}ms`}>
+        <article class="card spot path reveal" style={`--d:${i * 90}ms`}>
           <div class="top">
             <span class="num">{p.n}</span>
-            {p.soon && <span class="badge soon-badge">Próximamente</span>}
+            <span class="badge">{p.tag}</span>
           </div>
 
-          <!-- Mini dibujo del tipo de web -->
-          <div class:list={['mini', p.kind]} aria-hidden="true">
+          <!-- Maqueta animada: cómo se ve este tipo de web -->
+          <div class:list={['mock', p.kind]} aria-hidden="true">
+            <div class="bar">
+              <i></i><i></i><i></i>
+              <span class="url">
+                tunegocio.cl/
+                {p.kind === 'multi' && <span class="paths">{slugs.map((sl, n) => <span style={`--n:${n}`}>{sl}</span>)}</span>}
+              </span>
+            </div>
+
             {p.kind === 'one' && (
-              <div class="sheet"><i class="h"></i><i class="l"></i><i class="l s"></i><i class="b"></i><i class="row"></i></div>
+              <div class="view">
+                <div class="page scroll">
+                  <div class="b-nav"><b class="logo"></b><span></span><span></span><span class="nav-cta"></span></div>
+                  <div class="b-hero"><div><b class="t1"></b><b class="t2"></b><b class="btn"></b></div><span class="ph"></span></div>
+                  <div class="b-cards"><span></span><span></span><span></span></div>
+                  <div class="b-split"><span class="ph"></span><div><b class="t2"></b><b></b><b class="s"></b></div></div>
+                  <div class="b-cta"><b class="t2"></b><b class="btn"></b></div>
+                </div>
+              </div>
             )}
+
             {p.kind === 'multi' && (
               <>
-                <div class="sheet back2"></div>
-                <div class="sheet back1"></div>
-                <div class="sheet"><i class="nav"></i><i class="h"></i><i class="l"></i><i class="row"></i></div>
+                <div class="tabs">{pages.map((pg, n) => <span style={`--n:${n}`}>{pg}</span>)}</div>
+                <div class="view">
+                  <div class="page pg" style="--n:0"><div class="b-hero"><div><b class="t1"></b><b class="t2"></b><b class="btn"></b></div><span class="ph"></span></div></div>
+                  <div class="page pg" style="--n:1"><b class="t2 ttl"></b><div class="b-cards"><span></span><span></span><span></span></div></div>
+                  <div class="page pg" style="--n:2"><b class="t2 ttl"></b><div class="b-team"><span></span><span></span><span></span></div></div>
+                  <div class="page pg" style="--n:3"><b class="t2 ttl"></b><div class="b-form"><i></i><i></i><i class="area"></i><b class="btn"></b></div></div>
+                </div>
               </>
-            )}
-            {p.kind === 'shop' && (
-              <div class="sheet grid"><i></i><i></i><i></i><i></i><span class="cart">1</span></div>
             )}
           </div>
 
           <h3>{p.t}</h3>
           <p class="for">{p.for}</p>
           <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
-          <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">
-            {p.soon ? 'Avísame cuando esté' : 'Cotizar'} <span class="arrow">→</span>
-          </a>
+          <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">Cotizar <span class="arrow">→</span></a>
         </article>
       ))}
     </div>
@@ -146,7 +157,6 @@ const paths = [
   .top { display: flex; justify-content: space-between; align-items: center; min-height: 28px; margin-bottom: 18px; }
   .num { font-family: var(--mono); color: var(--violet-2); font-size: 14px; }
   .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(123, 92, 255, .18); color: var(--lavender); }
-  .soon-badge { background: transparent; border: 1px dashed var(--line-2); color: var(--muted); }
   h3 { font-size: 28px; line-height: 1.08; letter-spacing: -0.03em; }
   .text { color: var(--muted); margin-top: 12px; }
   .checks { list-style: none; display: grid; gap: 10px; margin-top: 20px; }
@@ -156,36 +166,71 @@ const paths = [
     background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
   }
 
-  /* ---- Tres caminos ---- */
-  .paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  /* ---- Dos caminos ---- */
+  .paths { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .path { padding: 28px; display: flex; flex-direction: column; }
   .path .for { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
-  .path .checks { margin-bottom: 20px; }
+  .path .checks { margin-bottom: 24px; }
   .more { margin-top: auto; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
   .more .arrow { transition: transform .35s var(--ease); }
   .more:hover .arrow { transform: translateX(4px); }
-  .soon h3, .soon .for, .soon .checks { opacity: .75; }
 
-  /* Mini dibujos */
-  .mini { position: relative; height: 120px; margin-bottom: 22px; display: grid; place-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  .sheet { position: relative; width: 120px; height: 88px; padding: 10px; border-radius: 8px; background: #1d1940; border: 1px solid var(--line-2); display: grid; gap: 6px; align-content: start; }
-  .sheet i { display: block; height: 6px; border-radius: 3px; background: rgba(157, 134, 255, .35); }
-  .sheet .h { height: 10px; width: 75%; background: rgba(216, 208, 255, .6); }
-  .sheet .l { width: 90%; }
-  .sheet .s { width: 60%; }
-  .sheet .b { width: 36px; height: 10px; border-radius: 999px; background: var(--violet); }
-  .sheet .row { height: 16px; background: rgba(157, 134, 255, .2); }
-  .sheet .nav { height: 4px; width: 100%; background: rgba(216, 208, 255, .25); }
-  .multi .sheet { position: absolute; transition: transform .6s var(--ease); }
-  .multi .back1 { transform: translate(12px, -10px); opacity: .6; }
-  .multi .back2 { transform: translate(24px, -20px); opacity: .3; }
-  .path:hover .multi .back1 { transform: translate(20px, -14px); }
-  .path:hover .multi .back2 { transform: translate(40px, -28px); }
-  .shop .sheet { grid-template-columns: 1fr 1fr; gap: 6px; }
-  .shop .sheet i { height: 30px; border-radius: 5px; background: rgba(157, 134, 255, .22); }
-  .cart { position: absolute; right: -10px; top: -10px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--violet); color: #fff; font-size: 12px; font-weight: 700; }
-  .one .sheet { transition: transform .6s var(--ease); }
-  .path:hover .one .sheet { transform: translateY(-4px); }
+  /* Maquetas: un navegador con una web clara adentro */
+  .mock {
+    --pg: #f6f3ff; --ink: #1a1535; --soft: #e4ddfb; --mid: #c9bdf5; --acc: #7b5cff;
+    height: 230px; margin-bottom: 24px; border-radius: 14px; overflow: hidden;
+    background: #100e24; border: 1px solid var(--line-2); display: flex; flex-direction: column;
+  }
+  .bar { flex: none; display: flex; align-items: center; gap: 6px; padding: 10px 12px; }
+  .bar > i { width: 9px; height: 9px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
+  .url {
+    margin-left: 8px; flex: 1; display: flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 7px;
+    background: rgba(255, 255, 255, .06); font-family: var(--mono); font-size: 11px; color: var(--muted); overflow: hidden; white-space: nowrap;
+  }
+  .paths { position: relative; display: inline-grid; color: var(--lavender); }
+  .paths > span { grid-area: 1 / 1; opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
+  .view { position: relative; flex: 1; margin: 0 10px 10px; border-radius: 8px; background: var(--pg); overflow: hidden; }
+  .page { position: absolute; inset: 0 0 auto 0; padding: 12px; display: grid; gap: 12px; }
+
+  /* Piezas de la web de ejemplo */
+  .page b { display: block; height: 7px; border-radius: 4px; background: var(--mid); }
+  .page b.t1 { height: 12px; width: 85%; background: var(--ink); }
+  .page b.t2 { height: 9px; width: 60%; background: var(--ink); opacity: .85; }
+  .page b.s { width: 70%; }
+  .page b.btn { width: 54px; height: 16px; border-radius: 999px; background: var(--acc); }
+  .page b.logo { width: 34px; height: 9px; background: var(--acc); }
+  .ph { display: block; border-radius: 6px; background: linear-gradient(135deg, var(--mid), var(--acc)); }
+  .b-nav { display: flex; align-items: center; gap: 8px; }
+  .b-nav span { width: 26px; height: 6px; border-radius: 3px; background: var(--soft); }
+  .b-nav span:first-of-type { margin-left: auto; }
+  .b-nav .nav-cta { width: 36px; height: 12px; border-radius: 999px; background: var(--acc); }
+  .b-hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; align-items: center; }
+  .b-hero > div { display: grid; gap: 7px; }
+  .b-hero .ph { height: 66px; }
+  .b-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .b-cards span { height: 50px; border-radius: 6px; background: #fff; border: 1px solid var(--soft); box-shadow: inset 0 14px 0 var(--soft); }
+  .b-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; }
+  .b-split .ph { height: 54px; }
+  .b-split > div { display: grid; gap: 6px; }
+  .b-cta { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 6px; background: var(--ink); }
+  .b-cta b.t2 { background: #fff; width: 50%; }
+  .b-team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .b-team span { aspect-ratio: 1; max-height: 56px; justify-self: center; width: 100%; max-width: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--mid), var(--acc)); }
+  .b-form { display: grid; gap: 7px; }
+  .b-form i { display: block; height: 16px; border-radius: 5px; background: #fff; border: 1px solid var(--soft); }
+  .b-form i.area { height: 34px; }
+  .ttl { margin-bottom: 2px; }
+
+  /* Landing: una sola página larga que baja sola */
+  .scroll { animation: pageScroll 9s ease-in-out infinite; }
+  @keyframes pageScroll { 0%, 12% { transform: translateY(0); } 45%, 57% { transform: translateY(-34%); } 88%, 100% { transform: translateY(0); } }
+
+  /* Sitio web: pestañas que cambian de página */
+  .tabs { flex: none; display: flex; gap: 4px; padding: 0 10px 8px; }
+  .tabs span { position: relative; padding: 4px 9px; border-radius: 999px; font-size: 11px; color: var(--muted); }
+  .tabs span::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: rgba(123, 92, 255, .3); opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
+  .pg { opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
+  @keyframes show { 0%, 22% { opacity: 1; } 26%, 96% { opacity: 0; } 100% { opacity: 1; } }
 
   /* ---- Reservas ---- */
   .feat {
@@ -248,13 +293,11 @@ const paths = [
 
   @media (max-width: 980px) {
     .paths { grid-template-columns: 1fr; }
-    .path { display: grid; grid-template-columns: 180px 1fr; column-gap: 28px; }
-    .path > :not(.mini) { grid-column: 2; }
-    .path .mini { grid-row: 1 / span 6; margin: 0; height: 100%; min-height: 140px; }
   }
   @media (max-width: 760px) {
     .path { display: flex; padding: 24px 20px; }
-    .path .mini { display: none; }
+    .mock { height: 200px; }
+    .tabs span { padding: 4px 7px; font-size: 10px; }
     .feat { grid-template-columns: 1fr; padding: 28px 22px 36px; gap: 28px; }
     .cta { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 20px; }
     .cta-icon { width: 68px; height: 68px; padding: 14px 12px; gap: 9px; }
