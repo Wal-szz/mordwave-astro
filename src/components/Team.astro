@@ -50,8 +50,8 @@ const team: Member[] = [
     <div class="people">
       {team.map((m, i) => (
         <article class="person card spot reveal" style={`--d:${i * 110}ms`}>
-          {m.photo ? (
-            <Image src={m.photo} alt={`Foto de ${m.name}`} class="avatar photo" width={168} height={168} />
+          {m.photo ? (           
+              <Image src={m.photo} alt={`Foto de ${m.name}`}class="avatar photo"width={504}height={504}format="webp" quality={90}/>
           ) : (
             <div class="avatar logo" aria-hidden="true"><Image src={icono} alt="" width={120} height={120} /></div>
           )}
