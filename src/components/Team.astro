@@ -2,6 +2,9 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import icono from '../assets/icono.png';
+import Walter from '../assets/equipo/Walter.jpeg';
+import Carlos from '../assets/equipo/Carlos.jpeg';
+import Bastian from '../assets/equipo/Bastian.jpeg';
 
 // Fotos: guárdalas en src/assets/equipo/ (ej: walter.jpg) e impórtalas aquí, por ejemplo:
 //   import walterFoto from '../assets/equipo/walter.jpg';
@@ -10,22 +13,25 @@ type Member = { name: string; role?: string; studies: string; bio: string; photo
 
 const team: Member[] = [
   {
+    photo: Walter,
     name: 'Walter Saez',
     role: 'Jefe de proyecto',
     studies: 'Ingeniero Informático · Desarrollo web',
     bio: 'Es tu contacto principal: lidera las reuniones, ordena los plazos y se asegura de que la web cumpla lo que tu negocio necesita.',
   },
   {
+    photo: Carlos,
     name: 'Carlos Yáñez',
     role: 'Líder técnico',
     studies: 'Ingeniero Informático · Arquitectura y Desarrollo de Software',
     bio: 'Lidera las decisiones tecnológicas de MordWave, definiendo arquitecturas, herramientas y estándares de desarrollo para crear soluciones digitales seguras, escalables y de calidad.',
   },
   {
+    photo: Bastian,
     name: 'Bastian Nuñez',
-    // role: 'Cargo por definir',  ← cuando lo tengan, quita las // de esta línea y escribe el cargo
-    studies: 'Ingeniero Informático · Desarrollo web',
-    bio: 'Diseña y desarrolla las secciones de cada web para que se vean y funcionen bien en celular y computador.',
+    role: 'Analista QA · Control de calidad ',
+    studies: 'Ingeniero Informático · Control de calidad',
+    bio: 'Se encarga de verificar la calidad de cada proyecto, realizando pruebas, detectando errores y asegurando que cada sitio web funcione correctamente en distintos dispositivos antes de su entrega.',
   },
 ];
 
@@ -64,13 +70,24 @@ const team: Member[] = [
   .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .person { padding: 30px; display: flex; flex-direction: column; transition: transform .6s var(--ease); }
   .person:hover { transform: translateY(-6px); }
-  .avatar {
-    position: relative; width: 88px; height: 88px; border-radius: 26px; display: grid; place-items: center; margin-bottom: 24px;
-    font-size: 30px; font-weight: 800; color: #fff; isolation: isolate;
-    background: linear-gradient(135deg, var(--violet-2), var(--violet) 55%, #5a33e6);
-    box-shadow: 0 14px 34px -10px rgba(123, 92, 255, .85);
-    transition: transform .6s var(--ease);
-  }
+  
+.avatar {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  border-radius: 26px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  isolation: isolate;
+  background: linear-gradient(135deg, var(--violet-2), var(--violet) 55%, #5a33e6);
+  box-shadow: 0 14px 34px -10px rgba(123, 92, 255, .85);
+  transition: transform .6s var(--ease);
+}
+
   /* Anillo de luz girando alrededor del avatar */
   .avatar::before {
     content: ''; position: absolute; inset: -5px; border-radius: 30px; z-index: -1; padding: 2px;
@@ -82,7 +99,13 @@ const team: Member[] = [
   @property --r { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
   @keyframes ring { to { --r: 360deg; } }
   .person:hover .avatar { transform: rotate(-6deg) scale(1.05); }
-  .photo { object-fit: cover; }
+  
+.photo {
+  object-fit: cover;
+  object-position: center 30%;
+  border: 2px solid rgba(157, 134, 255, 0.45);
+}
+
   /* Mientras no hay foto: ícono de MordWave sobre fondo oscuro */
   .avatar.logo {
     background: radial-gradient(circle at 50% 40%, rgba(123, 92, 255, .35), transparent 70%), #141130;
