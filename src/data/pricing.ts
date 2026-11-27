@@ -9,7 +9,7 @@ export type Product = {
   name: string;
   from: number;
   summary: string;
-  structure: string;
+  highlights: string[];
   includes: string[];
   includesPrefix?: string;
   sizesLabel: string;
@@ -20,11 +20,12 @@ export type Product = {
   wa: string;
 };
 
+// "highlights" son los 3 puntos que se ven en la tarjeta; "includes" es el detalle completo.
 const baseIncludes = [
   'Diseño adaptado a tu marca, que se ve bien en celular y computador',
-  'Formulario de contacto, botón de WhatsApp y enlaces a tus redes',
-  'SEO básico: títulos, descripciones y alta en Google Search Console',
-  'Aviso de privacidad, conexión de tu dominio y publicación',
+  'Botón de WhatsApp, formulario de contacto y enlaces a tus redes',
+  'Preparada para aparecer en Google (títulos, descripciones y alta en Google)',
+  'Publicación en tu dominio (tunegocio.cl) y aviso de privacidad',
   'Primer mes del plan Soporte incluido',
 ];
 
@@ -34,7 +35,7 @@ export const products: Product[] = [
     name: 'Landing Esencial',
     from: 119990,
     summary: 'Una página para presentar tu negocio y recibir contactos.',
-    structure: '1 página',
+    highlights: ['Una sola página con todo lo importante', 'WhatsApp, formulario y redes', 'Preparada para aparecer en Google'],
     includes: baseIncludes,
     sizesLabel: 'Secciones',
     sizes: [
@@ -42,7 +43,7 @@ export const products: Product[] = [
       { size: 'M', units: 'Hasta 7', price: 169990 },
       { size: 'L', units: 'Hasta 9', price: 219990 },
     ],
-    rounds: '1 ronda de revisión',
+    rounds: '1 ronda de correcciones',
     time: '5 a 7 días hábiles',
     wa: 'Hola MordWave, quiero cotizar una Landing Esencial.',
   },
@@ -50,14 +51,14 @@ export const products: Product[] = [
     id: 'agenda',
     name: 'Landing + Agenda',
     from: 169990,
-    summary: 'Tu landing con agenda en línea para que tus clientes reserven.',
-    structure: '1 página',
+    summary: 'Tu landing con agenda en línea para que tus clientes reserven solos.',
+    highlights: ['Todo lo de la Landing Esencial', 'Tus clientes reservan desde tu web', 'Conectada a tu Google Calendar u otra agenda'],
     includesPrefix: 'Todo lo de la Landing Esencial, más:',
     includes: [
-      'Agenda en línea integrada, para reservar sin salir de tu sitio',
+      'Agenda en línea dentro de tu web, para reservar sin salir de ella',
       'Usamos tu agenda actual (Google Calendar u otra) o te ayudamos a crear una',
-      'Configuración de 1 calendario: servicios, duración y horarios',
-      'Prueba de reserva completa antes de publicar',
+      'Configuramos tus servicios, su duración y tus horarios',
+      'Probamos una reserva completa antes de publicar',
     ],
     sizesLabel: 'Secciones',
     sizes: [
@@ -65,7 +66,7 @@ export const products: Product[] = [
       { size: 'M', units: 'Hasta 7', price: 219990 },
       { size: 'L', units: 'Hasta 9', price: 269990 },
     ],
-    rounds: '2 rondas de revisión',
+    rounds: '2 rondas de correcciones',
     time: '7 a 10 días hábiles',
     note: 'Profesional o calendario adicional: $24.990 cada uno.',
     wa: 'Hola MordWave, quiero cotizar una Landing + Agenda.',
@@ -74,14 +75,14 @@ export const products: Product[] = [
     id: 'sitio',
     name: 'Sitio web',
     from: 299990,
-    summary: 'Sitio de varias páginas para empresas y servicios profesionales.',
-    structure: '4 a 8 páginas',
+    summary: 'Varias páginas para empresas y servicios profesionales.',
+    highlights: ['4, 6 u 8 páginas', 'Diseño personalizado para tu marca', 'Cada página preparada para Google'],
     includes: [
       'Diseño personalizado para tu marca, adaptado a celular y computador',
       'Páginas independientes, cada una con hasta 5 secciones',
-      'Formulario de contacto, WhatsApp y redes',
-      'SEO básico en cada página y alta en Google Search Console',
-      'Aviso de privacidad, conexión de tu dominio y publicación',
+      'Botón de WhatsApp, formulario de contacto y redes',
+      'Cada página preparada para aparecer en Google',
+      'Publicación en tu dominio (tunegocio.cl) y aviso de privacidad',
       'Primer mes del plan Soporte incluido',
     ],
     sizesLabel: 'Páginas',
@@ -90,7 +91,7 @@ export const products: Product[] = [
       { size: 'M', units: '6', price: 399990 },
       { size: 'L', units: '8', price: 499990 },
     ],
-    rounds: '2 rondas de revisión',
+    rounds: '2 rondas de correcciones',
     time: '10 a 15 días hábiles',
     note: 'Página adicional: $49.990.',
     wa: 'Hola MordWave, quiero cotizar un sitio web.',
@@ -98,7 +99,7 @@ export const products: Product[] = [
 ];
 
 export const addons = [
-  { name: 'Agenda en línea integrada', price: '$49.990' },
+  { name: 'Agenda en línea (para el sitio web)', price: '$49.990' },
   { name: 'Blog o noticias que puedes actualizar tú', price: '$99.990' },
   { name: 'Catálogo de productos sin carrito (hasta 30)', price: '$79.990' },
   { name: 'Segundo idioma', price: '40% del desarrollo' },
@@ -110,7 +111,7 @@ export const extras = [
   { name: 'Redacción de textos (por página del sitio web)', price: '$19.990' },
   { name: 'Ficha de Google Business Profile (aparecer en Google Maps)', price: '$24.990' },
   { name: 'Configuración de correo corporativo (la licencia la contratas tú)', price: '$24.990' },
-  { name: 'Ronda de revisión adicional', price: '$19.990' },
+  { name: 'Ronda de correcciones adicional', price: '$19.990' },
   { name: 'Entrega express (la mitad del plazo)', price: '+30%' },
 ];
 
@@ -120,10 +121,10 @@ export const plans = [
     monthly: 9990,
     yearly: 99900,
     features: [
-      'Hosting y certificado de seguridad (SSL)',
-      'Monitoreo de que tu sitio esté en línea',
-      'Respaldo y actualizaciones de seguridad',
-      'Ayuda con la configuración de tu dominio',
+      'Tu web en línea con candado de seguridad (hosting y SSL)',
+      'Revisamos que esté siempre funcionando',
+      'Copias de seguridad y actualizaciones',
+      'Ayuda con tu dominio',
       'Cambios cuando los necesites, a $9.990 cada uno',
     ],
   },
@@ -132,7 +133,7 @@ export const plans = [
     monthly: 19990,
     yearly: 199900,
     recommended: true,
-    features: ['Todo lo del plan Base', '2 cambios menores al mes incluidos', 'Respuesta en hasta 3 días hábiles'],
+    features: ['Todo lo del plan Base', '2 cambios al mes incluidos', 'Respuesta en hasta 3 días hábiles'],
   },
   {
     name: 'Plus',
@@ -142,7 +143,7 @@ export const plans = [
       'Todo lo del plan Soporte',
       'Hasta 5 cambios o 2 horas de trabajo al mes',
       'Respuesta en 1 a 2 días hábiles',
-      'Informe trimestral de visitas y 1 ajuste de SEO',
+      'Informe de visitas cada 3 meses y una mejora para Google',
     ],
   },
 ];

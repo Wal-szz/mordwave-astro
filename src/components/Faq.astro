@@ -1,15 +1,6 @@
 ---
-import { products, clp } from '../data/pricing';
-// Solo dudas que no se responden en otras secciones (el pago y las reuniones están en "Cómo trabajamos").
+// Solo dudas que no se responden en otras secciones (precios y plazos están en Servicios y precios; el pago, en Cómo trabajamos).
 const faqs = [
-  {
-    q: '¿Cuánto cuesta una página web?',
-    a: `Una landing parte en ${clp(products[0].from)}, una landing con agenda en ${clp(products[1].from)} y un sitio web de varias páginas en ${clp(products[2].from)}, IVA incluido. El precio final depende del tamaño y los extras, y queda en la cotización y el contrato.`,
-  },
-  {
-    q: '¿Cuánto demora un proyecto?',
-    a: `Landing Esencial: ${products[0].time}. Landing + Agenda: ${products[1].time}. Sitio web: ${products[2].time}. El plazo empieza cuando recibimos todo el contenido; si llega por partes, se ajusta.`,
-  },
   {
     q: '¿Quién compra el dominio?',
     a: 'Tú. Se registra a tu nombre y lo pagas directo al registrador; un .cl cuesta cerca de $10.000 al año. Te ayudamos a elegirlo, hacemos toda la configuración técnica y te avisamos antes de que venza.',
@@ -17,6 +8,14 @@ const faqs = [
   {
     q: '¿El sitio es mío?',
     a: 'Sí. Tu marca, textos e imágenes siempre son tuyos, y al pagar el desarrollo completo puedes usar el diseño y el código de tu sitio sin plazo. Si dejas de trabajar con nosotros, te entregamos tu sitio y los accesos que te correspondan.',
+  },
+  {
+    q: '¿Qué cuenta como un cambio en los planes?',
+    a: 'Actualizar un texto, una imagen, un precio, un horario, un enlace o un dato de contacto que ya existe. Una sección, página o función nueva se cotiza aparte, siempre con presupuesto antes.',
+  },
+  {
+    q: '¿Qué necesito tener para empezar?',
+    a: 'Tu logo, fotos, textos, precios y datos de contacto. Si no tienes textos, podemos redactarlos. La creación de logo e identidad de marca no está incluida.',
   },
   {
     q: '¿Trabajan con clientes de todo Chile?',

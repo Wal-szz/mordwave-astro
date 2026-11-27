@@ -13,8 +13,7 @@ export const waLink = (text = 'Hola, vi MordWave y me gustaría cotizar un proye
 
 export const nav = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#precios', label: 'Precios' },
+  { href: '#servicios', label: 'Servicios y precios' },
   { href: '#proyectos', label: 'Proyectos' },
   { href: '#proceso', label: 'Cómo trabajamos' },
   { href: '#equipo', label: 'Equipo' },

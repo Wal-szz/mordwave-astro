@@ -14,7 +14,6 @@ import { minPrice, clp } from '../data/pricing';
     <!-- Panel izquierdo: logo grande animado -->
     <div class="logo-wrap">
       <div class="logo-panel" id="logo-panel">
-        <canvas id="particles" aria-hidden="true"></canvas>
         <div class="stage" aria-hidden="true">
           <div class="layer l1"><div class="ring ring-1"></div></div>
           <div class="layer l2"><div class="ring ring-2"></div></div>
@@ -74,9 +73,9 @@ import { minPrice, clp } from '../data/pricing';
   /* Fondo: auroras y grilla */
   .aurora { position: absolute; inset: 0; pointer-events: none; filter: blur(80px); opacity: .45; }
   .aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
-  .aurora span:nth-child(1) { width: 46vw; height: 46vw; left: -8vw; top: 4vh; background: #5b3df0; opacity: .5; animation: drift1 18s ease-in-out infinite; }
-  .aurora span:nth-child(2) { width: 34vw; height: 34vw; right: -6vw; top: -10vh; background: #b04dff; opacity: .25; animation: drift2 22s ease-in-out infinite; }
-  .aurora span:nth-child(3) { width: 30vw; height: 30vw; left: 35vw; bottom: -14vw; background: #3a2bd1; opacity: .35; animation: drift1 26s ease-in-out infinite reverse; }
+  .aurora span:nth-child(1) { width: 46vw; height: 46vw; left: -8vw; top: 4vh; background: #5b3df0; opacity: .5;  }
+  .aurora span:nth-child(2) { width: 34vw; height: 34vw; right: -6vw; top: -10vh; background: #b04dff; opacity: .25;  }
+  .aurora span:nth-child(3) { width: 30vw; height: 30vw; left: 35vw; bottom: -14vw; background: #3a2bd1; opacity: .35;  }
   @keyframes drift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(6vw, 4vh) scale(1.15); } }
   @keyframes drift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-5vw, 8vh) scale(.9); } }
   .grid-bg {
@@ -113,11 +112,9 @@ import { minPrice, clp } from '../data/pricing';
     background: conic-gradient(from var(--a, 0deg), transparent 0 70%, rgba(196, 180, 255, .9) 82%, transparent 92%);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask-composite: exclude;
-    animation: border-spin 6s linear infinite;
   }
   @property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
   @keyframes border-spin { to { --a: 360deg; } }
-  canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
   .stage { position: relative; width: 80%; aspect-ratio: 1; display: grid; place-items: center; }
   .layer { position: absolute; inset: 0; display: grid; place-items: center; transition: transform .25s ease-out; }
@@ -133,13 +130,13 @@ import { minPrice, clp } from '../data/pricing';
   .halo {
     position: absolute; width: 58%; aspect-ratio: 1; border-radius: 50%;
     background: radial-gradient(circle, rgba(123, 92, 255, .6), transparent 65%);
-    filter: blur(24px); animation: pulse 4s ease-in-out infinite;
+    filter: blur(24px);
   }
   .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(214, 206, 255, .14); }
-  .ring-1 { inset: 2%; border-style: dashed; animation: spin 70s linear infinite; }
-  .ring-2 { inset: 13%; border-color: rgba(157, 134, 255, .24); animation: spin 45s linear infinite reverse; }
-  .ring-3 { inset: 0; border-color: transparent; animation: spin 13s linear infinite; }
-  .ring-4 { inset: 20%; border-color: transparent; animation: spin 8s linear infinite reverse; }
+  .ring-1 { inset: 2%; border-style: dashed; }
+  .ring-2 { inset: 13%; border-color: rgba(157, 134, 255, .24); }
+  .ring-3 { inset: 0; border-color: transparent; animation: spin 20s linear infinite; }
+  .ring-4 { inset: 20%; border-color: transparent; animation: spin 14s linear infinite reverse; }
   .dot { position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--lavender); box-shadow: 0 0 20px 5px rgba(157, 134, 255, .85); }
   .ring-4 .dot { width: 8px; height: 8px; top: -4px; background: var(--pink); box-shadow: 0 0 16px 4px rgba(200, 107, 255, .8); }
   .tag { position: absolute; bottom: 26px; z-index: 2; font-family: var(--mono); font-size: 12px; letter-spacing: .34em; text-transform: uppercase; color: var(--muted); }
@@ -158,8 +155,8 @@ import { minPrice, clp } from '../data/pricing';
   }
   .chip strong { display: block; font-weight: 600; }
   .chip small { color: var(--muted); font-size: 12px; }
-  .chip-a { right: -26px; top: 15%; animation: chipIn 1s var(--ease) 1s both, bob 5s ease-in-out 2s infinite; }
-  .chip-b { left: -22px; bottom: 14%; animation: chipIn 1s var(--ease) 1.3s both, bob 6s ease-in-out 2.3s infinite reverse; }
+  .chip-a { right: -26px; top: 15%; animation: chipIn 1s var(--ease) 1s both; }
+  .chip-b { left: -22px; bottom: 14%; animation: chipIn 1s var(--ease) 1.3s both; }
   .ok, .cal { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; flex: none; }
   .ok { background: rgba(62, 224, 143, .16); color: var(--green); font-weight: 700; }
   .cal { background: rgba(123, 92, 255, .22); color: var(--lavender); }
@@ -214,7 +211,6 @@ import { minPrice, clp } from '../data/pricing';
 
 <script>
   const panel = document.getElementById('logo-panel') as HTMLElement;
-  const canvas = document.getElementById('particles') as HTMLCanvasElement;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Profundidad: el logo y los anillos se mueven según el mouse
@@ -233,66 +229,4 @@ import { minPrice, clp } from '../data/pricing';
     });
   }
 
-  // Partículas conectadas (constelación)
-  const ctx = canvas.getContext('2d')!;
-  let w = 0, h = 0, dpr = 1, raf = 0, visible = true;
-  type P = { x: number; y: number; vx: number; vy: number; r: number };
-  let pts: P[] = [];
-  const mouse = { x: -999, y: -999 };
-
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round((w * h) / 9000);
-    pts = Array.from({ length: n }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.4 + 0.4,
-    }));
-  };
-
-  const draw = () => {
-    ctx.clearRect(0, 0, w, h);
-    for (const p of pts) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      // Repulsión suave del mouse
-      const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
-      if (d2 < 9000) { p.x += dx * 0.02; p.y += dy * 0.02; }
-    }
-    for (let i = 0; i < pts.length; i++) {
-      const a = pts[i];
-      for (let j = i + 1; j < pts.length; j++) {
-        const b = pts[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < 90) {
-          ctx.strokeStyle = `rgba(170, 150, 255, ${(1 - d / 90) * 0.28})`;
-          ctx.lineWidth = 0.6;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-      ctx.fillStyle = 'rgba(216, 208, 255, .75)';
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
-    }
-    if (!reduce && visible) raf = requestAnimationFrame(draw);
-  };
-
-  panel.addEventListener('pointermove', (e) => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-  });
-  panel.addEventListener('pointerleave', () => { mouse.x = mouse.y = -999; });
-
-  resize();
-  draw();
-  new ResizeObserver(resize).observe(canvas);
-  // Pausa la animación cuando no se ve, para ahorrar batería
-  new IntersectionObserver(([e]) => {
-    visible = e.isIntersecting;
-    cancelAnimationFrame(raf);
-    if (visible) draw();
-  }).observe(canvas);
 </script>

@@ -1,68 +1,36 @@
 ---
+// Servicios y precios en una sola sección. Los valores vienen de src/data/pricing.ts.
 import { waLink } from '../data/site';
-import { products, addons, clp } from '../data/pricing';
-const fromOf = (id: string) => clp(products.find((p) => p.id === id)!.from);
+import { products, plans, addons, extras, clp } from '../data/pricing';
 
-const days = Array.from({ length: 14 }, (_, i) => i + 10);
-const slots = ['10:00', '11:30', '15:00', '17:30'];
-
-// Los dos tipos de web que ofrecemos hoy.
-const paths = [
-  {
-    n: '01',
-    t: 'Landing page',
-    for: 'Para lanzar tu negocio, un servicio o una campaña.',
-    items: ['Una página con todo lo importante', 'WhatsApp y formulario de contacto', 'Lista para Google'],
-    kind: 'one',
-    price: 'landing',
-    tag: '1 página',
-    wa: 'Hola MordWave, quiero cotizar una landing page.',
-  },
-  {
-    n: '02',
-    t: 'Sitio web',
-    for: 'Para empresas que necesitan mostrar más: servicios, equipo, proyectos.',
-    items: ['Varias páginas: inicio, servicios, nosotros, contacto…', 'Estructura pensada para posicionar en Google', 'Crece contigo: se suman páginas cuando quieras'],
-    kind: 'multi',
-    price: 'sitio',
-    tag: 'Varias páginas',
-    wa: 'Hola MordWave, quiero cotizar un sitio web de varias páginas.',
-  },
-];
 const pages = ['Inicio', 'Servicios', 'Nosotros', 'Contacto'];
 const slugs = ['', 'servicios', 'nosotros', 'contacto'];
-
+const days = Array.from({ length: 14 }, (_, i) => i + 10);
 ---
 
 <section id="servicios">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Servicios</span>
-      <h2 class="section-title">Elige el camino para <span class="grad">tu negocio.</span></h2>
-      <p class="section-lead">
-        Dos tipos de web según lo que necesitas. Las reservas online se suman a cualquiera de ellas.
-      </p>
+      <span class="eyebrow">Servicios y precios</span>
+      <h2 class="section-title">Elige tu web. <span class="grad">Precios claros.</span></h2>
+      <p class="section-lead">Tres opciones según lo que necesitas. Todos los precios incluyen IVA.</p>
     </div>
 
-    <div class="paths">
-      {paths.map((p, i) => (
-        <article class="card spot path reveal" style={`--d:${i * 90}ms`}>
-          <div class="top">
-            <span class="num">{p.n}</span>
-            <span class="badge">{p.tag}</span>
-          </div>
-
-          <!-- Maqueta animada: cómo se ve este tipo de web -->
-          <div class:list={['mock', p.kind]} aria-hidden="true">
+    <div class="products">
+      {products.map((p, i) => (
+        <article class="card prod reveal" style={`--d:${i * 90}ms`}>
+          <!-- Maqueta: se mueve solo al pasar el mouse por la tarjeta -->
+          <div class:list={['mock', p.id]} aria-hidden="true">
             <div class="bar">
               <i></i><i></i><i></i>
               <span class="url">
                 tunegocio.cl/
-                {p.kind === 'multi' && <span class="paths">{slugs.map((sl, n) => <span style={`--n:${n}`}>{sl}</span>)}</span>}
+                {p.id === 'sitio' && <span class="paths">{slugs.map((sl, n) => <span style={`--n:${n}`}>{sl}</span>)}</span>}
+                {p.id === 'agenda' && <span class="paths"><span>reservar</span></span>}
               </span>
             </div>
 
-            {p.kind === 'one' && (
+            {p.id === 'landing' && (
               <div class="view">
                 <div class="page scroll">
                   <div class="b-nav"><b class="logo"></b><span></span><span></span><span class="nav-cta"></span></div>
@@ -74,243 +42,274 @@ const slugs = ['', 'servicios', 'nosotros', 'contacto'];
               </div>
             )}
 
-            {p.kind === 'multi' && (
+            {p.id === 'agenda' && (
+              <div class="view">
+                <div class="page cal">
+                  <b class="t2"></b>
+                  <div class="days">{days.map((d) => <span class:list={{ off: d % 7 === 2 || d < 12, sel: d === 14 }}>{d}</span>)}</div>
+                  <div class="slots"><span>10:00</span><span class="sel">15:00</span><span>17:30</span></div>
+                  <div class="ok">✓ Reserva confirmada</div>
+                </div>
+              </div>
+            )}
+
+            {p.id === 'sitio' && (
               <>
-                <div class="tabs">{pages.map((pg, n) => <span style={`--n:${n}`}>{pg}</span>)}</div>
+                <div class="tabs-mini">{pages.map((pg, n) => <span style={`--n:${n}`}>{pg}</span>)}</div>
                 <div class="view">
                   <div class="page pg" style="--n:0"><div class="b-hero"><div><b class="t1"></b><b class="t2"></b><b class="btn"></b></div><span class="ph"></span></div></div>
-                  <div class="page pg" style="--n:1"><b class="t2 ttl"></b><div class="b-cards"><span></span><span></span><span></span></div></div>
-                  <div class="page pg" style="--n:2"><b class="t2 ttl"></b><div class="b-team"><span></span><span></span><span></span></div></div>
-                  <div class="page pg" style="--n:3"><b class="t2 ttl"></b><div class="b-form"><i></i><i></i><i class="area"></i><b class="btn"></b></div></div>
+                  <div class="page pg" style="--n:1"><b class="t2"></b><div class="b-cards"><span></span><span></span><span></span></div></div>
+                  <div class="page pg" style="--n:2"><b class="t2"></b><div class="b-team"><span></span><span></span><span></span></div></div>
+                  <div class="page pg" style="--n:3"><b class="t2"></b><div class="b-form"><i></i><i></i><b class="btn"></b></div></div>
                 </div>
               </>
             )}
           </div>
 
-          <h3>{p.t}</h3>
-          <p class="from"><span>desde</span> {fromOf(p.price)} <small>IVA incluido</small></p>
-          <p class="for">{p.for}</p>
-          <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
-          <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">Cotizar <span class="arrow">→</span></a>
+          <h3>{p.name}</h3>
+          <p class="price"><span>desde</span> {clp(p.from)}</p>
+          <p class="summary">{p.summary}</p>
+          <ul class="checks">{p.highlights.map((h) => <li>{h}</li>)}</ul>
+
+          <details class="detail">
+            <summary>Ver tamaños y qué incluye</summary>
+            <table class="sizes">
+              <thead><tr><th>Tamaño</th><th>{p.sizesLabel}</th><th>Precio</th></tr></thead>
+              <tbody>{p.sizes.map((s) => <tr><td><b>{s.size}</b></td><td>{s.units}</td><td>{clp(s.price)}</td></tr>)}</tbody>
+            </table>
+            {p.includesPrefix && <p class="prefix">{p.includesPrefix}</p>}
+            <ul class="dots">{p.includes.map((x) => <li>{x}</li>)}</ul>
+            <p class="meta">{p.rounds} · Listo en {p.time}*{p.note && <><br />{p.note}</>}</p>
+          </details>
+
+          <a class="btn btn-primary quote" href={waLink(p.wa)} target="_blank" rel="noopener">Cotizar <span class="arrow">↗</span></a>
         </article>
       ))}
     </div>
 
-    <!-- Reservas: se suma a cualquiera de los tres -->
-    <article class="card spot feat reveal">
-      <div class="feat-text">
-        <div class="top">
-          <span class="badge">Se suma a cualquier web</span>
+    <p class="fine">* Desde que recibimos todo el contenido. Una sección es un bloque de la página, como portada, servicios, galería o contacto.</p>
+
+    <details class="card more reveal">
+      <summary>Complementos y extras</summary>
+      <div class="more-grid">
+        <div>
+          <h4>Para el sitio web</h4>
+          <ul class="rows">{addons.map((a) => <li><span>{a.name}</span><b>{a.price}</b></li>)}</ul>
         </div>
-        <h3>Reservas online con Google Calendar</h3>
-        <p class="from"><span>Landing + Agenda desde</span> {fromOf('agenda')} <small>· en un sitio web, +{addons[0].price}</small></p>
-        <p class="text">
-          Tus clientes eligen día y hora desde la web y la cita llega directo a tu Google Calendar. Ideal para estudios
-          de tatuajes, barberías, estética, consultas y clases.
-        </p>
-        <ul class="checks">
-          <li>Horarios disponibles en tiempo real</li>
-          <li>Sincronizado con tu Google Calendar</li>
-          <li>Tus clientes reservan a cualquier hora, sin escribirte</li>
-        </ul>
-        <a class="see-demo" href="#proyectos">Ver un ejemplo funcionando <span class="arrow">→</span></a>
-
+        <div>
+          <h4>Para cualquier producto</h4>
+          <ul class="rows">{extras.map((e) => <li><span>{e.name}</span><b>{e.price}</b></li>)}</ul>
+        </div>
       </div>
+    </details>
 
-      <div class="phone-wrap" aria-hidden="true">
-        <div class="phone">
-          <div class="notch"></div>
-          <div class="screen">
-            <p class="p-title">Reserva tu hora</p>
-            <p class="p-month">Noviembre</p>
-            <div class="week">{['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d) => <span>{d}</span>)}</div>
-            <div class="days">
-              {days.map((d) => (
-                <span class:list={['day', { off: d % 7 === 2 || d === 10 || d === 11, sel: d === 14 }]}>{d}</span>
-              ))}
-            </div>
-            <p class="p-label">Horarios</p>
-            <div class="slots">
-              {slots.map((s) => <span class:list={['slot', { sel: s === '15:00', off: s === '11:30' }]}>{s}</span>)}
-            </div>
-            <span class="confirm">Confirmar reserva</span>
-            <div class="toast">
-              <span class="t-ok">✓</span>
-              <div><strong>¡Reserva confirmada!</strong><small>Añadida a Google Calendar</small></div>
-            </div>
+    <!-- Planes mensuales -->
+    <div class="plans-head reveal" id="planes">
+      <div>
+        <h3>Planes para mantener tu web</h3>
+        <p>Tu primer mes de Soporte viene incluido con cualquier web. Después eliges si sigues, sin permanencia mínima.</p>
+      </div>
+      <div class="period" role="group" aria-label="Forma de pago">
+        <button aria-pressed="true" data-period="monthly">Mensual</button>
+        <button aria-pressed="false" data-period="yearly">Anual <em>2 meses gratis</em></button>
+      </div>
+    </div>
+
+    <div class="plans">
+      {plans.map((pl, i) => (
+        <article class:list={['card', 'plan', 'reveal', { rec: pl.recommended }]} style={`--d:${i * 90}ms`}>
+          <div class="plan-top">
+            <h4>{pl.name}</h4>
+            {pl.recommended && <span class="rec-badge">Recomendado</span>}
           </div>
-        </div>
-      </div>
-    </article>
+          <p class="pp">
+            <span class="amount" data-monthly={clp(pl.monthly)} data-yearly={clp(pl.yearly)}>{clp(pl.monthly)}</span>
+            <span class="per" data-monthly="/mes" data-yearly="/año">/mes</span>
+          </p>
+          <ul class="checks">{pl.features.map((f) => <li>{f}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+
+    <p class="fine">
+      ¿Sin plan mensual? Te entregamos tu web y una guía para publicarla en tu cuenta (traspaso $29.990). Cada proyecto
+      se formaliza con una cotización y un contrato.
+    </p>
 
     <div class="card cta reveal">
-      <div class="cta-icon" aria-hidden="true">
-        <span></span><span></span><span></span>
+      <div>
+        <h3>¿No sabes cuál elegir?</h3>
+        <p>Agenda una reunión sin costo y te enviamos una cotización con el tamaño y los extras que necesitas.</p>
       </div>
-      <div class="cta-text">
-        <h3>¿No sabes cuál <span class="grad">elegir?</span></h3>
-        <p>
-          Agenda una reunión sin costo. Conversamos lo que necesita tu negocio y te enviamos una cotización con el
-          tamaño y los extras.
-        </p>
-      </div>
-      <a class="btn btn-primary" href={waLink('Hola MordWave, quiero agendar una reunión para cotizar mi web.')} target="_blank" rel="noopener">Agendar reunión sin costo <span class="arrow">↗</span></a>
+      <a class="btn btn-primary" href={waLink('Hola MordWave, quiero agendar una reunión para cotizar mi web.')} target="_blank" rel="noopener">Agendar reunión <span class="arrow">↗</span></a>
     </div>
   </div>
 </section>
 
 <style>
-  .top { display: flex; justify-content: space-between; align-items: center; min-height: 28px; margin-bottom: 18px; }
-  .num { font-family: var(--mono); color: var(--violet-2); font-size: 14px; }
-  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(123, 92, 255, .18); color: var(--lavender); }
-  h3 { font-size: 28px; line-height: 1.08; letter-spacing: -0.03em; }
-  .text { color: var(--muted); margin-top: 12px; }
-  .checks { list-style: none; display: grid; gap: 10px; margin-top: 20px; }
-  .checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+  /* ---- Productos ---- */
+  .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .prod { padding: 24px; display: flex; flex-direction: column; }
+  .prod h3 { font-size: 24px; letter-spacing: -0.03em; }
+  .price { font-family: var(--display); font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-top: 4px; }
+  .price span { font-family: var(--font); font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-right: 2px; }
+  .summary { color: var(--muted); font-size: 15px; margin: 6px 0 16px; }
+  .checks { list-style: none; display: grid; gap: 9px; }
+  .checks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
   .checks li::before {
-    content: ''; flex: none; width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
-    background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
+    content: ''; flex: none; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%;
+    background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 10px no-repeat;
   }
 
-  /* ---- Dos caminos ---- */
-  .paths { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .path { padding: 28px; display: flex; flex-direction: column; }
-  .from { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-top: 6px; }
-  .from span { font-family: var(--font); font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-right: 2px; }
-  .from small { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
-  .feat .from { font-size: 20px; margin-top: 10px; }
-  .path .for { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
-  .path .checks { margin-bottom: 24px; }
-  .more { margin-top: auto; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
-  .more .arrow { transition: transform .35s var(--ease); }
-  .more:hover .arrow { transform: translateX(4px); }
+  /* Detalle plegable de cada producto */
+  .detail { margin-top: auto; padding-top: 18px; }
+  .detail summary { border-top: 1px solid var(--line); }
+  .detail summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 14px 0; font-weight: 600; font-size: 14.5px; color: var(--lavender); }
+  .detail summary::-webkit-details-marker { display: none; }
+  .detail summary::after { content: '+'; font-size: 20px; transition: rotate .3s; }
+  .detail[open] summary::after { rotate: 45deg; }
+  .sizes { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .sizes th { text-align: left; font-weight: 500; font-size: 12px; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line-2); }
+  .sizes td { padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  .sizes td:last-child, .sizes th:last-child { text-align: right; }
+  .sizes td:last-child { font-weight: 600; }
+  .sizes b { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line-2); font-size: 12px; }
+  .prefix { font-weight: 600; font-size: 14px; margin: 16px 0 8px; }
+  .dots { list-style: disc; padding-left: 18px; display: grid; gap: 6px; margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .prefix + .dots { margin-top: 0; }
+  .meta { font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
+  .quote { margin-top: 18px; justify-content: center; }
 
-  /* Maquetas: un navegador con una web clara adentro */
+  /* Maquetas (en pausa hasta pasar el mouse) */
   .mock {
     --pg: #f6f3ff; --ink: #1a1535; --soft: #e4ddfb; --mid: #c9bdf5; --acc: #7b5cff;
-    height: 230px; margin-bottom: 24px; border-radius: 14px; overflow: hidden;
+    height: 170px; margin-bottom: 20px; border-radius: 12px; overflow: hidden;
     background: #100e24; border: 1px solid var(--line-2); display: flex; flex-direction: column;
   }
-  .bar { flex: none; display: flex; align-items: center; gap: 6px; padding: 10px 12px; }
-  .bar > i { width: 9px; height: 9px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
-  .url {
-    margin-left: 8px; flex: 1; display: flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 7px;
-    background: rgba(255, 255, 255, .06); font-family: var(--mono); font-size: 11px; color: var(--muted); overflow: hidden; white-space: nowrap;
-  }
-  .paths { position: relative; display: inline-grid; color: var(--lavender); }
-  .paths > span { grid-area: 1 / 1; opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
-  .view { position: relative; flex: 1; margin: 0 10px 10px; border-radius: 8px; background: var(--pg); overflow: hidden; }
-  .page { position: absolute; inset: 0 0 auto 0; padding: 12px; display: grid; gap: 12px; }
-
-  /* Piezas de la web de ejemplo */
-  .page b { display: block; height: 7px; border-radius: 4px; background: var(--mid); }
-  .page b.t1 { height: 12px; width: 85%; background: var(--ink); }
-  .page b.t2 { height: 9px; width: 60%; background: var(--ink); opacity: .85; }
+  .mock * { animation-play-state: paused !important; }
+  .prod:hover .mock *, .prod:focus-within .mock * { animation-play-state: running !important; }
+  .bar { flex: none; display: flex; align-items: center; gap: 5px; padding: 8px 10px; }
+  .bar > i { width: 8px; height: 8px; border-radius: 50%; background: rgba(214, 206, 255, .25); }
+  .url { margin-left: 6px; flex: 1; display: flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 6px; background: rgba(255, 255, 255, .06); font-family: var(--mono); font-size: 10px; color: var(--muted); overflow: hidden; white-space: nowrap; }
+  .paths { display: inline-grid; color: var(--lavender); }
+  .paths > span { grid-area: 1 / 1; }
+  .sitio .paths > span { opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
+  .view { position: relative; flex: 1; margin: 0 8px 8px; border-radius: 7px; background: var(--pg); overflow: hidden; }
+  .page { position: absolute; inset: 0 0 auto 0; padding: 10px; display: grid; gap: 9px; }
+  .page b { display: block; height: 6px; border-radius: 3px; background: var(--mid); }
+  .page b.t1 { height: 10px; width: 85%; background: var(--ink); }
+  .page b.t2 { height: 8px; width: 55%; background: var(--ink); opacity: .85; }
   .page b.s { width: 70%; }
-  .page b.btn { width: 54px; height: 16px; border-radius: 999px; background: var(--acc); }
-  .page b.logo { width: 34px; height: 9px; background: var(--acc); }
-  .ph { display: block; border-radius: 6px; background: linear-gradient(135deg, var(--mid), var(--acc)); }
-  .b-nav { display: flex; align-items: center; gap: 8px; }
-  .b-nav span { width: 26px; height: 6px; border-radius: 3px; background: var(--soft); }
+  .page b.btn { width: 46px; height: 13px; border-radius: 999px; background: var(--acc); }
+  .page b.logo { width: 28px; height: 8px; background: var(--acc); }
+  .ph { display: block; border-radius: 5px; background: linear-gradient(135deg, var(--mid), var(--acc)); }
+  .b-nav { display: flex; align-items: center; gap: 6px; }
+  .b-nav span { width: 20px; height: 5px; border-radius: 3px; background: var(--soft); }
   .b-nav span:first-of-type { margin-left: auto; }
-  .b-nav .nav-cta { width: 36px; height: 12px; border-radius: 999px; background: var(--acc); }
-  .b-hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; align-items: center; }
-  .b-hero > div { display: grid; gap: 7px; }
-  .b-hero .ph { height: 66px; }
-  .b-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
-  .b-cards span { height: 50px; border-radius: 6px; background: #fff; border: 1px solid var(--soft); box-shadow: inset 0 14px 0 var(--soft); }
-  .b-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; }
-  .b-split .ph { height: 54px; }
-  .b-split > div { display: grid; gap: 6px; }
-  .b-cta { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 6px; background: var(--ink); }
+  .b-nav .nav-cta { width: 28px; height: 10px; border-radius: 999px; background: var(--acc); }
+  .b-hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; align-items: center; }
+  .b-hero > div { display: grid; gap: 6px; }
+  .b-hero .ph { height: 50px; }
+  .b-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .b-cards span { height: 38px; border-radius: 5px; background: #fff; border: 1px solid var(--soft); box-shadow: inset 0 10px 0 var(--soft); }
+  .b-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; align-items: center; }
+  .b-split .ph { height: 42px; }
+  .b-split > div { display: grid; gap: 5px; }
+  .b-cta { display: grid; justify-items: center; gap: 6px; padding: 10px; border-radius: 5px; background: var(--ink); }
   .b-cta b.t2 { background: #fff; width: 50%; }
-  .b-team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .b-team span { aspect-ratio: 1; max-height: 56px; justify-self: center; width: 100%; max-width: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--mid), var(--acc)); }
-  .b-form { display: grid; gap: 7px; }
-  .b-form i { display: block; height: 16px; border-radius: 5px; background: #fff; border: 1px solid var(--soft); }
-  .b-form i.area { height: 34px; }
-  .ttl { margin-bottom: 2px; }
-
-  /* Landing: una sola página larga que baja sola */
+  .b-team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .b-team span { justify-self: center; width: 100%; max-width: 44px; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(135deg, var(--mid), var(--acc)); }
+  .b-form { display: grid; gap: 6px; }
+  .b-form i { display: block; height: 14px; border-radius: 4px; background: #fff; border: 1px solid var(--soft); }
   .scroll { animation: pageScroll 9s ease-in-out infinite; }
-  @keyframes pageScroll { 0%, 12% { transform: translateY(0); } 45%, 57% { transform: translateY(-34%); } 88%, 100% { transform: translateY(0); } }
-
-  /* Sitio web: pestañas que cambian de página */
-  .tabs { flex: none; display: flex; gap: 4px; padding: 0 10px 8px; }
-  .tabs span { position: relative; padding: 4px 9px; border-radius: 999px; font-size: 11px; color: var(--muted); }
-  .tabs span::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: rgba(123, 92, 255, .3); opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
+  @keyframes pageScroll { 0%, 12% { transform: translateY(0); } 45%, 57% { transform: translateY(-38%); } 88%, 100% { transform: translateY(0); } }
+  .tabs-mini { flex: none; display: flex; gap: 3px; padding: 0 8px 6px; }
+  .tabs-mini span { position: relative; padding: 3px 7px; border-radius: 999px; font-size: 9.5px; color: var(--muted); }
+  .tabs-mini span::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: rgba(123, 92, 255, .3); opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
   .pg { opacity: 0; animation: show 8s infinite; animation-delay: calc(var(--n) * 2s - 8s); }
   @keyframes show { 0%, 22% { opacity: 1; } 26%, 96% { opacity: 0; } 100% { opacity: 1; } }
+  /* Agenda */
+  .cal { gap: 7px; }
+  .cal .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .cal .days span { aspect-ratio: 1.4; display: grid; place-items: center; border-radius: 4px; font-size: 8.5px; font-weight: 600; color: var(--ink); background: var(--soft); }
+  .cal .days span.off { background: transparent; color: #c7c1e6; }
+  .cal .days span.sel { background: var(--acc); color: #fff; }
+  .cal .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .cal .slots span { text-align: center; font-size: 8.5px; font-weight: 600; padding: 4px 0; border-radius: 4px; border: 1px solid var(--soft); color: var(--ink); }
+  .cal .slots span.sel { background: var(--acc); color: #fff; border-color: var(--acc); }
+  .cal .ok { justify-self: center; font-size: 9px; font-weight: 700; color: #fff; background: var(--ink); padding: 5px 10px; border-radius: 6px; animation: okPop 4s ease-in-out infinite; }
+  @keyframes okPop { 0%, 30% { opacity: .35; transform: translateY(4px); } 40%, 85% { opacity: 1; transform: none; } 95%, 100% { opacity: .35; } }
 
-  /* ---- Reservas ---- */
-  .feat {
-    margin-top: 16px; padding: 40px; overflow: hidden;
-    display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center;
-    border-color: rgba(157, 134, 255, .3);
-  }
-  .feat h3 { font-size: clamp(28px, 3vw, 36px); max-width: 16ch; }
-  .feat .text { max-width: 52ch; }
-  .see-demo { display: inline-flex; gap: 8px; align-items: center; margin-top: 24px; font-weight: 600; color: var(--lavender); }
-  .see-demo .arrow { transition: transform .35s var(--ease); }
-  .see-demo:hover .arrow { transform: translateX(4px); }
+  .fine { margin-top: 14px; font-size: 13px; color: var(--muted); }
 
-  .phone-wrap { position: relative; display: grid; place-items: center; }
-  .phone { width: 250px; border-radius: 38px; padding: 10px; position: relative; background: #24203f; }
-  .notch { position: absolute; top: 18px; left: 50%; translate: -50% 0; width: 70px; height: 20px; border-radius: 999px; background: #0b0a16; z-index: 2; }
-  .screen { position: relative; border-radius: 30px; background: #f6f3ff; color: #1a1535; padding: 48px 16px 18px; overflow: hidden; font-size: 12px; }
-  .p-title { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; font-family: var(--display); }
-  .p-month { color: #7a72a6; font-size: 12px; margin-bottom: 10px; }
-  .week, .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-  .week span { font-size: 10px; color: #9b94c4; font-weight: 600; }
-  .days { margin-top: 4px; }
-  .day { aspect-ratio: 1; display: grid; place-items: center; border-radius: 8px; font-weight: 600; font-size: 11px; background: #ebe6ff; }
-  .day.off { background: transparent; color: #c7c1e6; text-decoration: line-through; }
-  .day.sel { animation: pickDay 10s var(--ease) infinite; }
-  .p-label { margin: 12px 0 6px; font-weight: 700; font-size: 12px; }
-  .slots { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .slot { text-align: center; padding: 7px 0; border-radius: 9px; border: 1px solid #ddd6ff; font-weight: 600; font-size: 11px; }
-  .slot.off { color: #c7c1e6; text-decoration: line-through; }
-  .slot.sel { animation: pickSlot 10s var(--ease) infinite; }
-  .confirm { display: block; margin-top: 12px; text-align: center; padding: 10px 0; border-radius: 12px; font-weight: 700; color: #fff; background: #b9addf; animation: confirm 10s var(--ease) infinite; }
-  .toast {
-    position: absolute; left: 10px; right: 10px; bottom: 12px; display: flex; gap: 10px; align-items: center;
-    padding: 12px; border-radius: 14px; background: #1a1535; color: #fff; animation: toast 10s var(--ease) infinite;
-  }
-  .toast strong { display: block; font-size: 12px; }
-  .toast small { font-size: 10.5px; color: #b9b1e6; }
-  .t-ok { width: 26px; height: 26px; flex: none; border-radius: 8px; display: grid; place-items: center; background: rgba(62, 224, 143, .2); color: var(--green); font-weight: 800; }
-  @keyframes pickDay { 0%, 12% { background: #ebe6ff; color: inherit; transform: none; } 16% { transform: scale(.85); } 20%, 92% { background: #7b5cff; color: #fff; transform: none; } 100% { background: #ebe6ff; color: inherit; } }
-  @keyframes pickSlot { 0%, 30% { background: transparent; color: inherit; border-color: #ddd6ff; transform: none; } 34% { transform: scale(.9); } 38%, 92% { background: #7b5cff; color: #fff; border-color: #7b5cff; transform: none; } 100% { background: transparent; color: inherit; } }
-  @keyframes confirm { 0%, 40% { background: #b9addf; transform: none; } 44%, 50% { background: #7b5cff; transform: none; } 53% { transform: scale(.94); } 57%, 92% { background: #5b3df0; transform: none; } 100% { background: #b9addf; } }
-  @keyframes toast { 0%, 56% { opacity: 0; transform: translateY(30px) scale(.95); } 62%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: translateY(30px) scale(.95); } }
+  /* ---- Complementos y extras ---- */
+  .more { margin-top: 16px; padding: 0 24px; }
+  .more summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-weight: 600; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::after { content: '+'; font-size: 22px; color: var(--lavender); transition: rotate .3s; }
+  .more[open] summary::after { rotate: 45deg; }
+  .more-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-bottom: 22px; }
+  .more h4 { font-size: 15px; margin-bottom: 6px; }
+  .rows { list-style: none; }
+  .rows li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .rows span { color: var(--muted); }
+  .rows b { white-space: nowrap; font-weight: 600; }
 
-  /* ---- Nos adaptamos a ti ---- */
-  .cta { margin-top: 16px; padding: 36px 40px; display: flex; align-items: center; gap: 32px; border-color: rgba(157, 134, 255, .3); }
-  .cta-text { flex: 1; }
-  .cta h3 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.035em; }
-  .cta p { color: var(--muted); font-size: 16px; max-width: 600px; margin-top: 8px; }
+  /* ---- Planes ---- */
+  .plans-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin: 64px 0 18px; scroll-margin-top: 100px; }
+  .plans-head h3 { font-size: clamp(24px, 2.8vw, 32px); letter-spacing: -0.03em; }
+  .plans-head p { color: var(--muted); max-width: 54ch; margin-top: 6px; }
+  .period { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--bg); }
+  .period button { padding: 8px 14px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; transition: background .3s, color .3s; }
+  .period button em { font-style: normal; font-size: 12px; color: var(--green); margin-left: 4px; }
+  .period button[aria-pressed='true'] { background: var(--violet); color: #fff; }
+  .period button[aria-pressed='true'] em { color: #d6ffe9; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .plan { padding: 24px; }
+  .plan.rec { border-color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet); }
+  .plan-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .plan h4 { font-size: 19px; }
+  .rec-badge { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--violet); color: #fff; }
+  .pp { margin: 8px 0 16px; font-variant-numeric: tabular-nums; }
+  .amount { font-family: var(--display); font-size: 34px; font-weight: 700; letter-spacing: -0.03em; }
+  .per { color: var(--muted); margin-left: 2px; }
+
+  /* ---- Llamado final ---- */
+  .cta { margin-top: 40px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .cta h3 { font-size: 24px; letter-spacing: -0.03em; }
+  .cta p { color: var(--muted); font-size: 15px; margin-top: 4px; max-width: 58ch; }
   .cta .btn { flex: none; }
-  .cta-icon { flex: none; width: 84px; height: 84px; border-radius: 22px; padding: 18px 16px; display: grid; gap: 11px; align-content: center; background: rgba(123, 92, 255, .16); }
-  .cta-icon span { position: relative; height: 3px; border-radius: 3px; background: rgba(216, 208, 255, .3); }
-  .cta-icon span::after {
-    content: ''; position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; translate: -50% -50%;
-    background: var(--lavender); animation: knob 4s var(--ease) infinite;
-  }
-  .cta-icon span:nth-child(1)::after { left: 30%; }
-  .cta-icon span:nth-child(2)::after { left: 70%; animation-delay: -1.3s; }
-  .cta-icon span:nth-child(3)::after { left: 45%; animation-delay: -2.6s; }
-  @keyframes knob { 0%, 100% { left: 25%; } 33% { left: 80%; } 66% { left: 50%; } }
 
-  @media (max-width: 980px) {
-    .paths { grid-template-columns: 1fr; }
+  @media (max-width: 1000px) {
+    .products, .plans { grid-template-columns: 1fr; }
+    .prod { display: grid; grid-template-columns: 220px 1fr; column-gap: 24px; }
+    .prod > :not(.mock) { grid-column: 2; }
+    .prod .mock { grid-row: 1 / span 7; margin: 0; }
+    .more-grid { grid-template-columns: 1fr; gap: 8px; }
   }
-  @media (max-width: 760px) {
-    .path { display: flex; padding: 24px 20px; }
-    .mock { height: 200px; }
-    .tabs span { padding: 4px 7px; font-size: 10px; }
-    .feat { grid-template-columns: 1fr; padding: 28px 22px 36px; gap: 28px; }
-    .cta { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 20px; }
-    .cta-icon { width: 68px; height: 68px; padding: 14px 12px; gap: 9px; }
-    h3 { font-size: 24px; }
+  @media (max-width: 640px) {
+    .prod { display: flex; padding: 20px; }
+    .prod .mock { display: none; }
+    .more { padding: 0 18px; }
+    .cta { flex-direction: column; align-items: stretch; padding: 24px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mock * { animation: none !important; }
+    .pg, .sitio .paths > span { opacity: 0; }
+    .pg[style*='--n:0'], .sitio .paths > span[style*='--n:0'] { opacity: 1; }
   }
 </style>
+
+<script>
+  // Mensual / Anual
+  const btns = [...document.querySelectorAll<HTMLButtonElement>('#servicios [data-period]')];
+  btns.forEach((b) =>
+    b.addEventListener('click', () => {
+      const period = b.dataset.period as 'monthly' | 'yearly';
+      btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      document.querySelectorAll<HTMLElement>('#servicios [data-monthly]').forEach((el) => {
+        el.textContent = el.dataset[period] ?? '';
+      });
+    })
+  );
+</script>
