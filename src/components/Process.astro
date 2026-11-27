@@ -1,33 +1,25 @@
 ---
-// Proceso en 4 pasos + lo que incluye cada proyecto. Aquí vive la información de pago y reuniones
+// Proceso en 4 pasos. Aquí vive la información de pago y de correcciones
 // (no se repite en otras secciones).
 const steps = [
   {
-    title: 'Reunión y contrato',
-    text: 'Conversamos sobre tu negocio y lo que necesitas. Luego firmamos un contrato con el alcance, el precio, el plazo y las rondas de revisión incluidas, para que ambos sepamos exactamente qué se entrega.',
+    title: 'Reunión y cotización',
+    text: 'Conversamos lo que necesitas y te enviamos una cotización con el tamaño y los extras. El proyecto se formaliza con un contrato.',
   },
   {
-    title: 'Abono y desarrollo',
-    text: 'Con el abono del 50% partimos. Para empezar necesitamos tu logo, textos y fotos; si te falta algo, te ayudamos. Te vamos mostrando los avances.',
+    title: 'Contenido',
+    text: 'Con el 50% inicial comenzamos. Completas un formulario breve y nos envías logo, textos, fotos y datos. Si no tienes textos, podemos redactarlos.',
   },
   {
-    title: 'Revisión',
-    text: 'Revisamos juntos la web y aplicamos las correcciones incluidas en el contrato. Si quieres sumar algo que no estaba acordado, lo cotizamos aparte.',
+    title: 'Diseño y revisión',
+    text: 'Te mostramos el sitio en una dirección de prueba y nos envías tus observaciones. Cada ronda de correcciones es el conjunto de comentarios que envías de una vez.',
   },
   {
     title: 'Publicación',
-    text: 'Compras tu dominio para que quede a tu nombre, con nuestra asesoría. Pagas el 50% restante, publicamos y te enseñamos a usar tu web.',
+    text: 'Al aprobar el sitio pagas el 50% restante. Conectamos tu dominio, publicamos y comienza tu mes de soporte incluido.',
   },
 ];
 
-const includes = [
-  'Diseño a medida, adaptado al celular',
-  'Botón de WhatsApp y formulario de contacto',
-  'SEO básico para aparecer en Google',
-  'Sitio seguro con certificado SSL',
-  'Asesoría para elegir y comprar tu dominio',
-  'Capacitación al entregar y acompañamiento',
-];
 ---
 
 <section id="proceso" class="process">
@@ -37,11 +29,6 @@ const includes = [
         <span class="eyebrow">Cómo trabajamos</span>
         <h2 class="section-title">De la idea a tu <span class="grad">web publicada.</span></h2>
         <p class="section-lead">Todo queda por escrito desde el inicio: qué se entrega, cuánto cuesta y cuándo pagas cada parte.</p>
-      </div>
-
-      <div class="card inc reveal" style="--d:100ms">
-        <h3>Incluido en cada proyecto</h3>
-        <ul>{includes.map((x) => <li>{x}</li>)}</ul>
       </div>
     </div>
 
@@ -66,15 +53,6 @@ const includes = [
   .process { background: linear-gradient(180deg, transparent, rgba(22, 19, 49, .55) 20%, rgba(22, 19, 49, .55) 80%, transparent); }
   .layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
   .side { position: sticky; top: 110px; }
-
-  .inc { padding: 26px 28px; margin-top: 32px; }
-  .inc h3 { font-size: 18px; margin-bottom: 14px; }
-  .inc ul { list-style: none; display: grid; gap: 10px; }
-  .inc li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
-  .inc li::before {
-    content: ''; flex: none; width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
-    background: rgba(123, 92, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d8d0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
-  }
 
   /* Línea de tiempo que se llena al hacer scroll */
   .timeline { position: relative; padding-left: 72px; }
@@ -101,7 +79,6 @@ const includes = [
     .track { left: 17px; }
     .node { left: -54px; width: 36px; height: 36px; border-radius: 10px; font-size: 16px; top: 18px; }
     .content { padding: 18px 18px; }
-    .inc { padding: 22px 20px; }
   }
 </style>
 
