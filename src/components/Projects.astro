@@ -1,32 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import demo from '../assets/demo-tattoo.jpg';
-import nulanios from '../assets/nulanios.jpg';
-import inkSoul from '../assets/ink-soul.jpg';
+
 
 const demoUrl = 'https://landing-tatto-calendar.vercel.app';
-const more = [
-  {
-    img: nulanios,
-    url: 'https://nulanios-burgers.vercel.app',
-    badge: 'Proyecto real',
-    real: true,
-    kind: 'Sitio web · Hamburguesería',
-    t: "Nulanio's Burgers",
-    need: 'Emprendimiento familiar de Coihueco recién lanzado que necesitaba estar en internet rápido.',
-    did: 'Sitio con menú visible, historia del negocio y pedidos directos por WhatsApp.',
-  },
-  {
-    img: inkSoul,
-    url: 'https://tatto-landingpage.vercel.app',
-    badge: 'Concepto MordWave',
-    real: false,
-    kind: 'Landing · Estudio de tatuajes',
-    t: 'Ink & Soul',
-    need: 'Una presencia oscura y elegante para un estudio de tatuajes.',
-    did: 'Landing con galería de trabajos, sección de artistas y forma de reservar sesión.',
-  },
-];
 
 ---
 
@@ -63,28 +40,6 @@ const more = [
         <a class="btn btn-primary magnetic" href={demoUrl} target="_blank" rel="noopener">Ver demo en vivo <span class="arrow">↗</span></a>
       </div>
     </article>
-
-    <div class="more">
-      {more.map((p, i) => (
-        <article class="card spot mini reveal" style={`--d:${i * 100}ms`}>
-          <a class="mshot" href={p.url} target="_blank" rel="noopener" aria-label={`Abrir ${p.t} en una pestaña nueva`}>
-            <Image src={p.img} alt={`Vista de ${p.t}`} widths={[400, 800]} sizes="(max-width: 900px) 100vw, 560px" />
-          </a>
-          <div class="mbody">
-            <div class="mtop">
-              <span class:list={['mbadge', { real: p.real }]}>{p.badge}</span>
-              <span class="kind">{p.kind}</span>
-            </div>
-            <h3>{p.t}</h3>
-            <dl>
-              <div><dt>Necesitaba</dt><dd>{p.need}</dd></div>
-              <div><dt>Hicimos</dt><dd>{p.did}</dd></div>
-            </dl>
-            <a class="visit" href={p.url} target="_blank" rel="noopener">Ver sitio <span class="arrow">↗</span></a>
-          </div>
-        </article>
-      ))}
-    </div>
   </div>
 </section>
 
