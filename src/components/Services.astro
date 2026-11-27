@@ -1,5 +1,7 @@
 ---
 import { waLink } from '../data/site';
+import { products, addons, clp } from '../data/pricing';
+const fromOf = (id: string) => clp(products.find((p) => p.id === id)!.from);
 
 const days = Array.from({ length: 14 }, (_, i) => i + 10);
 const slots = ['10:00', '11:30', '15:00', '17:30'];
@@ -12,6 +14,7 @@ const paths = [
     for: 'Para lanzar tu negocio, un servicio o una campaña.',
     items: ['Una página con todo lo importante', 'WhatsApp y formulario de contacto', 'Lista para Google'],
     kind: 'one',
+    price: 'landing',
     tag: '1 página',
     wa: 'Hola MordWave, quiero cotizar una landing page.',
   },
@@ -21,6 +24,7 @@ const paths = [
     for: 'Para empresas que necesitan mostrar más: servicios, equipo, proyectos.',
     items: ['Varias páginas: inicio, servicios, nosotros, contacto…', 'Estructura pensada para posicionar en Google', 'Crece contigo: se suman páginas cuando quieras'],
     kind: 'multi',
+    price: 'sitio',
     tag: 'Varias páginas',
     wa: 'Hola MordWave, quiero cotizar un sitio web de varias páginas.',
   },
@@ -84,6 +88,7 @@ const slugs = ['', 'servicios', 'nosotros', 'contacto'];
           </div>
 
           <h3>{p.t}</h3>
+          <p class="from"><span>desde</span> {fromOf(p.price)} <small>IVA incluido</small></p>
           <p class="for">{p.for}</p>
           <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
           <a class="more" href={waLink(p.wa)} target="_blank" rel="noopener">Cotizar <span class="arrow">→</span></a>
@@ -98,6 +103,7 @@ const slugs = ['', 'servicios', 'nosotros', 'contacto'];
           <span class="badge">Se suma a cualquier web</span>
         </div>
         <h3>Reservas online con Google Calendar</h3>
+        <p class="from"><span>Landing + Agenda desde</span> {fromOf('agenda')} <small>· en un sitio web, +{addons[0].price}</small></p>
         <p class="text">
           Tus clientes eligen día y hora desde la web y la cita llega directo a tu Google Calendar. Ideal para estudios
           de tatuajes, barberías, estética, consultas y clases.
@@ -142,13 +148,13 @@ const slugs = ['', 'servicios', 'nosotros', 'contacto'];
         <span></span><span></span><span></span>
       </div>
       <div class="cta-text">
-        <h3>Nos adaptamos <span class="grad">a ti.</span></h3>
+        <h3>¿No sabes cuál <span class="grad">elegir?</span></h3>
         <p>
-          No trabajamos con paquetes cerrados. Conversamos sobre lo que necesita tu negocio y con qué presupuesto
-          cuentas, y armamos una propuesta a tu medida.
+          Agenda una reunión sin costo. Conversamos lo que necesita tu negocio y te enviamos una cotización con el
+          tamaño y los extras.
         </p>
       </div>
-      <a class="btn btn-primary" href={waLink('Hola MordWave, quiero cotizar una web a mi medida.')} target="_blank" rel="noopener">Cotizar sin compromiso <span class="arrow">↗</span></a>
+      <a class="btn btn-primary" href={waLink('Hola MordWave, quiero agendar una reunión para cotizar mi web.')} target="_blank" rel="noopener">Agendar reunión sin costo <span class="arrow">↗</span></a>
     </div>
   </div>
 </section>
@@ -169,6 +175,10 @@ const slugs = ['', 'servicios', 'nosotros', 'contacto'];
   /* ---- Dos caminos ---- */
   .paths { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .path { padding: 28px; display: flex; flex-direction: column; }
+  .from { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-top: 6px; }
+  .from span { font-family: var(--font); font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-right: 2px; }
+  .from small { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+  .feat .from { font-size: 20px; margin-top: 10px; }
   .path .for { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
   .path .checks { margin-bottom: 24px; }
   .more { margin-top: auto; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--lavender); align-self: flex-start; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }

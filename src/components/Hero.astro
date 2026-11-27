@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import icono from '../assets/icono.png';
 import { waLink } from '../data/site';
+import { minPrice, clp } from '../data/pricing';
 
 ---
 
@@ -58,8 +59,8 @@ import { waLink } from '../data/site';
         <a class="btn btn-ghost magnetic" href="#proyectos">Ver proyecto demo</a>
       </div>
       <ul class="facts rise" style="--i:6">
+        <li><strong>Desde {clp(minPrice)}</strong><span>IVA incluido</span></li>
         <li><strong>3 ingenieros</strong><span>Informáticos, trato directo</span></li>
-        <li><strong>Chillán</strong><span>Trabajamos con todo Chile</span></li>
         <li><strong>&lt; 24 horas</strong><span>Para responderte</span></li>
       </ul>
     </div>
